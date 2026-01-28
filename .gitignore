@@ -23,12 +23,15 @@ dist-ssr
 *.sln
 *.sw?
 
-# Project specific
-public/sequence/*.jpg
-images/*.jpg
+# Generic Ignores
+images/
 *.png
 *.jpg
 *.jpeg
+/brain/
+
+# EXCEPTIONS (Keep these)
+!public/sequence/
+!public/sequence/*.jpg
 !logo.jpg
 !og-image.jpg
-/brain/
