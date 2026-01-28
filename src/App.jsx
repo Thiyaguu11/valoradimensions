@@ -12,9 +12,9 @@ function App() {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "Valora Dimensions",
-        "image": "https://valoradimensions.com/logo.jpg",
-        "@id": "https://valoradimensions.com",
-        "url": "https://valoradimensions.com",
+        "image": "https://valoradimensions.vercel.app/logo.jpg",
+        "@id": "https://valoradimensions.vercel.app",
+        "url": "https://valoradimensions.vercel.app",
         "telephone": "+917338776815",
         "address": {
             "@type": "PostalAddress",
@@ -54,17 +54,17 @@ function App() {
 
                 {/* OpenGraph / Facebook */}
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://valoradimensions.com/" />
+                <meta property="og:url" content="https://valoradimensions.vercel.app/" />
                 <meta property="og:title" content="Valora Dimensions | Build Brands Meant to Scale" />
                 <meta property="og:description" content="ROI-focused marketing and business consulting for brands ready to lead their market." />
-                <meta property="og:image" content="https://valoradimensions.com/og-image.jpg" />
+                <meta property="og:image" content="https://valoradimensions.vercel.app/og-image.jpg" />
 
                 {/* Twitter */}
                 <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:url" content="https://valoradimensions.com/" />
+                <meta property="twitter:url" content="https://valoradimensions.vercel.app/" />
                 <meta property="twitter:title" content="Valora Dimensions | Build Brands Meant to Scale" />
                 <meta property="twitter:description" content="ROI-focused marketing and business consulting for brands ready to lead their market." />
-                <meta property="twitter:image" content="https://valoradimensions.com/og-image.jpg" />
+                <meta property="twitter:image" content="https://valoradimensions.vercel.app/og-image.jpg" />
 
                 {/* Schema.org JSON-LD */}
                 <script type="application/ld+json">
