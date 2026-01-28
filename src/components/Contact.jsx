@@ -31,6 +31,13 @@ const Particle = ({ color, x, y, delay }) => (
 const Contact = () => {
     const [result, setResult] = React.useState("");
     const [status, setStatus] = React.useState("idle"); // idle, sending, success, error
+    const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+
+    React.useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -67,9 +74,9 @@ const Contact = () => {
     return (
         <section id="contact">
             <div className="container">
-                <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                    <h2 style={{ fontSize: '2.5rem' }}>Let's Scale Your Brand</h2>
-                    <p style={{ color: 'var(--text-secondary)' }}>Book a strategy call or send us a message to get started.</p>
+                <div style={{ textAlign: 'center', marginBottom: isMobile ? '2.5rem' : '4rem' }}>
+                    <h2 style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>Let's Scale Your Brand</h2>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: isMobile ? '0.9rem' : '1rem' }}>Book a strategy call or send us a message to get started.</p>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
@@ -136,39 +143,50 @@ const Contact = () => {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        <div className="glass" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                            <div style={{ padding: '1rem', background: 'var(--accent-soft)', borderRadius: '12px' }}>
-                                <MessageSquare color="#25D366" />
+                        <div className="glass" style={{ padding: isMobile ? '1.2rem' : '1.5rem', display: 'flex', alignItems: 'center', gap: isMobile ? '1rem' : '1.5rem' }}>
+                            <div style={{ padding: isMobile ? '0.7rem' : '1rem', background: 'var(--accent-soft)', borderRadius: '12px', flexShrink: 0 }}>
+                                <MessageSquare color="#25D366" size={isMobile ? 20 : 24} />
                             </div>
-                            <div>
-                                <h4 style={{ fontSize: '0.9rem', color: '#888' }}>WhatsApp</h4>
-                                <a href="https://wa.me/917338776815" target="_blank" rel="noreferrer" style={{ fontWeight: 600 }}>Chat with us</a>
-                            </div>
-                        </div>
-
-                        <div className="glass" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                            <div style={{ padding: '1rem', background: 'var(--accent-soft)', borderRadius: '12px' }}>
-                                <Calendar color="var(--text-primary)" />
-                            </div>
-                            <div>
-                                <h4 style={{ fontSize: '0.9rem', color: '#888' }}>Strategy Call</h4>
-                                <a href="https://calendly.com/valoradimensions" target="_blank" rel="noreferrer" style={{ fontWeight: 600 }}>Book on Calendly</a>
+                            <div style={{ overflow: 'hidden' }}>
+                                <h4 style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.2rem' }}>WhatsApp</h4>
+                                <a href="https://wa.me/917338776815" target="_blank" rel="noreferrer" style={{ fontWeight: 600, fontSize: isMobile ? '0.9rem' : '1rem' }}>Chat with us</a>
                             </div>
                         </div>
 
-                        <div className="glass" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                            <div style={{ padding: '1rem', background: 'var(--accent-soft)', borderRadius: '12px' }}>
-                                <Mail color="var(--text-primary)" />
+                        <div className="glass" style={{ padding: isMobile ? '1.2rem' : '1.5rem', display: 'flex', alignItems: 'center', gap: isMobile ? '1rem' : '1.5rem' }}>
+                            <div style={{ padding: isMobile ? '0.7rem' : '1rem', background: 'var(--accent-soft)', borderRadius: '12px', flexShrink: 0 }}>
+                                <Calendar color="var(--text-primary)" size={isMobile ? 20 : 24} />
                             </div>
-                            <div>
-                                <h4 style={{ fontSize: '0.9rem', color: '#888' }}>Email</h4>
-                                <a href="mailto:valoradimensions@gmail.com" style={{ fontWeight: 600, color: 'inherit' }}>valoradimensions@gmail.com</a>
+                            <div style={{ overflow: 'hidden' }}>
+                                <h4 style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.2rem' }}>Strategy Call</h4>
+                                <a href="https://calendly.com/valoradimensions" target="_blank" rel="noreferrer" style={{ fontWeight: 600, fontSize: isMobile ? '0.9rem' : '1rem' }}>Book on Calendly</a>
                             </div>
                         </div>
 
-                        <div style={{ marginTop: '1rem' }}>
+                        <div className="glass" style={{ padding: isMobile ? '1.2rem' : '1.5rem', display: 'flex', alignItems: 'center', gap: isMobile ? '1rem' : '1.5rem' }}>
+                            <div style={{ padding: isMobile ? '0.7rem' : '1rem', background: 'var(--accent-soft)', borderRadius: '12px', flexShrink: 0 }}>
+                                <Mail color="var(--text-primary)" size={isMobile ? 20 : 24} />
+                            </div>
+                            <div style={{ overflow: 'hidden', minWidth: 0 }}>
+                                <h4 style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.2rem' }}>Email</h4>
+                                <a
+                                    href="mailto:valoradimensions@gmail.com"
+                                    style={{
+                                        fontWeight: 600,
+                                        color: 'inherit',
+                                        fontSize: isMobile ? '0.85rem' : '1rem',
+                                        wordBreak: 'break-all',
+                                        display: 'block'
+                                    }}
+                                >
+                                    valoradimensions@gmail.com
+                                </a>
+                            </div>
+                        </div>
+
+                        <div style={{ marginTop: '1rem', textAlign: isMobile ? 'center' : 'left' }}>
                             <p style={{ color: '#888', marginBottom: '1rem' }}>Follow us</p>
-                            <a href="https://www.instagram.com/valoradimensions/" target="_blank" rel="noreferrer" className="glass" style={{ padding: '0.8rem 1.5rem', borderRadius: '50px', fontSize: '0.9rem' }}>
+                            <a href="https://www.instagram.com/valoradimensions/" target="_blank" rel="noreferrer" className="glass" style={{ padding: '0.8rem 1.5rem', borderRadius: '50px', fontSize: '0.9rem', display: isMobile ? 'inline-block' : 'inline' }}>
                                 Instagram
                             </a>
                         </div>
