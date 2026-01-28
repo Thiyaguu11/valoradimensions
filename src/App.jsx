@@ -57,14 +57,14 @@ function App() {
                 <meta property="og:url" content="https://valoradimensions.vercel.app/" />
                 <meta property="og:title" content="Valora Dimensions | Build Brands Meant to Scale" />
                 <meta property="og:description" content="ROI-focused marketing and business consulting for brands ready to lead their market." />
-                <meta property="og:image" content="https://valoradimensions.vercel.app/og-image.jpg" />
+                <meta property="og:image" content="https://valoradimensions.vercel.app/logo.jpg" />
 
                 {/* Twitter */}
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta property="twitter:url" content="https://valoradimensions.vercel.app/" />
                 <meta property="twitter:title" content="Valora Dimensions | Build Brands Meant to Scale" />
                 <meta property="twitter:description" content="ROI-focused marketing and business consulting for brands ready to lead their market." />
-                <meta property="twitter:image" content="https://valoradimensions.vercel.app/og-image.jpg" />
+                <meta property="twitter:image" content="https://valoradimensions.vercel.app/logo.jpg" />
 
                 {/* Schema.org JSON-LD */}
                 <script type="application/ld+json">
