@@ -102,7 +102,7 @@ const Hero = () => {
                 left: isMobile ? '1rem' : '2rem',
                 zIndex: 2000,
                 pointerEvents: 'none',
-                display: isMobile ? 'none' : 'flex', // HIDDEN ON MOBILE PER USER REQUEST
+                display: window.innerWidth < 1024 ? 'none' : 'flex', // HIDDEN ON TABLETS & MOBILE TO PREVENT NAVBAR CONFLICT
                 alignItems: 'center',
                 padding: '0.5rem'
             }}>
