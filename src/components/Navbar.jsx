@@ -41,7 +41,12 @@ const Navbar = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: isMobile ? '0.5rem 1rem' : '0.5rem 2rem',
+            padding: isMobile ? '0.6rem 1.2rem' : '0.5rem 2rem',
+            background: isMobile ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
+            backdropFilter: isMobile ? 'blur(20px)' : 'none',
+            borderRadius: isMobile ? '50px' : '0',
+            border: isMobile ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
+            boxShadow: isMobile ? '0 4px 20px rgba(0, 0, 0, 0.05)' : 'none'
         }}>
             {/* Left: Logo */}
             <div className="logo" style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
@@ -54,12 +59,13 @@ const Navbar = () => {
             {!isMobile && (
                 <div style={{
                     display: 'flex',
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    background: 'rgba(255, 255, 255, 0.7)',
                     backdropFilter: 'blur(20px)',
                     padding: '4px',
                     borderRadius: '100px',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    gap: '4px'
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    gap: '4px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)'
                 }}>
                     {['home', 'services', 'about'].map((item) => (
                         <a
@@ -69,11 +75,11 @@ const Navbar = () => {
                                 padding: '8px 20px',
                                 borderRadius: '100px',
                                 fontSize: '0.85rem',
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 textTransform: 'capitalize',
-                                transition: 'all 0.3s ease',
-                                color: activeSection === item ? 'var(--text-primary)' : 'rgba(255, 255, 255, 0.5)',
-                                background: activeSection === item ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                color: activeSection === item ? 'var(--text-primary)' : 'var(--text-secondary)',
+                                background: activeSection === item ? 'rgba(0, 0, 0, 0.05)' : 'transparent',
                             }}
                         >
                             {item}
@@ -87,16 +93,22 @@ const Navbar = () => {
                 <a href="#contact" style={{
                     fontSize: '0.85rem',
                     fontWeight: 600,
-                    color: 'var(--text-primary)',
                     textDecoration: 'none',
                     padding: isMobile ? '8px 16px' : '10px 24px',
                     borderRadius: '100px',
                     background: 'var(--text-primary)',
-                    color: 'var(--bg-primary)',
-                    transition: 'transform 0.2s ease'
+                    color: '#fff', // White text on dark button
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
                 }}
-                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)'
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.15)'
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)'
+                    }}
                 >
                     Contact
                 </a>
