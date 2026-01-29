@@ -57,6 +57,8 @@ const Hero = () => {
 
     const frameIndex = useTransform(smoothProgress, [0, 1], [0, frameCount - 1])
 
+    const [firstFrameLoaded, setFirstFrameLoaded] = useState(false)
+
     // Preload images
     useEffect(() => {
         const loadedImages = []
@@ -67,6 +69,7 @@ const Hero = () => {
             img.src = `/sequence/${i}.jpg`
             img.onload = () => {
                 loadedCount++
+                if (i === 0) setFirstFrameLoaded(true) // Show immediately when first frame is ready
                 if (loadedCount === frameCount) {
                     setIsLoaded(true)
                 }
@@ -123,7 +126,7 @@ const Hero = () => {
                             position: 'absolute',
                             top: 0,
                             left: 0,
-                            opacity: isLoaded ? 1 : 0,
+                            opacity: firstFrameLoaded ? 1 : 0,
                             transition: 'opacity 0.2s ease-in-out'
                         }}
                     />
