@@ -99,7 +99,8 @@ const Hero = () => {
             style={{
                 height: '110vh', /* EVEN TIGHTER */
                 position: 'relative',
-                background: '#fff'
+                background: '#fff',
+                padding: 0 /* OVERRIDE GLOBAL SECTION PADDING */
             }}
         >
             {/* Sticky Container for the Image Sequence */}
