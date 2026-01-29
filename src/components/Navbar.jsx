@@ -35,23 +35,19 @@ const Navbar = () => {
             top: isMobile ? '1.5rem' : '1.5rem',
             left: isMobile ? '1.5rem' : '50%',
             transform: isMobile ? 'none' : 'translateX(-50%)',
-            width: isMobile ? 'auto' : '95%',
+            width: isMobile ? 'auto' : 'calc(100% - 3rem)',
             maxWidth: '1200px',
             zIndex: 1000,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: isMobile ? '0' : '0.5rem 2rem',
+            padding: isMobile ? '0' : '0 1rem',
             background: 'transparent',
-            backdropFilter: 'none',
-            borderRadius: '0',
-            border: 'none',
-            boxShadow: 'none'
         }}>
             {/* Left: Logo */}
-            <div className="logo" style={{ display: 'flex' }}>
+            <div className="logo" style={{ flex: isMobile ? 'none' : 1, display: 'flex', justifyContent: 'flex-start' }}>
                 <a href="#home">
-                    <img src="/logo.jpg" alt="Valora" style={{ height: isMobile ? '40px' : '40px', borderRadius: '8px', boxShadow: isMobile ? '0 4px 15px rgba(0,0,0,0.1)' : 'none' }} />
+                    <img src="/logo.jpg" alt="Valora" style={{ height: isMobile ? '40px' : '45px', borderRadius: '8px', boxShadow: isMobile ? '0 4px 15px rgba(0,0,0,0.1)' : 'none' }} />
                 </a>
             </div>
 
