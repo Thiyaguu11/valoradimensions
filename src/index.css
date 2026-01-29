@@ -120,8 +120,13 @@ button {
 }
 
 section {
-    padding: 0;
-    /* REMOVED GLOBAL PADDING TO FIX GAPS */
+    padding: 100px 0;
     width: 100%;
     position: relative;
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: 60px 0;
+    }
 }

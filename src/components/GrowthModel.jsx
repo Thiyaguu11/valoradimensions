@@ -28,7 +28,9 @@ const GrowthModel = () => {
     const scale = isMobile ? 0.7 : 1;
 
     return (
-        <section id="growth-model" style={{ background: 'var(--bg-brand-green)' }}>
+        <section id="growth-model" style={{
+            background: 'var(--bg-brand-green)'
+        }}>
             <div className="container" style={{ overflow: 'hidden' }}>
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                     <h2 style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>Our Growth Model</h2>
@@ -44,7 +46,8 @@ const GrowthModel = () => {
                     height: isMobile ? '350px' : '500px',
                     position: 'relative',
                     transform: `scale(${scale})`,
-                    transformOrigin: 'center center'
+                    transformOrigin: 'center center',
+                    marginBottom: isMobile ? '2rem' : '4rem'
                 }}>
                     {/* Inner Orbit (Increased to 220px) */}
                     <motion.div
@@ -163,7 +166,13 @@ const GrowthModel = () => {
                     </motion.div>
                 </div>
 
-                <div style={{ marginTop: isMobile ? '2rem' : '4rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
+                <div style={{
+                    marginTop: isMobile ? '2rem' : '4rem',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '2rem',
+                    paddingBottom: isMobile ? '2rem' : '4rem' /* EXTRA GAP BELOW ELEMENTS */
+                }}>
                     {growthStages.map((stage, index) => (
                         <motion.div
                             key={index}
