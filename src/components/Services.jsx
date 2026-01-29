@@ -25,7 +25,7 @@ const serviceData = [
 
 const Services = () => {
     return (
-        <section id="services" style={{ background: 'var(--bg-brand-blue)' }}>
+        <section id="services" style={{ background: 'var(--bg-brand-blue)', padding: '80px 0' }}>
             <div className="container">
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                     <span style={{ color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.8rem' }}>What we do</span>

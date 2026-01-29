@@ -10,7 +10,7 @@ const About = () => {
     }, []);
 
     return (
-        <section id="about" style={{ background: 'var(--bg-section-alt)' }}>
+        <section id="about" style={{ background: 'var(--bg-section-alt)', padding: '80px 0' }}>
             <div className="container">
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
                     <div>

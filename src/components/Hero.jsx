@@ -93,17 +93,22 @@ const Hero = () => {
         <section
             ref={sectionRef}
             id="home"
-            style={{ height: '150vh', position: 'relative' }}
+            style={{
+                height: '110vh', /* EVEN TIGHTER */
+                position: 'relative',
+                background: '#fff'
+            }}
         >
             {/* Sticky Container for the Image Sequence */}
             <div style={{
                 position: 'sticky',
                 top: 0,
-                left: 0,
-                width: '100%',
                 height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 overflow: 'hidden',
-                backgroundColor: '#fff'
+                background: '#fff'
             }}>
                 {/* Background Image Sequence */}
                 {images.length > 0 && (
@@ -131,7 +136,7 @@ const Hero = () => {
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    background: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.5) 100%)',
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 100%)',
                     zIndex: 1
                 }}></div>
 

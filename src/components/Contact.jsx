@@ -72,7 +72,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact">
+        <section id="contact" style={{ padding: isMobile ? '60px 0' : '80px 0' }}>
             <div className="container">
                 <div style={{ textAlign: 'center', marginBottom: isMobile ? '2.5rem' : '4rem' }}>
                     <h2 style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>Let's Scale Your Brand</h2>
