@@ -1,22 +1,24 @@
 :root {
     --bg-color: #ffffff;
-    --bg-section-alt: #f1f5f9;
-    /* Slightly darker slate */
+    --bg-section-alt: #f8fafc;
     --bg-brand-blue: #e0f2fe;
-    /* More pronounced blue */
     --bg-brand-green: #dcfce7;
-    /* More pronounced green */
-    --panel-bg: rgba(255, 255, 255, 0.9);
+    --panel-bg: rgba(255, 255, 255, 0.4);
+    /* Much more translucent */
     --accent-color: #000000;
     --accent-soft: rgba(0, 0, 0, 0.05);
     --text-primary: #0f172a;
-    /* Even darker for better contrast */
     --text-secondary: #475569;
-    --glass-border: rgba(0, 0, 0, 0.12);
-    --glass-blur: blur(12px);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    /* Lighter border for inner glow */
+    --glass-outline: rgba(0, 0, 0, 0.05);
+    /* Outer subtle shadow */
+    --glass-blur: blur(25px);
+    /* Stronger blur for that 'liquid' look */
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    /* Faster, smoother */
 }
 
 * {
@@ -64,8 +66,20 @@ ul {
 .glass {
     background: var(--panel-bg);
     backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--glass-border);
-    border-radius: 12px;
+    border-radius: 20px;
+    /* Sweeter rounding */
+    box-shadow:
+        0 4px 24px -1px var(--glass-outline),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+}
+
+.glass:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 12px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 button {

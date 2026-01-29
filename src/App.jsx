@@ -47,7 +47,31 @@ function App() {
     };
 
     return (
-        <div className="app">
+        <div className="app" style={{ position: 'relative', overflow: 'hidden' }}>
+            {/* Ambient Liquid Blobs for Glass Depth */}
+            <div style={{
+                position: 'fixed',
+                top: '-10%',
+                right: '-5%',
+                width: '600px',
+                height: '600px',
+                background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%)',
+                filter: 'blur(80px)',
+                zIndex: -1,
+                pointerEvents: 'none'
+            }} />
+            <div style={{
+                position: 'fixed',
+                bottom: '10%',
+                left: '-10%',
+                width: '800px',
+                height: '800px',
+                background: 'radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%)',
+                filter: 'blur(100px)',
+                zIndex: -1,
+                pointerEvents: 'none'
+            }} />
+
             <Helmet>
                 <title>Valora Dimensions | Performance Marketing & Brand Scaling Studio</title>
                 <meta name="description" content="Valora Dimensions is a growth-focused marketing studio in Chennai. We specialize in ROI-driven performance marketing, strategy, and premium brand building." />
