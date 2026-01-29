@@ -95,36 +95,6 @@ const Hero = () => {
             id="home"
             style={{ height: '200vh', position: 'relative' }}
         >
-            {/* Sticky/Fixed Magical Branding */}
-            <div style={{
-                position: 'fixed',
-                top: isMobile ? '1rem' : '2rem',
-                left: isMobile ? '1rem' : '2rem',
-                zIndex: 2000,
-                pointerEvents: 'none',
-                display: window.innerWidth < 1024 ? 'none' : 'flex', // HIDDEN ON TABLETS & MOBILE TO PREVENT NAVBAR CONFLICT
-                alignItems: 'center',
-                padding: '0.5rem'
-            }}>
-                <div style={{ position: 'relative' }}>
-                    <Sparkle color="#3b82f6" size={isMobile ? 10 : 15} style={{ top: '-10px', left: '-10px' }} />
-                    <Sparkle color="#f59e0b" size={isMobile ? 8 : 12} style={{ bottom: '-15px', right: '20%' }} />
-                    <Sparkle color="#10b981" size={isMobile ? 12 : 18} style={{ top: '20%', right: '-15px' }} />
-                    <Sparkle color="#ef4444" size={isMobile ? 6 : 10} style={{ top: '-5px', left: '60%' }} />
-
-                    <span style={{
-                        fontSize: isMobile ? '1rem' : '1.4rem',
-                        letterSpacing: isMobile ? '2px' : '3px',
-                        fontWeight: 900,
-                        textTransform: 'uppercase',
-                        color: '#000',
-                        filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.5))'
-                    }}>
-                        VALORA DIMENSIONS
-                    </span>
-                </div>
-            </div>
-
             {/* Sticky Container for the Image Sequence */}
             <div style={{
                 position: 'sticky',
