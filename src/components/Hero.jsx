@@ -77,6 +77,7 @@ const Hero = () => {
     }, [])
 
     const [currentFrame, setCurrentFrame] = useState(0)
+    const canvasRef = useRef(null)
 
     useEffect(() => {
         const unsubscribe = frameIndex.on('change', (latest) => {
@@ -88,6 +89,50 @@ const Hero = () => {
     // Content animations based on scroll
     const textOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [1, 1, 0, 0])
     const textY = useTransform(scrollYProgress, [0, 1], [0, -50])
+
+    // Canvas drawing logic for high-performance, sharp rendering
+    useEffect(() => {
+        const canvas = canvasRef.current
+        if (!canvas || !images[currentFrame]) return
+
+        const ctx = canvas.getContext('2d')
+        const image = images[currentFrame]
+
+        // Set canvas dimensions based on container size and pixel ratio
+        const containerWidth = window.innerWidth
+        const containerHeight = window.innerHeight
+        const devicePixelRatio = window.devicePixelRatio || 1
+
+        canvas.width = containerWidth * devicePixelRatio
+        canvas.height = containerHeight * devicePixelRatio
+        canvas.style.width = `${containerWidth}px`
+        canvas.style.height = `${containerHeight}px`
+
+        ctx.imageSmoothingEnabled = true
+        ctx.imageSmoothingQuality = 'high'
+
+        // Calculate object-fit: cover aspect ratio
+        const imgRatio = image.width / image.height
+        const containerRatio = containerWidth / containerHeight
+
+        let drawWidth, drawHeight, offsetX, offsetY
+
+        if (containerRatio > imgRatio) {
+            drawWidth = containerWidth
+            drawHeight = containerWidth / imgRatio
+            offsetX = 0
+            offsetY = (containerHeight - drawHeight) / 2
+        } else {
+            drawWidth = containerHeight * imgRatio
+            drawHeight = containerHeight
+            offsetX = (containerWidth - drawWidth) / 2
+            offsetY = 0
+        }
+
+        // Draw the frame
+        ctx.scale(devicePixelRatio, devicePixelRatio)
+        ctx.drawImage(image, offsetX, offsetY, drawWidth, drawHeight)
+    }, [currentFrame, images])
 
     return (
         <section
@@ -110,24 +155,17 @@ const Hero = () => {
                 overflow: 'hidden',
                 background: '#fff'
             }}>
-                {/* Background Image Sequence */}
-                {images.length > 0 && (
-                    <img
-                        src={images[currentFrame]?.src}
-                        alt="Sequence frame"
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            objectPosition: 'center top',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            opacity: isLoaded ? 1 : 0,
-                            transition: 'opacity 0.2s ease-in-out'
-                        }}
-                    />
-                )}
+                {/* High-Performance Canvas Sequence */}
+                <canvas
+                    ref={canvasRef}
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        opacity: isLoaded ? 1 : 0,
+                        transition: 'opacity 0.2s ease-in-out'
+                    }}
+                />
 
                 {/* Overlay for Readability */}
                 <div style={{
