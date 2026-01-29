@@ -43,7 +43,7 @@ const Services = () => {
                             key={index}
                             className="glass"
                             style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
-                            whileHover={{ y: -10, backgroundColor: '#ffa800', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
+                            whileHover={{ y: -8, backgroundColor: 'rgba(255, 255, 255, 0.4)', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', borderColor: 'rgba(255, 255, 255, 0.6)' }}
                             transition={{ type: "spring", stiffness: 300 }}
                         >
                             <div style={{ color: 'var(--accent-color)' }}>

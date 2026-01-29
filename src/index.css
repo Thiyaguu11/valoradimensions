@@ -77,9 +77,10 @@ ul {
 }
 
 .glass:hover {
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 12px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 button {

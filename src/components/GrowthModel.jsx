@@ -121,7 +121,7 @@ const GrowthModel = () => {
                             >
                                 <motion.div
                                     className="glass"
-                                    whileHover={{ backgroundColor: '#ffa800' }}
+                                    whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor: 'rgba(255, 255, 255, 0.6)' }}
                                     style={{ padding: '0.8rem 1.4rem', borderRadius: '50px', fontSize: '1rem', fontWeight: 600, boxShadow: '0 4px 12px rgba(0,0,0,0.08)', whiteSpace: 'nowrap', cursor: 'default' }}
                                 >
                                     Performance
@@ -136,7 +136,7 @@ const GrowthModel = () => {
                             >
                                 <motion.div
                                     className="glass"
-                                    whileHover={{ backgroundColor: '#ffa800' }}
+                                    whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor: 'rgba(255, 255, 255, 0.6)' }}
                                     style={{ padding: '0.8rem 1.4rem', borderRadius: '50px', fontSize: '1rem', fontWeight: 600, boxShadow: '0 4px 12px rgba(0,0,0,0.08)', whiteSpace: 'nowrap', cursor: 'default' }}
                                 >
                                     Scale
@@ -148,7 +148,7 @@ const GrowthModel = () => {
                     {/* Central Hub (Branding Logo) */}
                     <motion.div
                         className="glass"
-                        whileHover={{ backgroundColor: '#ffa800', scale: 1.05 }}
+                        whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', scale: 1.05, boxShadow: '0 0 30px rgba(255, 255, 255, 0.2)' }}
                         style={{
                             width: '90px',
                             height: '90px',
@@ -178,7 +178,7 @@ const GrowthModel = () => {
                             key={index}
                             className="glass"
                             style={{ padding: '2rem' }}
-                            whileHover={{ y: -5, scale: 1.02, backgroundColor: '#ffa800', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}
+                            whileHover={{ y: -8, backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor: 'rgba(255, 255, 255, 0.6)', boxShadow: '0 15px 35px rgba(0,0,0,0.1)' }}
                             transition={{ type: "spring", stiffness: 300 }}
                         >
                             <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>{stage.title}</h4>
