@@ -86,14 +86,14 @@ const Hero = () => {
     }, [frameIndex])
 
     // Content animations based on scroll
-    const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [1, 1, 0, 0])
+    const textOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [1, 1, 0, 0])
     const textY = useTransform(scrollYProgress, [0, 1], [0, -50])
 
     return (
         <section
             ref={sectionRef}
             id="home"
-            style={{ height: '200vh', position: 'relative' }}
+            style={{ height: '150vh', position: 'relative' }}
         >
             {/* Sticky Container for the Image Sequence */}
             <div style={{
