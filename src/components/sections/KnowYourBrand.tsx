@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { BlurFade } from "@/components/ui/BlurFade";
 import { Check, Info, ArrowRight, Sparkles, Zap, ShieldCheck, Lock } from "lucide-react";
+import confetti from "canvas-confetti";
 
 const questions = [
     {
@@ -116,6 +117,39 @@ export const KnowYourBrand = () => {
 
         setRecommendedPlanKey(plan);
         setIsSubmitted(true);
+
+        // Celebrating the submission with "Graffiti" (Confetti)
+        if (plan) {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+            const interval: any = setInterval(function () {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+
+                // Fireworks effect
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#2563eb', '#3b82f6', '#60a5fa', '#ffffff']
+                });
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: ['#2563eb', '#3b82f6', '#60a5fa', '#ffffff']
+                });
+            }, 250);
+        }
     };
 
     const activePlan = recommendedPlanKey ? plans[recommendedPlanKey as keyof typeof plans] : null;
@@ -160,8 +194,8 @@ export const KnowYourBrand = () => {
                                                 disabled={isSubmitted}
                                                 onClick={() => handleAnswer(q.id, option)}
                                                 className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border ${answers[q.id] === option
-                                                        ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                                                        : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white disabled:opacity-50"
+                                                    ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                                    : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white disabled:opacity-50"
                                                     }`}
                                             >
                                                 {option}
@@ -177,8 +211,8 @@ export const KnowYourBrand = () => {
                                         onClick={handleSubmit}
                                         disabled={!isCompleted}
                                         className={`px-12 py-4 rounded-2xl font-black transition-all flex items-center gap-3 ${isCompleted
-                                                ? "bg-white text-black hover:bg-blue-50 hover:scale-105 shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
-                                                : "bg-white/5 text-white/20 border border-white/5 cursor-not-allowed"
+                                            ? "bg-white text-black hover:bg-blue-50 hover:scale-105 shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
+                                            : "bg-white/5 text-white/20 border border-white/5 cursor-not-allowed"
                                             }`}
                                     >
                                         Submit Requirements <ArrowRight className="w-5 h-5" />
