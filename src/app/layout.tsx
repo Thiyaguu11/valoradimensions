@@ -29,7 +29,7 @@ export default function RootLayout({
           {/* Live Breathing Gradient Background */}
           <div className="fixed inset-0 z-[-1] pointer-events-none live-gradient" />
           {/* Subtle Overlay to ensure text readability against light phases */}
-          <div className="fixed inset-0 z-[-1] pointer-events-none bg-black/20" />
+          <div className="fixed inset-0 z-[-1] pointer-events-none bg-black/50" />
 
           {children}
         </main>
