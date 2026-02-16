@@ -36,7 +36,7 @@ export const Hero = () => {
                         className="space-y-8"
                     >
                         <motion.div variants={itemVariants} className="flex justify-center">
-                            <span className="px-3 py-1 rounded-full border border-white/10 bg-white/10 text-xs text-violet-200 font-medium tracking-wide uppercase backdrop-blur-md">
+                            <span className="px-3 py-1 rounded-full border border-white/10 bg-white/10 text-xs text-blue-200 font-medium tracking-wide uppercase backdrop-blur-md">
                                 Welcome to the future of branding
                             </span>
                         </motion.div>
@@ -46,7 +46,7 @@ export const Hero = () => {
                             className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] drop-shadow-lg"
                         >
                             Valora Dimensions is a <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-indigo-300 drop-shadow-sm">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300 drop-shadow-sm">
                                 growth-driven
                             </span>{" "}
                             marketing partner.
@@ -54,7 +54,7 @@ export const Hero = () => {
 
                         <motion.p
                             variants={itemVariants}
-                            className="text-lg md:text-xl text-violet-100 max-w-2xl mx-auto leading-relaxed drop-shadow-md"
+                            className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed drop-shadow-md"
                         >
                             Helping brands scale through strategy, content, and performance. We build digital experiences that convert.
                         </motion.p>
@@ -67,10 +67,10 @@ export const Hero = () => {
                                 <span className="relative z-10 flex items-center gap-2">
                                     Get Started <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </span>
-                                <div className="absolute inset-0 bg-violet-500 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100 duration-300 ease-out z-0 opacity-10" />
+                                <div className="absolute inset-0 bg-blue-500 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100 duration-300 ease-out z-0 opacity-10" />
                             </button>
                             <button className="px-8 py-4 bg-white/10 text-white font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2 backdrop-blur-md shadow-md hover:shadow-lg">
-                                <PlayCircle className="w-4 h-4 text-violet-300" />
+                                <PlayCircle className="w-4 h-4 text-blue-300" />
                                 Watch Showreel
                             </button>
                         </motion.div>
@@ -84,12 +84,12 @@ export const Hero = () => {
                             <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
                                 <span className="text-green-400 text-xs">▲</span>
                             </div>
-                            <span className="text-violet-100 text-sm font-medium">Growth Metrics</span>
+                            <span className="text-blue-100 text-sm font-medium">Growth Metrics</span>
                         </div>
                         <div className="text-2xl font-bold text-white flex items-center gap-1">
                             +<NumberTicker value={145} className="text-white" />%
                         </div>
-                        <div className="text-xs text-violet-300">Client Revenue YoY</div>
+                        <div className="text-xs text-blue-300">Client Revenue YoY</div>
                     </GlassCard>
                 </div>
             </div>

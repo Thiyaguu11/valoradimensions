@@ -38,9 +38,9 @@ export const Contact = () => {
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            Let's create something <span className="text-violet-500">extraordinary</span>.
+                            Let's create something <span className="text-blue-500">extraordinary</span>.
                         </h2>
-                        <p className="text-violet-200 mb-12 text-lg">
+                        <p className="text-blue-200 mb-12 text-lg">
                             Ready to elevate your brand? Tell us about your project and we'll craft the perfect solution.
                         </p>
 
@@ -54,15 +54,15 @@ export const Contact = () => {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-violet-200">Email Address</label>
+                                <label className="text-sm font-medium text-blue-200">Email Address</label>
                                 <input
                                     type="email"
                                     placeholder="john@example.com"
-                                    className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/50 transition-all placeholder:text-violet-300/40"
+                                    className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-blue-300/40"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-violet-200">Project Details</label>
+                                <label className="text-sm font-medium text-blue-200">Project Details</label>
                                 <textarea
                                     placeholder="Tell us about your goals..."
                                     rows={4}
@@ -71,7 +71,7 @@ export const Contact = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-violet-600 hover:bg-violet-500 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)]"
+                                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]"
                             >
                                 Send Message <ChevronRight className="w-4 h-4" />
                             </button>
@@ -100,10 +100,10 @@ export const Contact = () => {
                                             : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20"
                                             }`}
                                     >
-                                        <span className={`font-medium ${selectedScopes.includes(scope) ? "text-white" : "text-violet-300/80"}`}>
+                                        <span className={`font-medium ${selectedScopes.includes(scope) ? "text-white" : "text-blue-300/80"}`}>
                                             {scope}
                                         </span>
-                                        <div className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors ${selectedScopes.includes(scope) ? "bg-violet-500 border-violet-500" : "border-violet-500/30"
+                                        <div className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors ${selectedScopes.includes(scope) ? "bg-blue-500 border-blue-500" : "border-blue-500/30"
                                             }`}>
                                             {selectedScopes.includes(scope) && <Check className="w-3 h-3 text-white" />}
                                         </div>
@@ -113,7 +113,7 @@ export const Contact = () => {
 
                             <div className="mt-8 pt-6 border-t border-white/10 w-full">
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-violet-200">Estimated Timeline</span>
+                                    <span className="text-blue-200">Estimated Timeline</span>
                                     <span className="text-white font-medium">4-8 Weeks</span>
                                 </div>
                             </div>

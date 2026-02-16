@@ -16,7 +16,7 @@ export const About = () => {
                     transition={{ duration: 0.6 }}
                     className="mb-16 text-center"
                 >
-                    <span className="text-violet-500 font-semibold tracking-wider text-sm uppercase">
+                    <span className="text-blue-500 font-semibold tracking-wider text-sm uppercase">
                         Our Philosophy
                     </span>
                     <h2 className="text-3xl md:text-5xl font-bold mt-4 tracking-tight">
@@ -33,25 +33,25 @@ export const About = () => {
                         <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
                             <NumberTicker value={100} className="text-white" />+
                         </div>
-                        <div className="text-sm text-violet-300/60 uppercase tracking-widest">Clients Worldwide</div>
+                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Clients Worldwide</div>
                     </div>
                     <div className="text-center">
                         <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
                             <NumberTicker value={500} className="text-white" />+
                         </div>
-                        <div className="text-sm text-violet-300/60 uppercase tracking-widest">Projects Completed</div>
+                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Projects Completed</div>
                     </div>
                     <div className="text-center">
                         <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
                             <NumberTicker value={98} className="text-white" />%
                         </div>
-                        <div className="text-sm text-violet-300/60 uppercase tracking-widest">Retention Rate</div>
+                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Retention Rate</div>
                     </div>
                     <div className="text-center">
                         <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
                             <NumberTicker value={10} className="text-white" />x
                         </div>
-                        <div className="text-sm text-violet-300/60 uppercase tracking-widest">Average ROI</div>
+                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Average ROI</div>
                     </div>
                 </div>
 

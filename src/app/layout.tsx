@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${outfit.variable} antialiased text-white relative selection:bg-violet-500/30 selection:text-violet-200`}
+        className={`${outfit.variable} antialiased text-white relative selection:bg-blue-500/30 selection:text-blue-200`}
       >
         <Navbar />
         <main className="min-h-screen relative overflow-hidden">

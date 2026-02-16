@@ -59,12 +59,12 @@ export function Navbar() {
                         <Link
                             key={item.href}
                             href={item.href}
-                            className="text-sm font-medium text-neutral-300 hover:text-violet-400 transition-colors"
+                            className="text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors"
                         >
                             {item.name}
                         </Link>
                     ))}
-                    <button className="bg-white/10 hover:bg-violet-600 hover:text-white px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-white/10">
+                    <button className="bg-white/10 hover:bg-blue-600 hover:text-white px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-white/10">
                         Let's Talk
                     </button>
                 </div>
@@ -91,7 +91,7 @@ export function Navbar() {
                                     key={item.href}
                                     href={item.href}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="text-2xl font-light text-white hover:text-violet-500 transition-colors"
+                                    className="text-2xl font-light text-white hover:text-blue-500 transition-colors"
                                 >
                                     {item.name}
                                 </Link>

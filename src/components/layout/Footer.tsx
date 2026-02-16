@@ -7,7 +7,7 @@ export function Footer() {
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
                 <div className="col-span-1 md:col-span-2">
                     <Link href="/" className="text-2xl font-bold tracking-tighter text-white">
-                        VALORA<span className="text-violet-500">.</span>
+                        VALORA<span className="text-blue-500">.</span>
                     </Link>
                     <p className="mt-4 text-neutral-400 max-w-sm">
                         We build digital experiences that move brands forward. Strategy, Design, and Development for the modern web.
@@ -20,7 +20,7 @@ export function Footer() {
                         <li>
                             <a
                                 href="#"
-                                className="flex items-center text-neutral-400 hover:text-violet-400 transition-colors"
+                                className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
                             >
                                 <Instagram className="w-4 h-4 mr-2" /> Instagram
                             </a>
@@ -28,7 +28,7 @@ export function Footer() {
                         <li>
                             <a
                                 href="#"
-                                className="flex items-center text-neutral-400 hover:text-violet-400 transition-colors"
+                                className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
                             >
                                 <Mail className="w-4 h-4 mr-2" /> Email
                             </a>
@@ -36,7 +36,7 @@ export function Footer() {
                         <li>
                             <a
                                 href="#"
-                                className="flex items-center text-neutral-400 hover:text-violet-400 transition-colors"
+                                className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
                             >
                                 <Phone className="w-4 h-4 mr-2" /> WhatsApp
                             </a>

@@ -8,22 +8,22 @@ const services = [
     {
         title: "Marketing Strategy",
         description: "Comprehensive go-to-market plans tailored for rapid growth.",
-        icon: <Activity className="w-8 h-8 text-violet-500" />,
+        icon: <Activity className="w-8 h-8 text-blue-500" />,
     },
     {
         title: "Design & Identity",
         description: "Visual branding that resonates and builds instant credibility.",
-        icon: <PenTool className="w-8 h-8 text-violet-500" />,
+        icon: <PenTool className="w-8 h-8 text-blue-500" />,
     },
     {
         title: "Digital Systems",
         description: "Optimized web platforms and automation for seamless operations.",
-        icon: <Layers className="w-8 h-8 text-violet-500" />,
+        icon: <Layers className="w-8 h-8 text-blue-500" />,
     },
     {
         title: "Performance Ads",
         description: "High-ROI paid media campaigns across Meta, Google, and LinkedIn.",
-        icon: <Zap className="w-8 h-8 text-violet-500" />,
+        icon: <Zap className="w-8 h-8 text-blue-500" />,
     },
 ];
 
@@ -39,7 +39,7 @@ export const Services = () => {
                     className="text-center mb-16"
                 >
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Our Expertise</h2>
-                    <p className="text-violet-200 max-w-2xl mx-auto">
+                    <p className="text-blue-200 max-w-2xl mx-auto">
                         Providing end-to-end solutions for ambitious brands ready to break through the noise.
                     </p>
                 </motion.div>
@@ -57,10 +57,10 @@ export const Services = () => {
                             <div className="p-4 rounded-full bg-white/5 w-fit mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.05)] flex items-center justify-center">
                                 {service.icon}
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-violet-300 transition-colors">
+                            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
                                 {service.title}
                             </h3>
-                            <p className="text-violet-200/80 text-sm leading-relaxed">
+                            <p className="text-blue-200/80 text-sm leading-relaxed">
                                 {service.description}
                             </p>
                         </GlassCard>
