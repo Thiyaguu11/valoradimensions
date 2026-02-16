@@ -1,0 +1,223 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { GlassCard } from "@/components/ui/GlassCard";
+import { BlurFade } from "@/components/ui/BlurFade";
+import { Check, Info, ArrowRight, Sparkles, Zap, ShieldCheck } from "lucide-react";
+
+const questions = [
+    {
+        id: 1,
+        text: "Would you like us to manage your social media?",
+    },
+    {
+        id: 2,
+        text: "Are you posting consistently on your social media?",
+    },
+    {
+        id: 3,
+        text: "Do you want to increase your followers?",
+    },
+    {
+        id: 4,
+        text: "Do you want posters and reels to share with your clients on WhatsApp, Facebook, and Instagram?",
+    },
+    {
+        id: 5,
+        text: "Do you want leads for your business?",
+    },
+    {
+        id: 6,
+        text: "Do you want us to set Lead Funnel?",
+    },
+];
+
+const plans = {
+    A: {
+        name: "ORBIT DIMENSION",
+        price: "Rs 9,999/Month",
+        description: "Perfect for foundational social presence.",
+        icon: <ShieldCheck className="w-8 h-8 text-blue-400" />,
+        features: [
+            "6-8 Creatives",
+            "Strategy development",
+            "Graphic Designs & Video editing",
+            "Social media management",
+            "Monthly reporting",
+            "Feedback form",
+        ],
+    },
+    B: {
+        name: "SPECTRUM DIMENSION",
+        price: "Rs 15,000/Month",
+        description: "Advanced growth & lead generation.",
+        icon: <Zap className="w-8 h-8 text-blue-500" />,
+        features: [
+            "8-10 Creatives",
+            "Everything in Orbit Dimensions",
+            "Lead Generation (Ad Spent separately)",
+            "Keyword separation",
+            "Website Audit",
+            "Up to 13X Traffic Growth",
+        ],
+    },
+    C: {
+        name: "ELEVATE DIMENSION",
+        price: "Rs 28,999/Month",
+        description: "The ultimate marketing powerhouse.",
+        icon: <Sparkles className="w-8 h-8 text-cyan-400" />,
+        features: [
+            "12-15 Creatives",
+            "Everything in SPECTRUM DIMENSION",
+            "Personal Branding",
+            "Influencer Marketing",
+            "Blog & SEO content",
+            "Up to 2X-3X Traffic Growth",
+        ],
+    },
+};
+
+export const KnowYourBrand = () => {
+    const [answers, setAnswers] = useState<Record<number, string>>({});
+
+    const handleAnswer = (questionId: number, answer: string) => {
+        setAnswers((prev) => ({ ...prev, [questionId]: answer }));
+    };
+
+    const recommendedPlanKey = useMemo(() => {
+        const isYes = (id: number) => answers[id] === "Yes";
+
+        // 1. If All are selected then show plan c
+        if (questions.every((q) => isYes(q.id))) return "C";
+
+        // 2. If 1,2,3,4,5 is selected should plan b should be considered
+        if ([1, 2, 3, 4, 5].every(isYes)) return "B";
+
+        // 3. If 1,2,3 is selected then plan A should be considered
+        if ([1, 2, 3].every(isYes)) return "A";
+
+        // 4. If 1,2,3 is not selected, 4,5,6 is selected then plan b should be considered
+        if (![1, 2, 3].every(isYes) && [4, 5, 6].every(isYes)) return "B";
+
+        return null;
+    }, [answers]);
+
+    const activePlan = recommendedPlanKey ? plans[recommendedPlanKey as keyof typeof plans] : null;
+
+    return (
+        <section id="know-your-brand" className="py-24 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <BlurFade delay={0.1} inView>
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Know your brand!</h2>
+                        <p className="text-blue-200/60 max-w-2xl mx-auto">
+                            Answer a few questions to help us identify the perfect growth strategy for your business.
+                        </p>
+                    </div>
+                </BlurFade>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    {/* Questionnaire */}
+                    <BlurFade delay={0.2} inView>
+                        <GlassCard className="p-8 space-y-8 bg-white/5 border-white/10">
+                            {questions.map((q, index) => (
+                                <div key={q.id} className="space-y-4">
+                                    <div className="flex gap-4">
+                                        <span className="text-blue-500 font-bold">{q.id}.</span>
+                                        <p className="text-white font-medium">{q.text}</p>
+                                    </div>
+                                    <div className="flex gap-3 ml-8">
+                                        {["Yes", "No", "No idea"].map((option) => (
+                                            <button
+                                                key={option}
+                                                onClick={() => handleAnswer(q.id, option)}
+                                                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${answers[q.id] === option
+                                                        ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                                        : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white"
+                                                    }`}
+                                            >
+                                                {option}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </GlassCard>
+                    </BlurFade>
+
+                    {/* Recommendation Logic Display */}
+                    <div className="space-y-8">
+                        <AnimatePresence mode="wait">
+                            {activePlan ? (
+                                <motion.div
+                                    key={recommendedPlanKey}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="space-y-8"
+                                >
+                                    {/* Component 2: Plan Header */}
+                                    <GlassCard className="p-8 bg-blue-600/10 border-blue-500/30 relative overflow-hidden group">
+                                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                            {activePlan.icon}
+                                        </div>
+                                        <div className="flex flex-col md:flex-row items-center gap-8">
+                                            <div className="w-24 h-24 rounded-2xl bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shadow-inner">
+                                                {activePlan.icon}
+                                            </div>
+                                            <div className="text-center md:text-left">
+                                                <h4 className="text-blue-400 font-semibold tracking-widest text-sm uppercase mb-2">Congratulations!!!</h4>
+                                                <h3 className="text-3xl font-bold text-white mb-2">{activePlan.name}</h3>
+                                                <p className="text-blue-200/70">{activePlan.description}</p>
+                                            </div>
+                                        </div>
+                                    </GlassCard>
+
+                                    {/* Component 3: Plan Breakdown */}
+                                    <GlassCard className="p-10 bg-white/5 border-white/10">
+                                        <div className="flex justify-between items-center mb-10 border-b border-white/10 pb-6">
+                                            <h4 className="text-xl font-bold text-white">Plan Breakdown:</h4>
+                                            <div className="text-right">
+                                                <div className="text-blue-400 text-2xl font-bold">{activePlan.price}</div>
+                                                <div className="text-xs text-blue-200/40 uppercase tracking-tighter">Billed Monthly</div>
+                                            </div>
+                                        </div>
+
+                                        <ul className="space-y-4">
+                                            {activePlan.features.map((feature, i) => (
+                                                <li key={i} className="flex items-center gap-4 text-blue-100/80 group">
+                                                    <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/30 group-hover:bg-blue-500 transition-colors duration-300">
+                                                        <Check className="w-3.5 h-3.5 text-white" />
+                                                    </div>
+                                                    <span className="group-hover:text-white transition-colors">{feature}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <button className="w-full mt-10 bg-white text-black font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-50 transition-all group">
+                                            Select This Plan <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        </button>
+                                    </GlassCard>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="h-full flex flex-col items-center justify-center p-12 text-center border-2 border-dashed border-white/10 rounded-3xl"
+                                >
+                                    <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 animate-pulse">
+                                        <Info className="w-10 h-10 text-blue-500/40" />
+                                    </div>
+                                    <h3 className="text-xl font-medium text-blue-200/40">Select your requirements to see your customized plan</h3>
+                                    <p className="text-sm text-blue-200/20 mt-2 max-w-xs">Our algorithm will recommend the best fit for your brand's current needs.</p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
