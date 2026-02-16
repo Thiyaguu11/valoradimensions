@@ -24,12 +24,6 @@ const itemVariants: Variants = {
 export const Hero = () => {
     return (
         <section className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
-            {/* Background Ambience */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-600/20 rounded-full blur-[120px] opacity-40 animate-pulse" />
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] opacity-30" />
-            </div>
-
             <div className="container px-6 relative z-10 mx-auto max-w-7xl flex items-center justify-center">
                 <GlassCard
                     variant="hero"

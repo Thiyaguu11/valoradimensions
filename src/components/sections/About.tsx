@@ -8,7 +8,6 @@ import NumberTicker from "@/components/ui/NumberTicker";
 export const About = () => {
     return (
         <section id="about" className="py-32 relative text-white">
-            <div className="absolute inset-0 z-0 bg-black/40 backdrop-blur-sm pointer-events-none" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

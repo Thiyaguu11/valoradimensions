@@ -26,11 +26,11 @@ export default function RootLayout({
       >
         <Navbar />
         <main className="min-h-screen relative overflow-hidden">
-          {/* Global Mesh Gradient Background */}
-          <div className="fixed inset-0 z-[-1] pointer-events-none">
-            <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-violet-900/20 rounded-full blur-[120px]" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[120px]" />
-          </div>
+          {/* Live Breathing Gradient Background */}
+          <div className="fixed inset-0 z-[-1] pointer-events-none live-gradient" />
+          {/* Subtle Overlay to ensure text readability against light phases */}
+          <div className="fixed inset-0 z-[-1] pointer-events-none bg-black/20" />
+
           {children}
         </main>
         <Footer />

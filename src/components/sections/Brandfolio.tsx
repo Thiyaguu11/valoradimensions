@@ -33,8 +33,6 @@ export const Brandfolio = () => {
 
     return (
         <section id="brandfolio" className="py-32 relative overflow-hidden">
-            <div className="absolute inset-0 z-0 bg-black/50 backdrop-blur-sm pointer-events-none" />
-
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <motion.div
                     className="mb-16 text-center"
@@ -104,8 +102,8 @@ export const Brandfolio = () => {
                         <div
                             key={index}
                             className={`h-1.5 rounded-full transition-all duration-500 ${activeIndex === index
-                                    ? "w-8 bg-violet-500"
-                                    : "w-2 bg-white/20"
+                                ? "w-8 bg-violet-500"
+                                : "w-2 bg-white/20"
                                 }`}
                         />
                     ))}

@@ -27,8 +27,6 @@ export const Contact = () => {
 
     return (
         <section id="contact" className="py-24 relative overflow-hidden">
-            <div className="absolute right-0 bottom-0 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none" />
-
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 
@@ -89,8 +87,6 @@ export const Contact = () => {
                         className="lg:pl-10"
                     >
                         <GlassCard className="h-full bg-white/5 backdrop-blur-2xl border-white/10 relative overflow-hidden p-8 flex flex-col items-center text-center">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/20 rounded-full blur-[50px] -mr-16 -mt-16" />
-
                             <h3 className="text-xl font-bold text-white mb-6">Project Scope</h3>
                             <p className="text-sm text-violet-200 mb-6">Select the services you're interested in:</p>
 
