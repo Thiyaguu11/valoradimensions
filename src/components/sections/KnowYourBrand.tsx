@@ -203,8 +203,8 @@ export const KnowYourBrand = () => {
                                                 disabled={isSubmitted}
                                                 onClick={() => handleAnswer(q.id, option)}
                                                 className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border ${answers[q.id] === option
-                                                        ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                                                        : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white disabled:opacity-50"
+                                                    ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                                    : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white disabled:opacity-50"
                                                     }`}
                                             >
                                                 {option}
@@ -220,8 +220,8 @@ export const KnowYourBrand = () => {
                                         onClick={handleSubmit}
                                         disabled={!isCompleted}
                                         className={`px-12 py-4 rounded-2xl font-black transition-all flex items-center gap-3 ${isCompleted
-                                                ? "bg-white text-black hover:bg-blue-50 hover:scale-105 shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
-                                                : "bg-white/5 text-white/20 border border-white/5 cursor-not-allowed"
+                                            ? "bg-white text-black hover:bg-blue-50 hover:scale-105 shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
+                                            : "bg-white/5 text-white/20 border border-white/5 cursor-not-allowed"
                                             }`}
                                     >
                                         Submit Requirements <ArrowRight className="w-5 h-5" />
@@ -239,70 +239,65 @@ export const KnowYourBrand = () => {
                                 initial={{ opacity: 0, x: 50 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                                className="space-y-8 w-full h-full lg:sticky lg:top-24"
+                                className="w-full h-full min-h-[600px]"
                             >
                                 {activePlan ? (
-                                    <>
-                                        {/* Component 2: Plan Header */}
-                                        <GlassCard className="p-8 lg:p-10 bg-blue-600/10 border-blue-500/30 relative overflow-hidden group">
-                                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                                    <GlassCard className="p-8 lg:p-10 bg-white/5 border-white/10 h-full flex flex-col shadow-2xl relative overflow-hidden">
+                                        {/* Subtle background glow */}
+                                        <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none" />
+
+                                        {/* Unified Header: Congratulations + Plan Name */}
+                                        <div className="flex items-center gap-6 pb-8 border-b border-white/5 mb-8">
+                                            <div className="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] shrink-0">
                                                 {activePlan.icon}
                                             </div>
-                                            <div className="flex flex-col sm:flex-row items-center gap-8">
-                                                <div className="w-24 h-24 rounded-3xl bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shadow-[inset_0_0_20px_rgba(59,130,246,0.2)]">
-                                                    {activePlan.icon}
-                                                </div>
-                                                <div className="text-center sm:text-left">
-                                                    <h4 className="text-blue-500 font-bold tracking-[0.2em] text-sm uppercase mb-3 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">Congratulations!!!</h4>
-                                                    <p className="text-white text-base xl:text-lg font-medium mb-3 opacity-90">
-                                                        Based on your requirements, we recommend
-                                                    </p>
-                                                    <h3 className="text-3xl xl:text-4xl font-black text-white tracking-tight leading-none">{activePlan.name}</h3>
-                                                </div>
+                                            <div>
+                                                <h4 className="text-blue-500 font-bold tracking-[0.2em] text-[10px] uppercase mb-1">Congratulations!!!</h4>
+                                                <h3 className="text-2xl xl:text-3xl font-black text-white leading-tight">{activePlan.name}</h3>
                                             </div>
-                                        </GlassCard>
+                                        </div>
 
-                                        {/* Component 3: Plan Breakdown */}
-                                        <GlassCard className="p-8 lg:p-10 bg-white/5 border-white/10 relative h-full">
-                                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b border-white/10 pb-8 gap-6">
-                                                <div>
-                                                    <h4 className="text-xl font-bold text-white mb-2 underline decoration-blue-500/50 underline-offset-8">Plan Breakdown:</h4>
-                                                    <p className="text-blue-200/40 text-[10px] sm:text-xs mt-3 uppercase tracking-widest font-bold">Services included in your dimension</p>
-                                                </div>
-                                                <div className="text-left p-6 rounded-2xl bg-blue-600/10 border border-blue-500/30 shadow-[0_10px_30px_rgba(0,0,0,0.3)] w-full sm:w-auto">
-                                                    <div className="text-blue-400 text-2xl xl:text-3xl font-black">{activePlan.price}</div>
-                                                    <div className="text-[10px] text-blue-300/30 uppercase tracking-[0.3em] mt-1 font-bold text-right">Full Value</div>
-                                                </div>
+                                        {/* Plan Price & Breakdown Label */}
+                                        <div className="flex justify-between items-end mb-8">
+                                            <div>
+                                                <h4 className="text-lg font-bold text-white mb-1">Plan Breakdown</h4>
+                                                <p className="text-blue-200/40 text-[10px] uppercase tracking-widest font-bold">Services included in your dimension</p>
                                             </div>
+                                            <div className="text-right">
+                                                <div className="text-blue-400 text-3xl font-black leading-none">{activePlan.price}</div>
+                                                <div className="text-[10px] text-blue-300/30 uppercase tracking-[0.2em] mt-1 font-bold">Full Value</div>
+                                            </div>
+                                        </div>
 
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-5">
-                                                {activePlan.features.map((feature, i) => (
-                                                    <motion.li
-                                                        key={i}
-                                                        initial={{ opacity: 0, x: -15 }}
-                                                        animate={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: 0.4 + i * 0.05 }}
-                                                        className="flex items-center gap-4 text-blue-100/90 group list-none"
-                                                    >
-                                                        <div className="w-5 h-5 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:bg-blue-500 group-hover:border-blue-500 group-hover:shadow-[0_0_10px_rgba(59,130,246,0.6)] transition-all duration-300">
-                                                            <Check className="w-2.5 h-2.5 text-white" />
-                                                        </div>
-                                                        <span className="font-semibold text-sm group-hover:text-white transition-colors">{feature}</span>
-                                                    </motion.li>
-                                                ))}
-                                            </div>
+                                        {/* Features List - Growing to fill space */}
+                                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-6 gap-y-4 mb-10 flex-grow content-start">
+                                            {activePlan.features.map((feature, i) => (
+                                                <motion.li
+                                                    key={i}
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: 0.4 + i * 0.04 }}
+                                                    className="flex items-center gap-3 text-blue-100/90 group list-none"
+                                                >
+                                                    <div className="w-5 h-5 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:bg-blue-500 transition-all duration-300">
+                                                        <Check className="w-2.5 h-2.5 text-white" />
+                                                    </div>
+                                                    <span className="font-semibold text-xs xl:text-sm group-hover:text-white transition-colors">{feature}</span>
+                                                </motion.li>
+                                            ))}
+                                        </div>
 
-                                            <div className="mt-10 flex flex-col items-center">
-                                                <button className="w-full px-8 bg-blue-600 text-white font-black py-4 rounded-xl flex items-center justify-center gap-4 hover:bg-blue-500 hover:scale-[1.02] transition-all group shadow-[0_20px_40px_rgba(59,130,246,0.3)] active:scale-95">
-                                                    Activate My Dimension <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                                </button>
-                                                <div className="flex items-center gap-3 mt-6 opacity-40">
-                                                    <Info className="w-3 h-3 text-blue-400" />
-                                                    <p className="text-blue-200 text-[10px] tracking-[0.2em] uppercase font-black">Strategy Session Included</p>
-                                                </div>
+                                        {/* Action Button */}
+                                        <div className="mt-auto pt-8 border-t border-white/5 flex flex-col items-center">
+                                            <button className="w-full bg-blue-600 text-white font-black py-4 rounded-xl flex items-center justify-center gap-4 hover:bg-blue-500 hover:scale-[1.02] transition-all group shadow-[0_20px_40px_rgba(59,130,246,0.3)] active:scale-95">
+                                                Activate My Dimension <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                            </button>
+                                            <div className="flex items-center gap-3 mt-4 opacity-30">
+                                                <Info className="w-3 h-3 text-blue-400" />
+                                                <p className="text-blue-200 text-[10px] tracking-[0.2em] uppercase font-black">Strategy Session Included • No Contracts</p>
                                             </div>
-                                        </GlassCard>
-                                    </>
+                                        </div>
+                                    </GlassCard>
                                 ) : (
                                     <GlassCard className="p-16 lg:p-20 bg-blue-600/5 border-dashed border-blue-500/30 flex flex-col items-center text-center h-full justify-center">
                                         <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-8">
