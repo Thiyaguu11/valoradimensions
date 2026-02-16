@@ -46,7 +46,7 @@ export const Contact = () => {
 
                         <form className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-violet-200">Your Name</label>
+                                <label className="text-sm font-medium text-blue-200">Your Name</label>
                                 <input
                                     type="text"
                                     placeholder="John Doe"
