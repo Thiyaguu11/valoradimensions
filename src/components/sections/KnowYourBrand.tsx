@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { BlurFade } from "@/components/ui/BlurFade";
@@ -159,8 +160,10 @@ export const KnowYourBrand = () => {
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <BlurFade delay={0.1} inView>
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Know your brand!</h2>
-                        <p className="text-blue-200/60 max-w-2xl mx-auto text-lg">
+                        <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter italic uppercase mb-6">
+                            Know your brand!
+                        </h2>
+                        <p className="text-blue-200/60 max-w-2xl mx-auto text-lg font-medium">
                             Finalize your strategy by answering our dimension diagnostic tool.
                         </p>
                     </div>
@@ -302,9 +305,12 @@ export const KnowYourBrand = () => {
                                                 </div>
 
                                                 <div className="mt-auto">
-                                                    <button className="w-full bg-blue-600 text-white font-black py-4 rounded-xl flex items-center justify-center gap-4 hover:bg-blue-500 hover:scale-[1.02] transition-all group shadow-[0_20px_40px_rgba(59,130,246,0.3)] active:scale-95">
+                                                    <Link
+                                                        href="#contact"
+                                                        className="w-full bg-blue-600 text-white font-black py-4 rounded-xl flex items-center justify-center gap-4 hover:bg-blue-500 hover:scale-[1.02] transition-all group shadow-[0_20px_40px_rgba(59,130,246,0.3)] active:scale-95 text-center"
+                                                    >
                                                         Activate My Dimension <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                                    </button>
+                                                    </Link>
                                                     <div className="flex items-center justify-center gap-3 mt-4 opacity-30">
                                                         <Info className="w-3 h-3 text-blue-400" />
                                                         <p className="text-blue-200 text-[9px] tracking-[0.2em] uppercase font-black">Strategy Session Included • No Contracts</p>

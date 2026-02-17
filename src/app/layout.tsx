@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
-const outfit = Outfit({
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-sans",
 });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${outfit.variable} antialiased text-white relative selection:bg-blue-500/30 selection:text-blue-200`}
+        className={`${poppins.variable} antialiased text-white relative selection:bg-blue-500/30 selection:text-blue-200 font-sans`}
       >
         <Navbar />
         <main className="min-h-screen relative overflow-hidden">

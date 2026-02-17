@@ -4,7 +4,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { motion } from "framer-motion";
 import NumberTicker from "@/components/ui/NumberTicker";
 import { BlurFade } from "@/components/ui/BlurFade";
-import { ShieldCheck, Target, Rocket, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Target, Rocket } from "lucide-react";
 import Image from "next/image";
 
 export const About = () => {
@@ -43,10 +43,10 @@ export const About = () => {
                     {/* Col 2: Stacked Vision/Mission (3/12) */}
                     <div className="lg:col-span-3 flex flex-col gap-6">
                         <BlurFade delay={0.3} inView className="flex-1">
-                            <GlassCard className="p-8 h-full bg-blue-600/5 border-blue-500/10 group/vision relative overflow-hidden flex flex-col justify-center">
-                                <Target className="w-12 h-12 text-blue-500/10 absolute -bottom-2 -right-2" />
-                                <h5 className="text-blue-400 font-black uppercase tracking-widest text-xs mb-4 flex items-center gap-2 italic">
-                                    <Target className="w-4 h-4" /> Vision
+                            <GlassCard className="p-8 h-full bg-blue-600/5 border-blue-500/10 group/vision relative overflow-hidden flex flex-col justify-center items-center text-center">
+                                <Target className="w-16 h-16 text-blue-500/10 absolute -bottom-2 -right-2" />
+                                <h5 className="text-blue-400 font-black uppercase tracking-widest text-2xl mb-6 flex items-center gap-3 italic">
+                                    <Target className="w-6 h-6" /> Vision
                                 </h5>
                                 <p className="text-lg text-white font-bold leading-tight">
                                     Building brands that scale with clarity and confidence.
@@ -54,10 +54,10 @@ export const About = () => {
                             </GlassCard>
                         </BlurFade>
                         <BlurFade delay={0.4} inView className="flex-1">
-                            <GlassCard className="p-8 h-full bg-white/5 border-white/10 group/mission relative overflow-hidden flex flex-col justify-center">
-                                <Rocket className="w-12 h-12 text-white/5 absolute -bottom-2 -right-2" />
-                                <h5 className="text-blue-200/40 font-black uppercase tracking-widest text-xs mb-4 flex items-center gap-2 italic">
-                                    <Rocket className="w-4 h-4" /> Mission
+                            <GlassCard className="p-8 h-full bg-white/5 border-white/10 group/mission relative overflow-hidden flex flex-col justify-center items-center text-center">
+                                <Rocket className="w-16 h-16 text-white/5 absolute -bottom-2 -right-2" />
+                                <h5 className="text-blue-200/40 font-black uppercase tracking-widest text-2xl mb-6 flex items-center gap-3 italic">
+                                    <Rocket className="w-6 h-6" /> Mission
                                 </h5>
                                 <p className="text-lg text-white font-bold leading-tight">
                                     Designing strategy-led growth systems that deliver predictable, measurable outcomes.
@@ -66,12 +66,19 @@ export const About = () => {
                         </BlurFade>
                     </div>
 
-                    {/* Col 3: Logo Card (3/12) */}
+                    {/* Col 3: Video Card (3/12) */}
                     <BlurFade delay={0.5} inView className="lg:col-span-3">
-                        <GlassCard className="h-full min-h-[300px] flex items-center justify-center bg-white/5 border-white/10 overflow-hidden relative group">
+                        <GlassCard className="h-full min-h-[400px] flex items-center justify-center bg-white/5 border-white/10 overflow-hidden relative group p-4">
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]" />
-                            <div className="relative z-10">
-                                <img src="/valora.jpg" alt="Logo" className="w-[140px] rounded-2xl opacity-80 group-hover:opacity-100 transition-all duration-500 shadow-2xl" />
+                            <div className="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-2xl">
+                                <video
+                                    src="/Vi1.mp4"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                />
                             </div>
                         </GlassCard>
                     </BlurFade>
@@ -83,16 +90,16 @@ export const About = () => {
                         {/* Top: Light Theme Section (Subtle White/Grey) */}
                         <div className="bg-[#f5f5f7] p-8 md:p-12 relative overflow-hidden border-b border-black/5">
                             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:24px_24px]" />
-                            <div className="relative z-10 space-y-4 max-w-4xl">
+                            <div className="relative z-10 space-y-4">
                                 <h4 className="text-lg md:text-xl font-bold text-black/40 tracking-tight">
                                     Valora was born from a simple realization!
                                 </h4>
                                 <div className="space-y-2">
-                                    <p className="text-3xl md:text-5xl font-black text-black leading-[1.1] tracking-tighter">
-                                        Great businesses don’t fail because of weak products.
+                                    <p className="text-2xl md:text-4xl font-black text-black leading-[1.1] tracking-tighter">
+                                        Great businesses don’t <span className="text-red-600">fail</span> because of weak products.
                                     </p>
-                                    <p className="text-3xl md:text-5xl font-black text-black leading-[1.1] tracking-tighter">
-                                        They struggle because growth lacks structure.
+                                    <p className="text-2xl md:text-4xl font-black text-black leading-[1.1] tracking-tighter">
+                                        They struggle because growth <span className="text-red-600">lacks</span> structure.
                                     </p>
                                 </div>
                             </div>
@@ -142,15 +149,15 @@ export const About = () => {
                 </BlurFade>
 
                 {/* Row 3: Focus Areas (3 Columns) */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                     {[
                         { title: "Brand thinking", desc: "Positioning, messaging, storytelling" },
                         { title: "Performance marketing", desc: "Campaigns, funnels, lead generation" },
                         { title: "Growth systems", desc: "Repeatable processes, data-backed decisions" }
                     ].map((item, idx) => (
                         <BlurFade key={idx} delay={0.7 + idx * 0.1} inView>
-                            <GlassCard className="p-8 bg-white/5 border-white/10 hover:border-blue-500/30 transition-all duration-500 group h-full">
-                                <span className="text-blue-400 font-black text-xl block mb-2 uppercase italic tracking-tighter group-hover:text-blue-300 transition-colors">{item.title}</span>
+                            <GlassCard className="p-8 bg-white/5 border-white/10 hover:border-blue-500/30 transition-all duration-500 group h-full flex flex-col items-center text-center">
+                                <span className="text-blue-400 font-black text-xl block mb-2 uppercase tracking-tighter group-hover:text-blue-300 transition-colors">{item.title}</span>
                                 <span className="text-blue-100/40 text-sm leading-relaxed font-bold block">{item.desc}</span>
                             </GlassCard>
                         </BlurFade>
@@ -163,10 +170,10 @@ export const About = () => {
                         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[150px] -translate-y-1/2 translate-x-1/2 rounded-full" />
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
                             {[
-                                { label: "Clients Worldwide", value: 100, suffix: "+" },
-                                { label: "Projects Completed", value: 500, suffix: "+" },
-                                { label: "Retention Rate", value: 98, suffix: "%" },
-                                { label: "Average ROI", value: 10, suffix: "x" }
+                                { label: "Clients Worldwide", value: 10, suffix: " +" },
+                                { label: "Projects Completed", value: 500, suffix: " +" },
+                                { label: "Leads Generated", value: 6000, suffix: " +" },
+                                { label: "Average ROI", value: 3, suffix: "X" }
                             ].map((stat, i) => (
                                 <div key={i} className="text-center group/stat">
                                     <div className="text-4xl md:text-6xl font-black text-white mb-2 group-hover/stat:text-blue-400 transition-colors drop-shadow-[0_0_20px_rgba(59,130,246,0.3)]">

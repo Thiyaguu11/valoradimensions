@@ -9,8 +9,9 @@ import Image from "next/image";
 
 const navItems = [
     { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
+    { name: "Services", href: "#know-your-brand" },
     { name: "Brandfolio", href: "#brandfolio" },
+    { name: "Our Clients", href: "#testimonials" },
     { name: "Contact", href: "#contact" },
 ];
 
@@ -36,46 +37,54 @@ export function Navbar() {
             )}
         >
             <div className="w-full px-8 flex items-center justify-between">
-                <Link
-                    href="/"
-                    className="z-50 flex flex-col items-center gap-1"
-                >
-                    <Image
-                        src="/logo-new.jpg"
-                        alt="Valora Logo"
-                        width={44}
-                        height={44}
-                        className="h-11 w-11 rounded-full object-cover border border-white/10"
-                        priority
-                    />
-                    <span className="text-[10px] font-bold tracking-wider text-white uppercase">
-                        Valora Dimensions
-                    </span>
-                </Link>
-
-                {/* Desktop Nav */}
-                <div className="hidden md:flex items-center space-x-8">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className="text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors"
-                        >
-                            {item.name}
-                        </Link>
-                    ))}
-                    <button className="bg-white/10 hover:bg-blue-600 hover:text-white px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-white/10">
-                        Let's Talk
-                    </button>
+                {/* Left: Logo & Name */}
+                <div className="flex-1 flex justify-start">
+                    <Link
+                        href="/"
+                        className="z-50 flex items-center gap-3 group"
+                    >
+                        <Image
+                            src="/updatedvalora.png"
+                            alt="Valora Logo"
+                            width={150}
+                            height={44}
+                            className="h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                            priority
+                        />
+                    </Link>
                 </div>
 
-                {/* Mobile Toggle */}
-                <button
-                    className="md:hidden z-50 text-white"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                >
-                    {mobileMenuOpen ? <X /> : <Menu />}
-                </button>
+                {/* Center: Nav Links */}
+                <div className="hidden md:flex flex-1 justify-center">
+                    <div className="flex items-center space-x-8">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className="text-[15.5px] font-medium text-neutral-300 hover:text-blue-400 transition-colors"
+                            >
+                                {item.name}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="flex-1 flex justify-end items-center gap-6">
+                    <Link
+                        href="#contact"
+                        className="hidden md:block bg-white/10 hover:bg-blue-600 hover:text-white px-5 py-2 rounded-full text-[15.5px] font-medium transition-all duration-300 border border-white/10"
+                    >
+                        Let's Talk
+                    </Link>
+
+                    {/* Mobile Toggle */}
+                    <button
+                        className="md:hidden z-50 text-white"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        {mobileMenuOpen ? <X /> : <Menu />}
+                    </button>
+                </div>
 
                 {/* Mobile Menu */}
                 <AnimatePresence>

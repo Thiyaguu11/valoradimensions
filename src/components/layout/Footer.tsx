@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Instagram, Mail, Phone } from "lucide-react";
 import { BlurFade } from "@/components/ui/BlurFade";
@@ -8,8 +9,14 @@ export function Footer() {
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
                 <BlurFade delay={0.1} inView className="col-span-1 md:col-span-2">
                     <div>
-                        <Link href="/" className="text-2xl font-bold tracking-tighter text-white">
-                            VALORA<span className="text-blue-500">.</span>
+                        <Link href="/" className="z-50 flex items-center gap-3 group">
+                            <Image
+                                src="/updatedvalora.png"
+                                alt="Valora Logo"
+                                width={150}
+                                height={44}
+                                className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+                            />
                         </Link>
                         <p className="mt-4 text-neutral-400 max-w-sm">
                             We build digital experiences that move brands forward. Strategy, Design, and Development for the modern web.
@@ -23,7 +30,9 @@ export function Footer() {
                         <ul className="space-y-4">
                             <li>
                                 <a
-                                    href="#"
+                                    href="https://www.instagram.com/valoradimensions/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
                                 >
                                     <Instagram className="w-4 h-4 mr-2" /> Instagram
@@ -31,7 +40,7 @@ export function Footer() {
                             </li>
                             <li>
                                 <a
-                                    href="#"
+                                    href="mailto:valoradimensions@gmail.com"
                                     className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
                                 >
                                     <Mail className="w-4 h-4 mr-2" /> Email
@@ -39,7 +48,9 @@ export function Footer() {
                             </li>
                             <li>
                                 <a
-                                    href="#"
+                                    href="https://wa.me/919500015061"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
                                 >
                                     <Phone className="w-4 h-4 mr-2" /> WhatsApp

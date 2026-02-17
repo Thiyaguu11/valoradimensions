@@ -29,6 +29,17 @@ export const Contact = () => {
     return (
         <section id="contact" className="py-24 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <BlurFade delay={0.1} inView>
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter italic uppercase mb-6">
+                            Contact Us
+                        </h2>
+                        <p className="text-blue-200/60 max-w-2xl mx-auto text-lg font-medium">
+                            Let's discuss how we can scale your brand together.
+                        </p>
+                    </div>
+                </BlurFade>
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     {/* Form Side */}
                     <BlurFade delay={0.1} inView>
