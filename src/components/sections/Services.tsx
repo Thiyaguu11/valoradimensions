@@ -51,7 +51,7 @@ export const Services = () => {
                     {services.map((service, index) => (
                         <BlurFade key={index} delay={0.2 + index * 0.1} inView>
                             <GlassCard
-                                className="group transition-all duration-500 p-8 flex flex-col items-center text-center bg-black/40 backdrop-blur-3xl"
+                                className="group transition-all duration-500 p-8 flex flex-col items-center text-center bg-black/40 backdrop-blur-3xl h-full"
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
@@ -63,7 +63,7 @@ export const Services = () => {
                                 <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
                                     {service.title}
                                 </h3>
-                                <p className="text-blue-200/80 text-sm leading-relaxed">
+                                <p className="text-blue-200/80 text-sm leading-relaxed mb-4">
                                     {service.description}
                                 </p>
                             </GlassCard>

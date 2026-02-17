@@ -97,21 +97,20 @@ export const KnowYourBrand = () => {
 
         let plan: string | null = null;
 
-        // Logic sequence derived from user requirements:
-        // 1. All Yes -> Plan C
+        const g1Count = [1, 2, 3].filter(id => isYes(id)).length;
+        const g2Count = [4, 5, 6].filter(id => isYes(id)).length;
+
+        // Group Comparison Logic Engine:
+        // C: Perfect match score
         if (yesCount === 6) {
             plan = "C";
         }
-        // 2. Any 5 Yes -> Plan B (Explicitly requested)
-        else if (yesCount === 5) {
+        // B: Near-perfect OR Scaling dominance/equality
+        else if (yesCount === 5 || (yesCount > 0 && g2Count >= g1Count)) {
             plan = "B";
         }
-        // 3. 1, 2, 3 No and 4, 5, 6 Yes -> Plan B
-        else if (!isYes(1) && !isYes(2) && !isYes(3) && isYes(4) && isYes(5) && isYes(6)) {
-            plan = "B";
-        }
-        // 4. 1, 2, 3 Yes -> Plan A
-        else if (isYes(1) && isYes(2) && isYes(3)) {
+        // A: Foundation dominance
+        else if (yesCount > 0) {
             plan = "A";
         }
 
@@ -170,16 +169,16 @@ export const KnowYourBrand = () => {
                 <motion.div
                     layout
                     transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                    className={`grid gap-12 items-start ${isSubmitted ? "lg:grid-cols-[1fr_1.2fr] max-w-none" : "grid-cols-1 max-w-4xl mx-auto"
+                    className={`grid gap-16 items-start ${isSubmitted ? "lg:grid-cols-[896px_1fr] max-w-none px-4" : "grid-cols-1 max-w-4xl mx-auto"
                         }`}
                 >
                     {/* Questionnaire */}
                     <motion.div
                         layout
                         transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                        className="w-full"
+                        className="w-full h-full"
                     >
-                        <GlassCard className={`p-8 space-y-8 bg-white/5 border-white/10 w-full transition-all duration-500 ${isSubmitted ? 'opacity-70 grayscale-[0.2]' : ''}`}>
+                        <GlassCard className={`p-8 space-y-8 bg-white/5 border-white/10 w-full h-full min-h-[750px] flex flex-col transition-all duration-500 ${isSubmitted ? 'opacity-70 grayscale-[0.2]' : ''}`}>
                             <div className="flex justify-between items-center border-b border-white/5 pb-6">
                                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
                                     Dimension Diagnostics
@@ -190,32 +189,34 @@ export const KnowYourBrand = () => {
                                 </div>
                             </div>
 
-                            {questions.map((q) => (
-                                <div key={q.id} className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 p-4 rounded-2xl hover:bg-white/5 transition-colors group">
-                                    <div className="flex gap-4 items-start">
-                                        <span className="text-blue-500 font-bold min-w-[20px]">{q.id}.</span>
-                                        <p className="text-white font-medium leading-relaxed group-hover:text-blue-100 transition-colors">{q.text}</p>
+                            <div className="space-y-4 flex-grow">
+                                {questions.map((q) => (
+                                    <div key={q.id} className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 p-4 rounded-2xl hover:bg-white/5 transition-colors group">
+                                        <div className="flex gap-4 items-start">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0 group-hover:scale-125 transition-transform shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                                            <p className="text-white font-medium leading-relaxed group-hover:text-blue-100 transition-colors">{q.text}</p>
+                                        </div>
+                                        <div className="flex gap-2 shrink-0">
+                                            {["Yes", "No", "No idea"].map((option) => (
+                                                <button
+                                                    key={option}
+                                                    disabled={isSubmitted}
+                                                    onClick={() => handleAnswer(q.id, option)}
+                                                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border ${answers[q.id] === option
+                                                        ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                                        : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white disabled:opacity-50"
+                                                        }`}
+                                                >
+                                                    {option}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className="flex gap-2 shrink-0">
-                                        {["Yes", "No", "No idea"].map((option) => (
-                                            <button
-                                                key={option}
-                                                disabled={isSubmitted}
-                                                onClick={() => handleAnswer(q.id, option)}
-                                                className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border ${answers[q.id] === option
-                                                    ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                                                    : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white disabled:opacity-50"
-                                                    }`}
-                                            >
-                                                {option}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
 
-                            {!isSubmitted && (
-                                <div className="pt-8 border-t border-white/5 flex justify-center">
+                            <div className="pt-8 border-t border-white/5 flex justify-center min-h-[100px] items-center">
+                                {!isSubmitted ? (
                                     <button
                                         onClick={handleSubmit}
                                         disabled={!isCompleted}
@@ -226,93 +227,113 @@ export const KnowYourBrand = () => {
                                     >
                                         Submit Requirements <ArrowRight className="w-5 h-5" />
                                     </button>
-                                </div>
-                            )}
+                                ) : (
+                                    <div className="flex items-center gap-3 text-blue-400 font-bold italic opacity-40">
+                                        <ShieldCheck className="w-5 h-5" />
+                                        <span>Diagnostics Analyzed</span>
+                                    </div>
+                                )}
+                            </div>
                         </GlassCard>
                     </motion.div>
 
-                    {/* Recommendation Display */}
+                    {/* Recommendation Display - Sequential Slide In */}
                     <AnimatePresence mode="wait">
                         {isSubmitted && (
-                            <motion.div
-                                key={recommendedPlanKey || "no-match"}
-                                initial={{ opacity: 0, x: 50 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                                className="w-full h-full min-h-[600px]"
-                            >
+                            <div className="space-y-6 w-full h-full flex flex-col">
                                 {activePlan ? (
-                                    <GlassCard className="p-8 lg:p-10 bg-white/5 border-white/10 h-full flex flex-col shadow-2xl relative overflow-hidden">
-                                        {/* Subtle background glow */}
-                                        <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none" />
-
-                                        {/* Unified Header: Congratulations + Plan Name */}
-                                        <div className="flex items-center gap-6 pb-8 border-b border-white/5 mb-8">
-                                            <div className="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] shrink-0">
-                                                {activePlan.icon}
-                                            </div>
-                                            <div>
-                                                <h4 className="text-blue-500 font-bold tracking-[0.2em] text-[10px] uppercase mb-1">Congratulations!!!</h4>
-                                                <h3 className="text-2xl xl:text-3xl font-black text-white leading-tight">{activePlan.name}</h3>
-                                            </div>
-                                        </div>
-
-                                        {/* Plan Price & Breakdown Label */}
-                                        <div className="flex justify-between items-end mb-8">
-                                            <div>
-                                                <h4 className="text-lg font-bold text-white mb-1">Plan Breakdown</h4>
-                                                <p className="text-blue-200/40 text-[10px] uppercase tracking-widest font-bold">Services included in your dimension</p>
-                                            </div>
-                                            <div className="text-right">
-                                                <div className="text-blue-400 text-3xl font-black leading-none">{activePlan.price}</div>
-                                                <div className="text-[10px] text-blue-300/30 uppercase tracking-[0.2em] mt-1 font-bold">Full Value</div>
-                                            </div>
-                                        </div>
-
-                                        {/* Features List - Growing to fill space */}
-                                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-6 gap-y-4 mb-10 flex-grow content-start">
-                                            {activePlan.features.map((feature, i) => (
-                                                <motion.li
-                                                    key={i}
-                                                    initial={{ opacity: 0, x: -10 }}
-                                                    animate={{ opacity: 1, x: 0 }}
-                                                    transition={{ delay: 0.4 + i * 0.04 }}
-                                                    className="flex items-center gap-3 text-blue-100/90 group list-none"
-                                                >
-                                                    <div className="w-5 h-5 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:bg-blue-500 transition-all duration-300">
-                                                        <Check className="w-2.5 h-2.5 text-white" />
+                                    <>
+                                        {/* Box 1: Congratulations - Slides from right after delay (settle first) */}
+                                        <motion.div
+                                            initial={{ opacity: 0, x: 300 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
+                                        >
+                                            <GlassCard className="p-6 lg:p-8 bg-blue-600/10 border-blue-500/30 relative overflow-hidden group">
+                                                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                                                    {activePlan.icon}
+                                                </div>
+                                                <div className="flex items-center gap-6">
+                                                    <div className="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                                                        <div className="w-8 h-8 text-blue-400">{activePlan.icon}</div>
                                                     </div>
-                                                    <span className="font-semibold text-xs xl:text-sm group-hover:text-white transition-colors">{feature}</span>
-                                                </motion.li>
-                                            ))}
-                                        </div>
+                                                    <div>
+                                                        <h4 className="text-blue-500 font-bold tracking-[0.2em] text-[10px] uppercase mb-1">Congratulations!!!</h4>
+                                                        <h3 className="text-2xl xl:text-3xl font-black text-white leading-tight">{activePlan.name}</h3>
+                                                    </div>
+                                                </div>
+                                            </GlassCard>
+                                        </motion.div>
 
-                                        {/* Action Button */}
-                                        <div className="mt-auto pt-8 border-t border-white/5 flex flex-col items-center">
-                                            <button className="w-full bg-blue-600 text-white font-black py-4 rounded-xl flex items-center justify-center gap-4 hover:bg-blue-500 hover:scale-[1.02] transition-all group shadow-[0_20px_40px_rgba(59,130,246,0.3)] active:scale-95">
-                                                Activate My Dimension <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                            </button>
-                                            <div className="flex items-center gap-3 mt-4 opacity-30">
-                                                <Info className="w-3 h-3 text-blue-400" />
-                                                <p className="text-blue-200 text-[10px] tracking-[0.2em] uppercase font-black">Strategy Session Included • No Contracts</p>
-                                            </div>
-                                        </div>
-                                    </GlassCard>
+                                        {/* Box 2: Plan Breakdown - Slides from right slightly after Box 1 */}
+                                        <motion.div
+                                            initial={{ opacity: 0, x: 300 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
+                                            className="flex-grow"
+                                        >
+                                            <GlassCard className="p-6 lg:p-8 bg-white/5 border-white/10 relative h-full flex flex-col">
+                                                <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-6">
+                                                    <div>
+                                                        <h4 className="text-lg font-bold text-white mb-1">Plan Breakdown:</h4>
+                                                        <p className="text-blue-200/40 text-[9px] uppercase tracking-widest font-bold">Included Services</p>
+                                                    </div>
+                                                    <div className="text-right p-4 rounded-xl bg-blue-600/10 border border-blue-500/30">
+                                                        <div className="text-blue-400 text-2xl font-black">{activePlan.price}</div>
+                                                        <div className="text-[9px] text-blue-300/30 uppercase tracking-[0.2em] font-bold">Full Value</div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-8 flex-grow content-start">
+                                                    {activePlan.features.map((feature, i) => (
+                                                        <motion.li
+                                                            key={i}
+                                                            initial={{ opacity: 0, x: -10 }}
+                                                            animate={{ opacity: 1, x: 0 }}
+                                                            transition={{ delay: 1.4 + i * 0.05 }}
+                                                            className="flex items-center gap-3 text-blue-100/90 group list-none"
+                                                        >
+                                                            <div className="w-4 h-4 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:bg-blue-500 transition-all duration-300">
+                                                                <Check className="w-2 h-2 text-white" />
+                                                            </div>
+                                                            <span className="font-semibold text-xs group-hover:text-white transition-colors">{feature}</span>
+                                                        </motion.li>
+                                                    ))}
+                                                </div>
+
+                                                <div className="mt-auto">
+                                                    <button className="w-full bg-blue-600 text-white font-black py-4 rounded-xl flex items-center justify-center gap-4 hover:bg-blue-500 hover:scale-[1.02] transition-all group shadow-[0_20px_40px_rgba(59,130,246,0.3)] active:scale-95">
+                                                        Activate My Dimension <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                                    </button>
+                                                    <div className="flex items-center justify-center gap-3 mt-4 opacity-30">
+                                                        <Info className="w-3 h-3 text-blue-400" />
+                                                        <p className="text-blue-200 text-[9px] tracking-[0.2em] uppercase font-black">Strategy Session Included • No Contracts</p>
+                                                    </div>
+                                                </div>
+                                            </GlassCard>
+                                        </motion.div>
+                                    </>
                                 ) : (
-                                    <GlassCard className="p-16 lg:p-20 bg-blue-600/5 border-dashed border-blue-500/30 flex flex-col items-center text-center h-full justify-center">
-                                        <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-8">
-                                            <ShieldCheck className="w-8 h-8 text-blue-400" />
-                                        </div>
-                                        <h3 className="text-2xl font-bold text-white mb-4 italic">Analysis Complete</h3>
-                                        <p className="text-blue-200/60 max-w-sm mb-8 text-sm leading-relaxed">
-                                            Your brand requirements are unique. Based on our analysis, let's have a quick 1-on-1 strategy call to tailor a dimension specifically for your growth.
-                                        </p>
-                                        <button className="bg-white text-black font-black px-10 py-4 rounded-xl hover:bg-blue-50 transition-all">
-                                            Schedule Custom Call
-                                        </button>
-                                    </GlassCard>
+                                    <motion.div
+                                        initial={{ opacity: 0, x: 200 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.6, duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                                    >
+                                        <GlassCard className="p-16 lg:p-20 bg-blue-600/5 border-dashed border-blue-500/30 flex flex-col items-center text-center">
+                                            <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-8">
+                                                <ShieldCheck className="w-8 h-8 text-blue-400" />
+                                            </div>
+                                            <h3 className="text-2xl font-bold text-white mb-4 italic">Analysis Complete</h3>
+                                            <p className="text-blue-200/60 max-w-sm mb-8 text-sm leading-relaxed">
+                                                Your brand requirements are unique. Based on our analysis, let's have a quick 1-on-1 strategy call to tailor a dimension specifically for your growth.
+                                            </p>
+                                            <button className="bg-white text-black font-black px-10 py-4 rounded-xl hover:bg-blue-50 transition-all">
+                                                Schedule Custom Call
+                                            </button>
+                                        </GlassCard>
+                                    </motion.div>
                                 )}
-                            </motion.div>
+                            </div>
                         )}
                     </AnimatePresence>
                 </motion.div>

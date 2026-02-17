@@ -38,7 +38,7 @@ export function Navbar() {
             <div className="w-full px-8 flex items-center justify-between">
                 <Link
                     href="/"
-                    className="z-50 flex items-center gap-3"
+                    className="z-50 flex flex-col items-center gap-1"
                 >
                     <Image
                         src="/logo-new.jpg"
@@ -48,7 +48,7 @@ export function Navbar() {
                         className="h-11 w-11 rounded-full object-cover border border-white/10"
                         priority
                     />
-                    <span className="text-xl font-bold tracking-tighter text-white uppercase">
+                    <span className="text-[10px] font-bold tracking-wider text-white uppercase">
                         Valora Dimensions
                     </span>
                 </Link>

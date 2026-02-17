@@ -1,103 +1,186 @@
 "use client";
 
-import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
-import { ArrowUpRight, CheckCircle, Lightbulb, TrendingUp } from "lucide-react";
+import { GlassCard } from "@/components/ui/GlassCard";
 import { motion } from "framer-motion";
 import NumberTicker from "@/components/ui/NumberTicker";
 import { BlurFade } from "@/components/ui/BlurFade";
+import { ShieldCheck, Target, Rocket, CheckCircle2 } from "lucide-react";
+import Image from "next/image";
 
 export const About = () => {
     return (
-        <section id="about" className="py-32 relative text-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <section id="about" className="py-32 relative text-white overflow-hidden">
+            {/* Header Block */}
+            <div className="max-w-7xl mx-auto px-6 mb-20 relative z-10">
                 <BlurFade delay={0.1} inView>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="mb-16 text-center"
-                    >
-                        <span className="text-blue-500 font-semibold tracking-wider text-sm uppercase">
-                            Our Philosophy
-                        </span>
-                        <h2 className="text-3xl md:text-5xl font-bold mt-4 tracking-tight">
-                            Visibility & Credibility
+                    <div className="text-center">
+                        <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter italic uppercase">
+                            About
                         </h2>
-                        <p className="mt-4 text-neutral-400 max-w-2xl mx-auto">
-                            We believe that true growth comes from a perfect balance of being seen and being trusted.
-                        </p>
-                    </motion.div>
+                    </div>
                 </BlurFade>
+            </div>
 
-                {/* Growth Metrics Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 px-4 py-12 bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10">
-                    <BlurFade delay={0.2} inView className="text-center">
-                        <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
-                            <NumberTicker value={100} className="text-white" />+
-                        </div>
-                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Clients Worldwide</div>
+            <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-6">
+                {/* Row 1: Top Bento Row (3 Columns) */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    {/* Col 1: Hero Typography (6/12) */}
+                    <BlurFade delay={0.2} inView className="lg:col-span-6">
+                        <GlassCard className="p-8 md:p-12 h-full flex flex-col justify-center bg-white/5 border-white/10 group overflow-hidden relative">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[120px] rounded-full group-hover:bg-blue-500/20 transition-colors" />
+                            <div className="relative z-10 space-y-6">
+                                <h3 className="text-3xl md:text-5xl font-black text-white leading-[1.1] tracking-tighter uppercase italic">
+                                    WE CAN BE <span className="text-blue-500 underline decoration-white/20 underline-offset-8">YOUR EXTENDED GROWTH PARTNER</span> TO ENSURE SUCCESS
+                                </h3>
+                                <div className="space-y-4 text-blue-100/60 text-lg leading-relaxed max-w-xl">
+                                    <p>Unlike typical agency setups, we become an extension of your in-house team, a partner that understands your market and goals and makes data-backed decisions.</p>
+                                    <p>With more competition online than ever before, it's critical to work with a company that shares your vision and delivers the results you need now and in the future.</p>
+                                </div>
+                            </div>
+                        </GlassCard>
                     </BlurFade>
-                    <BlurFade delay={0.3} inView className="text-center">
-                        <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
-                            <NumberTicker value={500} className="text-white" />+
-                        </div>
-                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Projects Completed</div>
-                    </BlurFade>
-                    <BlurFade delay={0.4} inView className="text-center">
-                        <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
-                            <NumberTicker value={98} className="text-white" />%
-                        </div>
-                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Retention Rate</div>
-                    </BlurFade>
-                    <BlurFade delay={0.5} inView className="text-center">
-                        <div className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
-                            <NumberTicker value={10} className="text-white" />x
-                        </div>
-                        <div className="text-sm text-blue-300/60 uppercase tracking-widest">Average ROI</div>
+
+                    {/* Col 2: Stacked Vision/Mission (3/12) */}
+                    <div className="lg:col-span-3 flex flex-col gap-6">
+                        <BlurFade delay={0.3} inView className="flex-1">
+                            <GlassCard className="p-8 h-full bg-blue-600/5 border-blue-500/10 group/vision relative overflow-hidden flex flex-col justify-center">
+                                <Target className="w-12 h-12 text-blue-500/10 absolute -bottom-2 -right-2" />
+                                <h5 className="text-blue-400 font-black uppercase tracking-widest text-xs mb-4 flex items-center gap-2 italic">
+                                    <Target className="w-4 h-4" /> Vision
+                                </h5>
+                                <p className="text-lg text-white font-bold leading-tight">
+                                    Building brands that scale with clarity and confidence.
+                                </p>
+                            </GlassCard>
+                        </BlurFade>
+                        <BlurFade delay={0.4} inView className="flex-1">
+                            <GlassCard className="p-8 h-full bg-white/5 border-white/10 group/mission relative overflow-hidden flex flex-col justify-center">
+                                <Rocket className="w-12 h-12 text-white/5 absolute -bottom-2 -right-2" />
+                                <h5 className="text-blue-200/40 font-black uppercase tracking-widest text-xs mb-4 flex items-center gap-2 italic">
+                                    <Rocket className="w-4 h-4" /> Mission
+                                </h5>
+                                <p className="text-lg text-white font-bold leading-tight">
+                                    Designing strategy-led growth systems that deliver predictable, measurable outcomes.
+                                </p>
+                            </GlassCard>
+                        </BlurFade>
+                    </div>
+
+                    {/* Col 3: Logo Card (3/12) */}
+                    <BlurFade delay={0.5} inView className="lg:col-span-3">
+                        <GlassCard className="h-full min-h-[300px] flex items-center justify-center bg-white/5 border-white/10 overflow-hidden relative group">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]" />
+                            <div className="relative z-10">
+                                <img src="/valora.jpg" alt="Logo" className="w-[140px] rounded-2xl opacity-80 group-hover:opacity-100 transition-all duration-500 shadow-2xl" />
+                            </div>
+                        </GlassCard>
                     </BlurFade>
                 </div>
 
-                <BentoGrid className="grid-cols-1 md:grid-cols-4 lg:grid-cols-4 lg:grid-rows-2 gap-4 auto-rows-[minmax(180px,auto)]">
-                    {items.map((item, i) => (
-                        <BlurFade key={i} delay={0.6 + i * 0.1} inView className={i === 0 || i === 3 ? "md:col-span-2" : ""}>
-                            <BentoGridItem
-                                title={item.title}
-                                description={item.description}
-                                header={item.header}
-                                icon={item.icon}
-                            />
+                {/* Row 2: Main Narrative Bento (12 Columns) */}
+                <BlurFade delay={0.6} inView>
+                    <div className="rounded-[2.5rem] overflow-hidden border border-white/10 bg-white/5 shadow-2xl">
+                        {/* Top: Light Theme Section (Subtle White/Grey) */}
+                        <div className="bg-[#f5f5f7] p-8 md:p-12 relative overflow-hidden border-b border-black/5">
+                            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:24px_24px]" />
+                            <div className="relative z-10 space-y-4 max-w-4xl">
+                                <h4 className="text-lg md:text-xl font-bold text-black/40 tracking-tight">
+                                    Valora was born from a simple realization!
+                                </h4>
+                                <div className="space-y-2">
+                                    <p className="text-3xl md:text-5xl font-black text-black leading-[1.1] tracking-tighter">
+                                        Great businesses don’t fail because of weak products.
+                                    </p>
+                                    <p className="text-3xl md:text-5xl font-black text-black leading-[1.1] tracking-tighter">
+                                        They struggle because growth lacks structure.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Bottom: Dark Theme Section with Floating Metric */}
+                        <div className="p-8 md:p-12 flex flex-col md:flex-row gap-12 relative bg-white/5 backdrop-blur-md">
+                            <div className="flex-1 space-y-6">
+                                <p className="text-blue-100/60 leading-relaxed text-lg md:text-xl font-medium">
+                                    We saw too many businesses investing in marketing without clarity—running ads, posting content, and chasing trends without a system, leading to inconsistent leads and unpredictable results.
+                                </p>
+                                <p className="text-blue-100/60 leading-relaxed text-lg md:text-xl italic font-medium">
+                                    Valora exists to replace that chaos with strategy-led growth. We design clear, focused systems across social media, lead generation, and performance marketing that turn attention into measurable outcomes. We don’t believe in multitasking—we believe in building brands with <span className="text-blue-400 font-bold">one dimension at a time</span>.
+                                </p>
+                            </div>
+
+                            {/* Floating Growth metrics */}
+                            <div className="md:w-1/3 flex items-center justify-center">
+                                <GlassCard className="p-8 w-full max-w-[300px] border-white/10 bg-black/40 backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] group overflow-hidden relative">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-green-500/50" />
+                                    <div className="relative z-10 space-y-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                                                <div className="w-3 h-3 bg-green-500 rounded-sm rotate-45" />
+                                            </div>
+                                            <span className="text-white font-bold uppercase tracking-widest text-xs">Growth Metrics</span>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <div className="text-5xl font-black text-white flex items-baseline gap-1">
+                                                <span className="text-2xl text-green-500">+</span>
+                                                <NumberTicker value={145} className="text-white" />
+                                                <span className="text-2xl text-white">%</span>
+                                            </div>
+                                            <span className="text-blue-300/40 text-[10px] font-black uppercase tracking-widest block">Client Revenue YoY</span>
+                                        </div>
+                                    </div>
+                                    <div className="absolute bottom-0 right-0 w-32 h-32 opacity-10 blur-2xl flex translate-x-8 translate-y-8">
+                                        <div className="w-8 h-[20%] bg-white/20 ml-2 mt-auto" />
+                                        <div className="w-8 h-[40%] bg-white/20 ml-2 mt-auto" />
+                                        <div className="w-8 h-[60%] bg-white/20 ml-2 mt-auto" />
+                                        <div className="w-8 h-[80%] bg-white/20 ml-2 mt-auto" />
+                                    </div>
+                                </GlassCard>
+                            </div>
+                        </div>
+                    </div>
+                </BlurFade>
+
+                {/* Row 3: Focus Areas (3 Columns) */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[
+                        { title: "Brand thinking", desc: "Positioning, messaging, storytelling" },
+                        { title: "Performance marketing", desc: "Campaigns, funnels, lead generation" },
+                        { title: "Growth systems", desc: "Repeatable processes, data-backed decisions" }
+                    ].map((item, idx) => (
+                        <BlurFade key={idx} delay={0.7 + idx * 0.1} inView>
+                            <GlassCard className="p-8 bg-white/5 border-white/10 hover:border-blue-500/30 transition-all duration-500 group h-full">
+                                <span className="text-blue-400 font-black text-xl block mb-2 uppercase italic tracking-tighter group-hover:text-blue-300 transition-colors">{item.title}</span>
+                                <span className="text-blue-100/40 text-sm leading-relaxed font-bold block">{item.desc}</span>
+                            </GlassCard>
                         </BlurFade>
                     ))}
-                </BentoGrid>
+                </div>
+
+                {/* Row 4: Final Unified Stats Card */}
+                <BlurFade delay={1.0} inView>
+                    <GlassCard className="p-12 md:p-16 bg-blue-600/5 backdrop-blur-3xl border border-blue-500/20 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[150px] -translate-y-1/2 translate-x-1/2 rounded-full" />
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
+                            {[
+                                { label: "Clients Worldwide", value: 100, suffix: "+" },
+                                { label: "Projects Completed", value: 500, suffix: "+" },
+                                { label: "Retention Rate", value: 98, suffix: "%" },
+                                { label: "Average ROI", value: 10, suffix: "x" }
+                            ].map((stat, i) => (
+                                <div key={i} className="text-center group/stat">
+                                    <div className="text-4xl md:text-6xl font-black text-white mb-2 group-hover/stat:text-blue-400 transition-colors drop-shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                                        <NumberTicker value={stat.value} className="text-white group-hover/stat:text-blue-400 transition-colors" />{stat.suffix}
+                                    </div>
+                                    <div className="text-[10px] md:text-xs text-blue-300/40 uppercase tracking-[0.3em] font-black">
+                                        {stat.label}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </GlassCard>
+                </BlurFade>
             </div>
         </section>
     );
 };
-
-const items = [
-    {
-        title: "Strategic Vision",
-        description: "We don't just execute tasks; we align every action with your long-term business goals.",
-        header: <div className="flex-1 min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800" />,
-        icon: <Lightbulb className="h-4 w-4 text-neutral-500" />,
-    },
-    {
-        title: "Data-Driven Decisions",
-        description: "Every campaign is backed by real-time analytics and performance metrics.",
-        header: <div className="flex-1 min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800" />,
-        icon: <TrendingUp className="h-4 w-4 text-neutral-500" />,
-    },
-    {
-        title: "Creative Excellence",
-        description: "Design that captures attention and tells your story effectively.",
-        header: <div className="flex-1 min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800" />,
-        icon: <CheckCircle className="h-4 w-4 text-neutral-500" />,
-    },
-    {
-        title: "Scalable Systems",
-        description: "Building frameworks that grow with your business, ensuring sustainability.",
-        header: <div className="flex-1 min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800" />,
-        icon: <ArrowUpRight className="h-4 w-4 text-neutral-500" />,
-    },
-];
