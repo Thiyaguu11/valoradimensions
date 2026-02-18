@@ -6,6 +6,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { useState } from "react";
 import { Check, ChevronRight } from "lucide-react";
 import { BlurFade } from "@/components/ui/BlurFade";
+import confetti from "canvas-confetti";
 
 const scopes = [
     "Social Media Strategy",
@@ -24,6 +25,56 @@ export const Contact = () => {
         } else {
             setSelectedScopes([...selectedScopes, scope]);
         }
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Celebration
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+        const interval: any = setInterval(function () {
+            const timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) return clearInterval(interval);
+
+            const particleCount = 50 * (timeLeft / duration);
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                colors: ['#2563eb', '#ffffff']
+            });
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                colors: ['#2563eb', '#ffffff']
+            });
+        }, 250);
+
+        // Mail Logic
+        const subject = `New Project Inquiry from ${formState.name}`;
+        const body = `
+Name: ${formState.name}
+Email: ${formState.email}
+
+Requested Scopes:
+${selectedScopes.length > 0 ? selectedScopes.map(s => `- ${s}`).join('\n') : "None selected"}
+
+Project Details:
+${formState.message}
+        `.trim();
+
+        const mailtoUrl = `mailto:valoradimensions@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // Brief delay for confetti pop before redirect
+        setTimeout(() => {
+            window.location.href = mailtoUrl;
+        }, 1000);
     };
 
     return (
@@ -56,12 +107,15 @@ export const Contact = () => {
                                 Ready to elevate your brand? Tell us about your project and we'll craft the perfect solution.
                             </p>
 
-                            <form className="space-y-6">
+                            <form className="space-y-6" onSubmit={handleSubmit}>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-blue-200">Your Name</label>
                                     <input
                                         type="text"
+                                        required
                                         placeholder="John Doe"
+                                        value={formState.name}
+                                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                                         className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-blue-300/40"
                                     />
                                 </div>
@@ -69,21 +123,27 @@ export const Contact = () => {
                                     <label className="text-sm font-medium text-blue-200">Email Address</label>
                                     <input
                                         type="email"
+                                        required
                                         placeholder="john@example.com"
+                                        value={formState.email}
+                                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                                         className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-blue-300/40"
                                     />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-blue-200">Project Details</label>
                                     <textarea
+                                        required
                                         placeholder="Tell us about your goals..."
                                         rows={4}
+                                        value={formState.message}
+                                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                                         className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-blue-300/40 resize-none"
                                     />
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30_rgba(59,130,246,0.5)]"
+                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30_rgba(59,130,246,0.5)] active:scale-[0.98]"
                                 >
                                     Send Message <ChevronRight className="w-4 h-4" />
                                 </button>

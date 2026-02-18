@@ -199,18 +199,25 @@ export const KnowYourBrand = () => {
                                             <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0 group-hover:scale-125 transition-transform shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
                                             <p className="text-white font-medium leading-relaxed group-hover:text-blue-100 transition-colors">{q.text}</p>
                                         </div>
-                                        <div className="flex gap-2 shrink-0">
+                                        <div className="flex bg-white/5 border border-white/10 rounded-xl p-1 relative p-1.5 min-w-[280px]">
                                             {["Yes", "No", "No idea"].map((option) => (
                                                 <button
                                                     key={option}
                                                     disabled={isSubmitted}
-                                                    onClick={() => handleAnswer(q.id, option)}
-                                                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border ${answers[q.id] === option
-                                                        ? "bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                                                        : "bg-white/5 border-white/10 text-blue-200/60 hover:border-blue-500/30 hover:text-white disabled:opacity-50"
+                                                    onClick={() => handleAnswer(q.id, answers[q.id] === option ? "" : option)}
+                                                    className={`relative flex-1 py-2 px-4 rounded-lg text-xs font-bold transition-all duration-300 z-10 ${answers[q.id] === option
+                                                            ? "text-white"
+                                                            : "text-blue-200/40 hover:text-white disabled:opacity-50"
                                                         }`}
                                                 >
-                                                    {option}
+                                                    {answers[q.id] === option && (
+                                                        <motion.div
+                                                            layoutId={`bubble-${q.id}`}
+                                                            className="absolute inset-0 bg-blue-600 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                                        />
+                                                    )}
+                                                    <span className="relative z-20">{option}</span>
                                                 </button>
                                             ))}
                                         </div>
