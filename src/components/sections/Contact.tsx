@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useState } from "react";
 import { Check, ChevronRight } from "lucide-react";
@@ -18,6 +18,8 @@ const scopes = [
 export const Contact = () => {
     const [selectedScopes, setSelectedScopes] = useState<string[]>([]);
     const [formState, setFormState] = useState({ name: "", email: "", message: "" });
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [mailtoUrl, setMailtoUrl] = useState("");
 
     const toggleScope = (scope: string) => {
         if (selectedScopes.includes(scope)) {
@@ -33,7 +35,7 @@ export const Contact = () => {
         // Celebration
         const duration = 3 * 1000;
         const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
 
         const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -69,12 +71,16 @@ Project Details:
 ${formState.message}
         `.trim();
 
-        const mailtoUrl = `mailto:valoradimensions@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const url = `mailto:valoradimensions@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        setMailtoUrl(url);
+        setShowSuccess(true);
+    };
 
-        // Brief delay for confetti pop before redirect
-        setTimeout(() => {
+    const handleSuccessConfirm = () => {
+        setShowSuccess(false);
+        if (mailtoUrl) {
             window.location.href = mailtoUrl;
-        }, 1000);
+        }
     };
 
     return (
@@ -158,7 +164,7 @@ ${formState.message}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="lg:pl-10"
+                            className="lg:pl-10 h-full"
                         >
                             <GlassCard className="h-full bg-white/5 backdrop-blur-2xl border-white/10 relative overflow-hidden p-8 flex flex-col items-center">
                                 <h3 className="text-xl md:text-2xl font-bold text-white mb-6">Consultation Focus</h3>
@@ -199,6 +205,40 @@ ${formState.message}
                     </BlurFade>
                 </div>
             </div>
+
+            {/* Success Modal */}
+            <AnimatePresence>
+                {showSuccess && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] flex items-center justify-center px-6"
+                    >
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowSuccess(false)} />
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+                            className="relative w-full max-w-md"
+                        >
+                            <GlassCard className="p-8 bg-blue-600/10 border-blue-500/30 text-center flex flex-col items-center">
+                                <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-6">
+                                    <Check className="w-8 h-8 text-blue-400" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-white mb-2">Message sent successfully</h3>
+                                <p className="text-blue-200/60 mb-8 italic">we will contact you soon!!!</p>
+                                <button
+                                    onClick={handleSuccessConfirm}
+                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] active:scale-95"
+                                >
+                                    Okay
+                                </button>
+                            </GlassCard>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };
