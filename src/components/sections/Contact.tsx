@@ -114,7 +114,7 @@ export const Contact = () => {
                                                 : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20"
                                                 }`}
                                         >
-                                            <span className={`font-semibold text-lg md:text-xl ${selectedScopes.includes(scope) ? "text-white" : "text-blue-200"}`}>
+                                            <span className={`font-semibold text-base md:text-lg ${selectedScopes.includes(scope) ? "text-white" : "text-blue-200"}`}>
                                                 {scope}
                                             </span>
                                             <div className={`w-7 h-7 rounded-full border flex items-center justify-center transition-colors ${selectedScopes.includes(scope) ? "bg-blue-500 border-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" : "border-blue-500/30"
@@ -129,7 +129,7 @@ export const Contact = () => {
                                     <Link
                                         href="https://calendly.com/valoradimensions/15?month=2026-02"
                                         target="_blank"
-                                        className="w-[80%] mx-auto bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:shadow-[0_20px_40px_rgba(59,130,246,0.4)] active:scale-95 text-lg uppercase tracking-wide"
+                                        className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30_rgba(59,130,246,0.5)] active:scale-95"
                                     >
                                         Book my consultation
                                     </Link>

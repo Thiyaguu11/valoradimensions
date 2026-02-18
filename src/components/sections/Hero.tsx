@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronRight, PlayCircle, ArrowLeft, X } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -94,12 +95,14 @@ export const Hero = () => {
                                         variants={itemVariants}
                                         className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
                                     >
-                                        <button className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
-                                            <span className="relative z-10 flex items-center gap-2">
-                                                Get Started <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                                            </span>
-                                            <div className="absolute inset-0 bg-blue-500 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100 duration-300 ease-out z-0 opacity-10" />
-                                        </button>
+                                        <Link href="#expertise">
+                                            <button className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
+                                                <span className="relative z-10 flex items-center gap-2">
+                                                    Get Started <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                                </span>
+                                                <div className="absolute inset-0 bg-blue-500 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100 duration-300 ease-out z-0 opacity-10" />
+                                            </button>
+                                        </Link>
                                         {!showShowreel && (
                                             <button
                                                 onClick={() => setShowShowreel(true)}

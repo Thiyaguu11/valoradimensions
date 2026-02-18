@@ -33,7 +33,11 @@ export function InteractiveGridPattern({
     const id = useId();
     const containerRef = useRef<SVGSVGElement>(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-    const [squares, setSquares] = useState(() => generateSquares(numSquares));
+    const [squares, setSquares] = useState<{ id: number; pos: number[] }[]>([]);
+
+    useEffect(() => {
+        setSquares(generateSquares(numSquares));
+    }, [numSquares]);
 
     function generateSquares(count: number) {
         return Array.from({ length: count }, (_, i) => ({

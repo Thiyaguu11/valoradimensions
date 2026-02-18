@@ -2,10 +2,14 @@
 
 import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { BlurFade } from "@/components/ui/BlurFade";
 import Image from "next/image";
+
+interface BrandfolioProps {
+    onOpenCaseStudies: () => void;
+}
 
 const portfolioItems = [
     {
@@ -40,7 +44,69 @@ const portfolioItems = [
     }
 ];
 
-export const Brandfolio = () => {
+export const Brandfolio = ({ onOpenCaseStudies }: BrandfolioProps) => {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+    const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const requestRef = useRef<number | null>(null);
+    const lastTimestampRef = useRef<number | null>(null);
+
+    useEffect(() => {
+        const scrollContainer = scrollRef.current;
+        if (!scrollContainer) return;
+
+        const animate = (timestamp: number) => {
+            if (!isPaused) {
+                if (lastTimestampRef.current !== null) {
+                    const elapsed = timestamp - lastTimestampRef.current;
+                    // Adjust speed to match the 80s CSS marquee (~0.04 - 0.05px per ms)
+                    const speed = 0.05;
+                    scrollContainer.scrollLeft += elapsed * speed;
+
+                    // Seamless loop check
+                    // We duplicate items 3 times in the render
+                    if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 3) {
+                        scrollContainer.scrollLeft = 0;
+                    }
+
+                    // Update active index based on scroll position
+                    // Only for the first set of items
+                    const cardWidth = 800 + 24; // width + gap
+                    const currentIdx = Math.round(scrollContainer.scrollLeft / cardWidth) % portfolioItems.length;
+                    setActiveIndex(currentIdx);
+                }
+            }
+            lastTimestampRef.current = timestamp;
+            requestRef.current = requestAnimationFrame(animate);
+        };
+
+        requestRef.current = requestAnimationFrame(animate);
+        return () => {
+            if (requestRef.current) cancelAnimationFrame(requestRef.current);
+        };
+    }, [isPaused]);
+
+    const scrollToCard = (index: number) => {
+        const scrollContainer = scrollRef.current;
+        if (!scrollContainer) return;
+
+        setIsPaused(true);
+        if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+
+        const cardWidth = 800 + 24; // width + gap
+        scrollContainer.scrollTo({
+            left: index * cardWidth,
+            behavior: "smooth"
+        });
+        setActiveIndex(index);
+
+        pauseTimeoutRef.current = setTimeout(() => {
+            setIsPaused(false);
+            lastTimestampRef.current = null; // Reset timestamp for smooth resume
+        }, 5000);
+    };
+
     return (
         <section id="brandfolio" className="py-20 relative overflow-hidden">
             <style jsx>{`
@@ -48,25 +114,16 @@ export const Brandfolio = () => {
                     0% { transform: translateX(0); }
                     100% { transform: translateX(-50%); }
                 }
-                @keyframes juggle {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(-20px); }
+                .marquee {
+                    display: flex;
+                    width: max-content;
                 }
-                @keyframes juggle-alt {
-                    0%, 100% { transform: translateY(-20px); }
-                    50% { transform: translateY(0); }
-                }
-                .marquee-container-fast {
+                .marquee-fast {
                     display: flex;
                     width: max-content;
                     animation: marquee 50s linear infinite;
                 }
-                .marquee-container-slow {
-                    display: flex;
-                    width: max-content;
-                    animation: marquee 80s linear infinite;
-                }
-                .marquee-container-fast:hover, .marquee-container-slow:hover {
+                .marquee-fast:hover {
                     animation-play-state: paused;
                 }
                 .juggle {
@@ -74,13 +131,6 @@ export const Brandfolio = () => {
                 }
                 .juggle-alt {
                     animation: juggle-alt 6s ease-in-out infinite;
-                }
-                .scrollbar-hide {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                }
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
                 }
             `}</style>
 
@@ -97,9 +147,9 @@ export const Brandfolio = () => {
                 </BlurFade>
             </div>
 
-            {/* Row 1: Summary Cards (Horizontal Strips - Marquee) */}
+            {/* Row 1: Summary Posters (Fast Marquee) */}
             <div className="relative overflow-hidden w-full mb-8">
-                <div className="marquee-container-fast flex gap-4 items-center">
+                <div className="marquee-fast flex gap-4 items-center">
                     {[...Array(4)].map((_, i) => (
                         <div key={i} className="flex gap-8 items-center">
                             {[
@@ -126,48 +176,74 @@ export const Brandfolio = () => {
                 </div>
             </div>
 
-            {/* Row 2: Portfolio Items with Descriptions - Auto-Scrolling */}
-            <div className="relative w-full mt-8 overflow-hidden">
-                <div className="relative z-10">
-                    <div className="overflow-hidden">
-                        <div className="marquee-container-slow flex gap-6">
-                            {[...Array(3)].map((_, i) => (
-                                <div key={i} className="flex gap-6 shrink-0">
-                                    {portfolioItems.map((item) => (
-                                        <div key={`${i}-${item.id}`} className="flex gap-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 transition-transform duration-500 hover:scale-105 w-[800px] shrink-0">
-                                            {/* Image */}
-                                            <div className="flex-shrink-0 w-[350px]">
-                                                <div className="rounded-xl overflow-hidden border border-white/10 bg-white/5 h-full relative aspect-[4/3]">
-                                                    <Image
-                                                        src={item.image}
-                                                        alt={item.title}
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            {/* Description */}
-                                            <div className="flex-1 flex flex-col justify-center">
-                                                <h3 className="text-white font-bold text-xl mb-4 leading-tight">
-                                                    {item.title}
-                                                </h3>
-                                                <p className="text-blue-100/70 text-sm leading-relaxed">
-                                                    {item.description}
-                                                </p>
+            {/* Row 2: Portfolio Details (JS-Controlled Marquee with Dots) */}
+            <div className="relative overflow-hidden w-full mt-8">
+                <div
+                    ref={scrollRef}
+                    className="flex gap-6 overflow-x-hidden py-4 cursor-default whitespace-nowrap scrollbar-hide"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => {
+                        if (pauseTimeoutRef.current) return; // Don't resume if dot click pause is active
+                        setIsPaused(false);
+                        lastTimestampRef.current = null;
+                    }}
+                >
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="flex gap-6 shrink-0">
+                            {portfolioItems.map((item) => (
+                                <div
+                                    key={`${item.id}-${i}`}
+                                    className="w-[85vw] md:w-[800px] shrink-0 h-full whitespace-normal"
+                                >
+                                    <GlassCard className="flex flex-col md:flex-row gap-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 transition-transform duration-500 hover:scale-[1.02] h-full">
+                                        <div className="flex-shrink-0 w-full md:w-[350px]">
+                                            <div className="rounded-xl overflow-hidden border border-white/10 bg-white/5 relative aspect-[4/3] h-full w-full">
+                                                <Image
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    fill
+                                                    className="object-cover"
+                                                    sizes="(max-width: 768px) 100vw, 350px"
+                                                />
                                             </div>
                                         </div>
-                                    ))}
+                                        <div className="flex-1 flex flex-col justify-center min-w-0">
+                                            <h3 className="text-white font-bold text-xl mb-4 leading-tight">
+                                                {item.title}
+                                            </h3>
+                                            <p className="text-blue-100/70 text-sm leading-relaxed">
+                                                {item.description}
+                                            </p>
+                                        </div>
+                                    </GlassCard>
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    ))}
+                </div>
+
+                {/* Navigation Dots */}
+                <div className="flex justify-center gap-3 mt-8">
+                    {portfolioItems.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => scrollToCard(index)}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${activeIndex === index
+                                ? "bg-blue-500 w-8"
+                                : "bg-white/20 hover:bg-white/40"
+                                }`}
+                            aria-label={`Go to card ${index + 1}`}
+                        />
+                    ))}
                 </div>
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10 mt-12 flex justify-center">
                 <BlurFade delay={0.5} inView>
-                    <button className="text-white bg-white/5 backdrop-blur-xl border border-white/10 px-10 py-4 rounded-full hover:bg-white/10 hover:border-blue-500/30 transition-all flex items-center gap-3 group font-bold tracking-widest uppercase text-sm italic">
+                    <button
+                        onClick={onOpenCaseStudies}
+                        className="text-white bg-white/5 backdrop-blur-xl border border-white/10 px-10 py-4 rounded-full hover:bg-white/10 hover:border-blue-500/30 transition-all flex items-center gap-3 group font-bold tracking-widest uppercase text-sm italic"
+                    >
                         View Full Case Studies <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                     </button>
                 </BlurFade>
