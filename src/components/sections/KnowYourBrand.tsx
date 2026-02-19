@@ -7,6 +7,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { BlurFade } from "@/components/ui/BlurFade";
 import { Check, Info, ArrowRight, Sparkles, Zap, ShieldCheck, Lock } from "lucide-react";
 import confetti from "canvas-confetti";
+import { scrollToSection } from "@/lib/utils";
 
 const questions = [
     {
@@ -206,8 +207,8 @@ export const KnowYourBrand = () => {
                                                     disabled={isSubmitted}
                                                     onClick={() => handleAnswer(q.id, answers[q.id] === option ? "" : option)}
                                                     className={`relative flex-1 py-2 px-4 rounded-lg text-xs font-bold transition-all duration-300 z-10 ${answers[q.id] === option
-                                                            ? "text-white"
-                                                            : "text-blue-200/40 hover:text-white disabled:opacity-50"
+                                                        ? "text-white"
+                                                        : "text-blue-200/40 hover:text-white disabled:opacity-50"
                                                         }`}
                                                 >
                                                     {answers[q.id] === option && (
@@ -314,6 +315,7 @@ export const KnowYourBrand = () => {
                                                 <div className="mt-auto">
                                                     <Link
                                                         href="#contact"
+                                                        onClick={(e) => scrollToSection(e, "#contact")}
                                                         className="w-full bg-blue-600 text-white font-black py-4 rounded-xl flex items-center justify-center gap-4 hover:bg-blue-500 hover:scale-[1.02] transition-all group shadow-[0_20px_40px_rgba(59,130,246,0.3)] active:scale-95 text-center"
                                                     >
                                                         Activate My Dimension <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

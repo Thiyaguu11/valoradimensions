@@ -7,7 +7,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import NumberTicker from "@/components/ui/NumberTicker";
 import { BlurFade } from "@/components/ui/BlurFade";
 import { InteractiveGridPattern } from "@/registry/magicui/interactive-grid-pattern";
-import { cn } from "@/lib/utils";
+import { cn, scrollToSection } from "@/lib/utils";
 import { useState } from "react";
 
 const containerVariants: Variants = {
@@ -95,7 +95,10 @@ export const Hero = () => {
                                         variants={itemVariants}
                                         className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
                                     >
-                                        <Link href="#expertise">
+                                        <Link
+                                            href="#expertise"
+                                            onClick={(e) => scrollToSection(e, "#expertise")}
+                                        >
                                             <button className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
                                                 <span className="relative z-10 flex items-center gap-2">
                                                     Get Started <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

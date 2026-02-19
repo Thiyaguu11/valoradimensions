@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, scrollToSection } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -93,6 +93,7 @@ export function Navbar() {
                                 <Link
                                     key={item.href}
                                     href={item.href}
+                                    onClick={(e) => scrollToSection(e, item.href)}
                                     className={cn(
                                         "text-[15.5px] font-medium transition-all duration-300 relative group py-2",
                                         isActive
@@ -118,6 +119,7 @@ export function Navbar() {
                 <div className="flex-1 flex justify-end items-center gap-6">
                     <Link
                         href="#contact"
+                        onClick={(e) => scrollToSection(e, "#contact")}
                         className={cn(
                             "hidden md:block px-5 py-2 rounded-full text-[15.5px] font-medium transition-all duration-300 border",
                             activeSection === "contact"
@@ -152,7 +154,10 @@ export function Navbar() {
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        onClick={() => setMobileMenuOpen(false)}
+                                        onClick={(e) => {
+                                            setMobileMenuOpen(false);
+                                            scrollToSection(e, item.href);
+                                        }}
                                         className={cn(
                                             "text-2xl font-light transition-colors",
                                             isActive ? "text-blue-500 font-medium" : "text-white hover:text-blue-500"
