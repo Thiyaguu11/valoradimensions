@@ -170,13 +170,13 @@ export const About = () => {
                         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[150px] -translate-y-1/2 translate-x-1/2 rounded-full" />
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
                             {[
-                                { label: "Clients Worldwide", value: 10, suffix: " +" },
-                                { label: "Projects Completed", value: 500, suffix: " +" },
-                                { label: "Leads Generated", value: 6000, suffix: " +" },
+                                { label: "Clients Worldwide", value: 10, suffix: "+" },
+                                { label: "Projects Completed", value: 500, suffix: "+" },
+                                { label: "Leads Generated", value: 6000, suffix: "+" },
                                 { label: "Average ROI", value: 3, suffix: "X" }
                             ].map((stat, i) => (
                                 <div key={i} className="text-center group/stat">
-                                    <div className="text-4xl md:text-6xl font-black text-white mb-2 group-hover/stat:text-blue-400 transition-colors drop-shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                                    <div className="text-4xl md:text-6xl font-black text-white mb-2 group-hover/stat:text-blue-400 transition-colors drop-shadow-[0_0_20px_rgba(59,130,246,0.3)] whitespace-nowrap">
                                         <NumberTicker value={stat.value} className="text-white group-hover/stat:text-blue-400 transition-colors" />{stat.suffix}
                                     </div>
                                     <div className="text-[10px] md:text-xs text-blue-300/40 uppercase tracking-[0.3em] font-black">

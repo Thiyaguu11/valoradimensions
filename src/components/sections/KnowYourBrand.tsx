@@ -173,7 +173,7 @@ export const KnowYourBrand = () => {
                 <motion.div
                     layout
                     transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                    className={`grid gap-16 items-start ${isSubmitted ? "lg:grid-cols-[896px_1fr] max-w-none px-4" : "grid-cols-1 max-w-4xl mx-auto"
+                    className={`grid gap-16 items-start w-full mx-auto ${isSubmitted ? "lg:grid-cols-[896px_1fr] max-w-7xl px-4" : "grid-cols-1 max-w-4xl"
                         }`}
                 >
                     {/* Questionnaire */}
@@ -182,7 +182,7 @@ export const KnowYourBrand = () => {
                         transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                         className="w-full h-full"
                     >
-                        <GlassCard className={`p-8 space-y-8 bg-white/5 border-white/10 w-full h-full min-h-[750px] flex flex-col transition-all duration-500 ${isSubmitted ? 'opacity-70 grayscale-[0.2]' : ''}`}>
+                        <GlassCard className={`p-6 md:p-8 space-y-6 md:space-y-8 bg-white/5 border-white/10 w-full h-full min-h-[750px] flex flex-col transition-all duration-500 ${isSubmitted ? 'opacity-70 grayscale-[0.2]' : ''}`}>
                             <div className="flex justify-between items-center border-b border-white/5 pb-6">
                                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
                                     Dimension Diagnostics
@@ -256,7 +256,7 @@ export const KnowYourBrand = () => {
                                     <>
                                         {/* Box 1: Congratulations - Slides from right after delay (settle first) */}
                                         <motion.div
-                                            initial={{ opacity: 0, x: 300 }}
+                                            initial={{ opacity: 0, x: typeof window !== 'undefined' && window.innerWidth < 1024 ? 50 : 300 }}
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
                                         >
@@ -278,10 +278,10 @@ export const KnowYourBrand = () => {
 
                                         {/* Box 2: Plan Breakdown - Slides from right slightly after Box 1 */}
                                         <motion.div
-                                            initial={{ opacity: 0, x: 300 }}
+                                            initial={{ opacity: 0, x: typeof window !== 'undefined' && window.innerWidth < 1024 ? 50 : 300 }}
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-                                            className="flex-grow"
+                                            className="flex-grow w-full"
                                         >
                                             <GlassCard className="p-6 lg:p-8 bg-white/5 border-white/10 relative h-full flex flex-col">
                                                 <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-6">

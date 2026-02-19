@@ -147,9 +147,9 @@ export const Brandfolio = ({ onOpenCaseStudies }: BrandfolioProps) => {
                 </BlurFade>
             </div>
 
-            {/* Row 1: Summary Posters (Fast Marquee) */}
+            {/* Row 1: Summary Posters (Fast Marquee + Touch Support) */}
             <div className="relative overflow-hidden w-full mb-8">
-                <div className="marquee-fast flex gap-4 items-center">
+                <div className="marquee-fast flex gap-4 items-center overflow-x-auto scrollbar-hide md:overflow-hidden">
                     {[...Array(4)].map((_, i) => (
                         <div key={i} className="flex gap-8 items-center">
                             {[
@@ -176,16 +176,40 @@ export const Brandfolio = ({ onOpenCaseStudies }: BrandfolioProps) => {
                 </div>
             </div>
 
-            {/* Row 2: Portfolio Details (JS-Controlled Marquee with Dots) */}
+            {/* Row 2: Portfolio Details (JS-Controlled Marquee with Dots + Touch Swipe) */}
             <div className="relative overflow-hidden w-full mt-8">
                 <div
                     ref={scrollRef}
-                    className="flex gap-6 overflow-x-hidden py-4 cursor-default whitespace-nowrap scrollbar-hide"
+                    className="flex gap-6 overflow-x-hidden py-4 cursor-default whitespace-nowrap scrollbar-hide touch-pan-x"
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => {
-                        if (pauseTimeoutRef.current) return; // Don't resume if dot click pause is active
+                        if (pauseTimeoutRef.current) return;
                         setIsPaused(false);
                         lastTimestampRef.current = null;
+                    }}
+                    onTouchStart={(e) => {
+                        setIsPaused(true);
+                        if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+                        const touch = e.touches[0];
+                        (scrollRef as any).current.touchStart = touch.clientX;
+                        (scrollRef as any).current.scrollStart = (scrollRef as any).current.scrollLeft;
+                    }}
+                    onTouchMove={(e) => {
+                        if (!(scrollRef as any).current.touchStart) return;
+                        const touch = e.touches[0];
+                        const dist = (scrollRef as any).current.touchStart - touch.clientX;
+                        (scrollRef as any).current.scrollLeft = (scrollRef as any).current.scrollStart + dist;
+                    }}
+                    onTouchEnd={() => {
+                        (scrollRef as any).current.touchStart = null;
+
+                        // SNAP to nearest card
+                        const scrollContainer = scrollRef.current;
+                        if (!scrollContainer) return;
+
+                        const cardWidth = (window.innerWidth < 768 ? window.innerWidth * 0.85 : 800) + 24;
+                        const index = Math.round(scrollContainer.scrollLeft / cardWidth) % portfolioItems.length;
+                        scrollToCard(index);
                     }}
                 >
                     {[...Array(3)].map((_, i) => (

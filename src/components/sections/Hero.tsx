@@ -44,14 +44,14 @@ export const Hero = () => {
             <div className="container px-6 relative z-10 mx-auto max-w-7xl flex items-center justify-center min-h-[80vh]">
                 <div className={cn(
                     "flex flex-col lg:flex-row items-center justify-center gap-12 w-full transition-all duration-700 ease-in-out px-4",
-                    showShowreel ? "lg:items-center" : ""
+                    showShowreel && !showShowreel ? "" : ""
                 )}>
-                    {/* Main Hero Content Wrapper - This slides as one unit and MUST NOT shrink */}
+                    {/* Main Hero Content Wrapper - This slides as one unit on desktop but stays centered on mobile */}
                     <motion.div
                         layout
                         initial={false}
                         animate={{
-                            x: showShowreel ? -160 : 0,
+                            x: showShowreel ? (typeof window !== 'undefined' && window.innerWidth < 1024 ? 0 : -160) : 0,
                         }}
                         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                         className="relative flex items-center justify-center max-w-4xl w-full shrink-0"
@@ -59,23 +59,23 @@ export const Hero = () => {
                         <BlurFade delay={0.2} duration={0.8} inView>
                             <GlassCard
                                 variant="hero"
-                                className="p-12 md:p-16 w-full flex flex-col items-center justify-center text-center backdrop-filter backdrop-blur-3xl border border-white/20 shadow-2xl bg-white/5 relative z-10"
+                                className="p-8 md:p-16 w-full flex flex-col items-center justify-center text-center backdrop-filter backdrop-blur-3xl border border-white/20 shadow-2xl bg-white/5 relative z-10"
                             >
                                 <motion.div
                                     variants={containerVariants}
                                     initial="hidden"
                                     animate="visible"
-                                    className="space-y-8"
+                                    className="space-y-6 md:space-y-8"
                                 >
                                     <motion.div variants={itemVariants} className="flex justify-center">
-                                        <span className="px-3 py-1 rounded-full border border-white/10 bg-white/10 text-xs text-blue-200 font-medium tracking-wide uppercase backdrop-blur-md">
+                                        <span className="px-3 py-1 rounded-full border border-white/10 bg-white/10 text-[10px] md:text-xs text-blue-200 font-medium tracking-wide uppercase backdrop-blur-md">
                                             Welcome to the future of branding
                                         </span>
                                     </motion.div>
 
                                     <motion.h1
                                         variants={itemVariants}
-                                        className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] drop-shadow-lg"
+                                        className="text-4xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] drop-shadow-lg"
                                     >
                                         Valora Dimensions is a <br />
                                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300 drop-shadow-sm">
@@ -86,7 +86,7 @@ export const Hero = () => {
 
                                     <motion.p
                                         variants={itemVariants}
-                                        className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed drop-shadow-md"
+                                        className="text-base md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed drop-shadow-md"
                                     >
                                         Helping brands scale through strategy, content, and performance. We build digital experiences that convert.
                                     </motion.p>
@@ -98,9 +98,10 @@ export const Hero = () => {
                                         <Link
                                             href="#expertise"
                                             onClick={(e) => scrollToSection(e, "#expertise")}
+                                            className="w-full sm:w-auto"
                                         >
-                                            <button className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
-                                                <span className="relative z-10 flex items-center gap-2">
+                                            <button className="w-full sm:w-auto group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
+                                                <span className="relative z-10 flex items-center justify-center gap-2">
                                                     Get Started <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                                 </span>
                                                 <div className="absolute inset-0 bg-blue-500 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100 duration-300 ease-out z-0 opacity-10" />
@@ -109,7 +110,7 @@ export const Hero = () => {
                                         {!showShowreel && (
                                             <button
                                                 onClick={() => setShowShowreel(true)}
-                                                className="px-8 py-4 bg-white/10 text-white font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2 backdrop-blur-md shadow-md hover:shadow-lg"
+                                                className="w-full sm:w-auto px-8 py-4 bg-white/10 text-white font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center gap-2 backdrop-blur-md shadow-md hover:shadow-lg"
                                             >
                                                 <PlayCircle className="w-4 h-4 text-blue-300" />
                                                 Watch Showreel
@@ -146,13 +147,13 @@ export const Hero = () => {
                     <AnimatePresence>
                         {showShowreel && (
                             <motion.div
-                                initial={{ opacity: 0, x: 100, scale: 0.9 }}
-                                animate={{ opacity: 1, x: 0, scale: 1 }}
-                                exit={{ opacity: 0, x: 100, scale: 0.9 }}
+                                initial={{ opacity: 0, x: typeof window !== 'undefined' && window.innerWidth < 1024 ? 0 : 100, y: typeof window !== 'undefined' && window.innerWidth < 1024 ? 50 : 0, scale: 0.9 }}
+                                animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, x: typeof window !== 'undefined' && window.innerWidth < 1024 ? 0 : 100, y: typeof window !== 'undefined' && window.innerWidth < 1024 ? 50 : 0, scale: 0.9 }}
                                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                                className="flex items-center gap-6 z-30"
+                                className="flex flex-col lg:flex-row items-center gap-6 z-30"
                             >
-                                <GlassCard className="w-[320px] h-[550px] p-2 bg-white/5 backdrop-blur-3xl border-white/20 shadow-2xl overflow-hidden relative">
+                                <GlassCard className="w-[85vw] md:w-[320px] h-[550px] p-2 bg-white/5 backdrop-blur-3xl border-white/20 shadow-2xl overflow-hidden relative">
                                     <video
                                         src="/showreel.mp4"
                                         autoPlay
@@ -167,17 +168,17 @@ export const Hero = () => {
                                     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">
                                         <button
                                             onClick={() => setShowShowreel(false)}
-                                            className="px-6 py-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white text-sm font-medium hover:bg-black/60 transition-all"
+                                            className="px-6 py-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white text-sm font-medium hover:bg-black/60 transition-all font-bold"
                                         >
                                             Close
                                         </button>
                                     </div>
                                 </GlassCard>
 
-                                {/* Side Arrow Button */}
+                                {/* Side Arrow Button - Hide on mobile, use Close button on cards */}
                                 <button
                                     onClick={() => setShowShowreel(false)}
-                                    className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center transition-all hover:scale-110 group backdrop-blur-md shrink-0"
+                                    className="hidden lg:flex w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 items-center justify-center transition-all hover:scale-110 group backdrop-blur-md shrink-0"
                                 >
                                     <ArrowRight className="w-5 h-5 text-white group-hover:text-blue-400 transition-colors" />
                                 </button>
