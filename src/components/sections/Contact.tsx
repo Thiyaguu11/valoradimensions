@@ -1,12 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { useState } from "react";
 import { Check, ChevronRight } from "lucide-react";
 import { BlurFade } from "@/components/ui/BlurFade";
-import confetti from "canvas-confetti";
 
 const scopes = [
     "Social Media Strategy",
@@ -17,9 +14,7 @@ const scopes = [
 
 export const Contact = () => {
     const [selectedScopes, setSelectedScopes] = useState<string[]>([]);
-    const [formState, setFormState] = useState({ name: "", email: "", message: "" });
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [mailtoUrl, setMailtoUrl] = useState("");
+    const [formState, setFormState] = useState({ name: "", mobile: "", message: "" });
 
     const toggleScope = (scope: string) => {
         if (selectedScopes.includes(scope)) {
@@ -32,39 +27,13 @@ export const Contact = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Celebration
-        const duration = 3 * 1000;
-        const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
-
-        const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
-
-        const interval: any = setInterval(function () {
-            const timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) return clearInterval(interval);
-
-            const particleCount = 50 * (timeLeft / duration);
-            confetti({
-                ...defaults,
-                particleCount,
-                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-                colors: ['#2563eb', '#ffffff']
-            });
-            confetti({
-                ...defaults,
-                particleCount,
-                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-                colors: ['#2563eb', '#ffffff']
-            });
-        }, 250);
-
         // Mail Logic
         const subject = `New Project Inquiry from ${formState.name}`;
         const body = `
 Name: ${formState.name}
-Email: ${formState.email}
+Mobile Number: ${formState.mobile}
 
-Requested Scopes:
+Consultation Focus Points:
 ${selectedScopes.length > 0 ? selectedScopes.map(s => `- ${s}`).join('\n') : "None selected"}
 
 Project Details:
@@ -72,173 +41,137 @@ ${formState.message}
         `.trim();
 
         const url = `mailto:valoradimensions@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        setMailtoUrl(url);
-        setShowSuccess(true);
-    };
-
-    const handleSuccessConfirm = () => {
-        setShowSuccess(false);
-        if (mailtoUrl) {
-            window.location.href = mailtoUrl;
-        }
+        window.location.href = url;
     };
 
     return (
-        <section id="contact" className="py-24 relative overflow-hidden">
+        <section id="contact" className="py-24 relative overflow-hidden bg-[#0A0A0A]">
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <BlurFade delay={0.1} inView>
-                    <div className="text-center mb-16 px-4">
-                        <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter italic uppercase mb-6">
-                            CONTACT US
-                        </h2>
-                        <p className="text-blue-200/60 max-w-2xl mx-auto text-lg font-medium">
-                            Get a Free Consultation for Your Custom Growth Playbook.
-                        </p>
-                    </div>
-                </BlurFade>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-stretch">
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    {/* Form Side */}
-                    <BlurFade delay={0.1} inView>
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                                Let's create something <span className="text-blue-500">extraordinary</span>.
-                            </h2>
-                            <p className="text-blue-200 mb-12 text-lg">
-                                Ready to elevate your brand? Tell us about your project and we'll craft the perfect solution.
-                            </p>
-
-                            <form className="space-y-6" onSubmit={handleSubmit}>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-blue-200">Your Name</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="John Doe"
-                                        value={formState.name}
-                                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                                        className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-blue-300/40"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-blue-200">Email Address</label>
-                                    <input
-                                        type="email"
-                                        required
-                                        placeholder="john@example.com"
-                                        value={formState.email}
-                                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                                        className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-blue-300/40"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-blue-200">Project Details</label>
-                                    <textarea
-                                        required
-                                        placeholder="Tell us about your goals..."
-                                        rows={4}
-                                        value={formState.message}
-                                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                                        className="w-full glass-input rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-blue-300/40 resize-none"
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30_rgba(59,130,246,0.5)] active:scale-[0.98]"
+                    {/* 1. Consultation Focus Card - Top on Mobile, Top-Right on Desktop */}
+                    <div className="flex justify-end w-full lg:order-2 order-first lg:col-start-2 lg:row-start-1 h-fit">
+                        <BlurFade delay={0.3} inView className="w-full max-w-[450px]">
+                            <div className="bg-[#121212] border border-white/5 p-10 rounded-3xl w-full shadow-2xl">
+                                <h3 className="text-2xl font-bold text-white mb-8 text-center italic uppercase tracking-tighter">Consultation Focus</h3>
+                                <Link
+                                    href="https://calendly.com/valoradimensions/15?month=2026-02"
+                                    target="_blank"
+                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_25px_rgba(37,99,235,0.3)] active:scale-[0.98] text-center block text-sm tracking-tight"
                                 >
-                                    Send Message <ChevronRight className="w-4 h-4" />
-                                </button>
-                            </form>
-                        </motion.div>
-                    </BlurFade>
+                                    Book my consultation
+                                </Link>
+                            </div>
+                        </BlurFade>
+                    </div>
 
-                    {/* Project Scope / "Cart" Side */}
-                    <BlurFade delay={0.2} inView>
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="lg:pl-10 h-full"
-                        >
-                            <GlassCard className="h-full bg-white/5 backdrop-blur-2xl border-white/10 relative overflow-hidden p-8 flex flex-col items-center">
-                                <h3 className="text-xl md:text-2xl font-bold text-white mb-6">Consultation Focus</h3>
-                                <p className="text-md text-blue-200 mb-8 font-medium">Select the areas you want to discuss during our call:</p>
+                    {/* 2. Left Column: Heading and Form - Middle on Mobile, Left-Full on Desktop */}
+                    <div className="flex flex-col justify-between lg:order-1 order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+                        <div className="space-y-12">
+                            <BlurFade delay={0.1} inView>
+                                <div className="space-y-8">
+                                    <h2 className="text-6xl md:text-8xl font-black text-white leading-[0.9] tracking-tighter">
+                                        Let's create <br />
+                                        something <br />
+                                        <span className="text-blue-500">extraordinary.</span>
+                                    </h2>
+                                    <p className="text-gray-400 text-lg md:text-xl max-w-sm font-medium leading-relaxed">
+                                        Ready to elevate your brand? Tell us about your project and we'll craft the perfect solution.
+                                    </p>
+                                </div>
+                            </BlurFade>
 
-                                <div className="space-y-4 w-full">
-                                    {scopes.map((scope) => (
-                                        <div
-                                            key={scope}
-                                            onClick={() => toggleScope(scope)}
-                                            className={`flex items-center justify-between p-5 rounded-xl border cursor-pointer transition-all duration-300 ${selectedScopes.includes(scope)
-                                                ? "bg-blue-600/20 border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.2)]"
-                                                : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20"
-                                                }`}
-                                        >
-                                            <span className={`font-semibold text-base md:text-lg ${selectedScopes.includes(scope) ? "text-white" : "text-blue-200"}`}>
-                                                {scope}
-                                            </span>
-                                            <div className={`w-7 h-7 rounded-full border flex items-center justify-center transition-colors ${selectedScopes.includes(scope) ? "bg-blue-500 border-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" : "border-blue-500/30"
-                                                }`}>
-                                                {selectedScopes.includes(scope) && <Check className="w-4 h-4 text-white" />}
+                            <BlurFade delay={0.2} inView>
+                                <form id="contact-form" onSubmit={handleSubmit} className="space-y-8">
+                                    <div className="space-y-3">
+                                        <label className="text-sm font-bold text-gray-400 uppercase tracking-widest">Your Name</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            placeholder="John Doe"
+                                            value={formState.name}
+                                            onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                                            className="w-full bg-[#121212] border border-white/5 rounded-xl px-6 py-5 text-white focus:outline-none focus:border-blue-500/20 transition-all placeholder:text-gray-700 font-medium"
+                                        />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-sm font-bold text-gray-400 uppercase tracking-widest">Mobile Number</label>
+                                        <input
+                                            type="tel"
+                                            required
+                                            placeholder="+91 00000 00000"
+                                            value={formState.mobile}
+                                            onChange={(e) => setFormState({ ...formState, mobile: e.target.value })}
+                                            className="w-full bg-[#121212] border border-white/5 rounded-xl px-6 py-5 text-white focus:outline-none focus:border-blue-500/20 transition-all placeholder:text-gray-700 font-medium"
+                                        />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-sm font-bold text-gray-400 uppercase tracking-widest">Project Details</label>
+                                        <textarea
+                                            required
+                                            placeholder="Tell us about your goals..."
+                                            rows={6}
+                                            value={formState.message}
+                                            onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                                            className="w-full bg-[#121212] border border-white/5 rounded-xl px-6 py-5 text-white focus:outline-none focus:border-blue-500/20 transition-all placeholder:text-gray-700 font-medium resize-none shadow-inner"
+                                        />
+                                    </div>
+                                </form>
+                            </BlurFade>
+                        </div>
+                    </div>
+
+                    {/* 3. Bottom Group: Checklist + Send Message Button - Bottom on both */}
+                    <div className="flex flex-col justify-end h-full w-full lg:order-3 order-3 lg:col-start-2 lg:row-start-2">
+                        <div className="space-y-10 flex flex-col items-end w-full pt-12 lg:pt-0">
+                            {/* Focus Points List */}
+                            <BlurFade delay={0.4} inView className="w-full">
+                                <div className="space-y-6">
+                                    <p className="text-gray-400 font-bold text-sm text-left lg:text-left tracking-wide">
+                                        Select the areas you want to discuss during our call:
+                                    </p>
+                                    <div className="space-y-3">
+                                        {scopes.map((scope) => (
+                                            <div
+                                                key={scope}
+                                                onClick={() => toggleScope(scope)}
+                                                className={`flex items-center justify-between p-6 rounded-2xl border cursor-pointer transition-all duration-300 ${selectedScopes.includes(scope)
+                                                    ? "bg-blue-600/10 border-blue-500/30 shadow-[0_0_20px_rgba(37,99,235,0.1)]"
+                                                    : "bg-[#121212] border-white/5 hover:border-white/10"
+                                                    }`}
+                                            >
+                                                <span className={`font-bold text-sm ${selectedScopes.includes(scope) ? "text-white" : "text-gray-600"}`}>
+                                                    {scope}
+                                                </span>
+                                                <div className={`w-6 h-6 rounded-full border flex items-center justify-center transition-all ${selectedScopes.includes(scope)
+                                                    ? "bg-blue-600 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                                    : "border-white/10"
+                                                    }`}>
+                                                    {selectedScopes.includes(scope) && <Check className="w-3.5 h-3.5 text-white stroke-[3px]" />}
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
+                            </BlurFade>
 
-                                <div className="mt-12 w-full">
-                                    <Link
-                                        href="https://calendly.com/valoradimensions/15?month=2026-02"
-                                        target="_blank"
-                                        className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30_rgba(59,130,246,0.5)] active:scale-95"
-                                    >
-                                        Book my consultation
-                                    </Link>
-                                </div>
-                            </GlassCard>
-                        </motion.div>
-                    </BlurFade>
+                            {/* Send Message Button (Bottom Right) */}
+                            <BlurFade delay={0.5} inView className="w-full flex justify-end">
+                                <button
+                                    form="contact-form"
+                                    type="submit"
+                                    className="bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-4 rounded-xl transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] active:scale-95 flex items-center gap-3 text-sm tracking-tighter"
+                                >
+                                    SEND MESSAGE <ChevronRight className="w-4 h-4" />
+                                </button>
+                            </BlurFade>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
-
-            {/* Success Modal */}
-            <AnimatePresence>
-                {showSuccess && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center px-6"
-                    >
-                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowSuccess(false)} />
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.8, opacity: 0, y: 20 }}
-                            className="relative w-full max-w-md"
-                        >
-                            <GlassCard className="p-8 bg-blue-600/10 border-blue-500/30 text-center flex flex-col items-center">
-                                <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-6">
-                                    <Check className="w-8 h-8 text-blue-400" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">Message sent successfully</h3>
-                                <p className="text-blue-200/60 mb-8 italic">we will contact you soon!!!</p>
-                                <button
-                                    onClick={handleSuccessConfirm}
-                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] active:scale-95"
-                                >
-                                    Okay
-                                </button>
-                            </GlassCard>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </section>
     );
 };

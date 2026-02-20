@@ -6,6 +6,7 @@ import Services from './components/Services'
 import GrowthModel from './components/GrowthModel'
 import About from './components/About'
 import Contact from './components/Contact'
+import SmoothScroll from './components/ui/SmoothScroll'
 
 function App() {
     const schemaData = {
@@ -97,13 +98,15 @@ function App() {
             </Helmet>
 
             <Navbar />
-            <main>
-                <Hero />
-                <GrowthModel />
-                <Services />
-                <About />
-                <Contact />
-            </main>
+            <SmoothScroll>
+                <main>
+                    <Hero />
+                    <GrowthModel />
+                    <Services />
+                    <About />
+                    <Contact />
+                </main>
+            </SmoothScroll>
             <footer style={{ padding: '60px 0', textAlign: 'center', color: 'var(--text-secondary)', borderTop: '1px solid var(--glass-border)', background: 'var(--bg-section-alt)' }}>
                 <div className="container">
                     <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap' }}>
