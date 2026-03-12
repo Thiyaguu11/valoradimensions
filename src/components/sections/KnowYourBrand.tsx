@@ -53,7 +53,7 @@ const plans = {
     },
     B: {
         name: "SPECTRUM DIMENSION",
-        price: "Rs 15,000/Month",
+        price: "Rs 28,999/Month",
         description: "Advanced growth & lead generation.",
         icon: <Zap className="w-8 h-8 text-blue-500" />,
         features: [
