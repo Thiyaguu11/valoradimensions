@@ -39,7 +39,7 @@ const questions = [
 const plans = {
     A: {
         name: "ORBIT DIMENSION",
-        price: "Rs 9,999/Month",
+        price: "Rs 15,000/Month",
         description: "Perfect for foundational social presence.",
         icon: <ShieldCheck className="w-8 h-8 text-blue-400" />,
         features: [
@@ -67,7 +67,7 @@ const plans = {
     },
     C: {
         name: "ELEVATE DIMENSION",
-        price: "Rs 28,999/Month",
+        price: "Rs 37,999/Month",
         description: "The ultimate marketing powerhouse.",
         icon: <Sparkles className="w-8 h-8 text-cyan-400" />,
         features: [
