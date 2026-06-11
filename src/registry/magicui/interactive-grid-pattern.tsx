@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,16 @@ interface InteractiveGridPatternProps {
     repeatDelay?: number;
 }
 
+function generateSquares(count: number) {
+    return Array.from({ length: count }, (_, i) => ({
+        id: i,
+        pos: [
+            Math.floor(Math.random() * 100),
+            Math.floor(Math.random() * 100),
+        ],
+    }));
+}
+
 export function InteractiveGridPattern({
     className,
     width = 40,
@@ -31,23 +41,11 @@ export function InteractiveGridPattern({
     ...props
 }: InteractiveGridPatternProps) {
     const id = useId();
-    const containerRef = useRef<SVGSVGElement>(null);
-    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [squares, setSquares] = useState<{ id: number; pos: number[] }[]>([]);
 
     useEffect(() => {
         setSquares(generateSquares(numSquares));
     }, [numSquares]);
-
-    function generateSquares(count: number) {
-        return Array.from({ length: count }, (_, i) => ({
-            id: i,
-            pos: [
-                Math.floor(Math.random() * 100),
-                Math.floor(Math.random() * 100),
-            ],
-        }));
-    }
 
     const updateSquarePosition = (id: number) => {
         setSquares((currentSquares) =>
@@ -65,28 +63,8 @@ export function InteractiveGridPattern({
         );
     };
 
-    useEffect(() => {
-        if (containerRef.current) {
-            const resizeObserver = new ResizeObserver((entries) => {
-                for (let entry of entries) {
-                    setDimensions({
-                        width: entry.contentRect.width,
-                        height: entry.contentRect.height,
-                    });
-                }
-            });
-
-            resizeObserver.observe(containerRef.current);
-
-            return () => {
-                resizeObserver.disconnect();
-            };
-        }
-    }, [containerRef]);
-
     return (
         <svg
-            ref={containerRef}
             aria-hidden="true"
             className={cn(
                 "pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
@@ -121,6 +99,7 @@ export function InteractiveGridPattern({
                             repeat: Infinity,
                             delay: index * 0.1,
                             repeatType: "reverse",
+                            repeatDelay,
                         }}
                         onAnimationComplete={() => updateSquarePosition(id)}
                         key={`${id}-${x}-${y}`}

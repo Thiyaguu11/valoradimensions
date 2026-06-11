@@ -9,10 +9,10 @@ import Image from "next/image";
 
 const navItems = [
     { name: "About", href: "#about" },
-    { name: "Expertise", href: "#expertise" },
-    { name: "Services", href: "#know-your-brand" },
+    { name: "Services", href: "#expertise" },
+    { name: "Know Your Brand", href: "#know-your-brand" },
     { name: "Brandfolio", href: "#brandfolio" },
-    { name: "Clients", href: "#testimonials" },
+    { name: "Blogs", href: "#blogs" },
     { name: "Contact", href: "#contact" },
 ];
 
@@ -93,12 +93,19 @@ export function Navbar() {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    onClick={(e) => scrollToSection(e, item.href)}
+                                    onClick={(e) => {
+                                        if (item.href === "#blogs") {
+                                            e.preventDefault();
+                                            window.location.hash = "#blogs";
+                                            return;
+                                        }
+                                        scrollToSection(e, item.href);
+                                    }}
                                     className={cn(
                                         "text-[15.5px] font-medium transition-all duration-300 relative group py-2",
                                         isActive
-                                            ? "text-blue-500"
-                                            : "text-neutral-300 hover:text-blue-400"
+                                            ? "text-brand-cyan"
+                                            : "text-neutral-300 hover:text-brand-cyan/85"
                                     )}
                                 >
                                     {item.name}
@@ -106,7 +113,7 @@ export function Navbar() {
                                     {isActive && (
                                         <motion.div
                                             layoutId="activeDot"
-                                            className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-500 rounded-full"
+                                            className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-brand-cyan rounded-full shadow-[0_0_8px_rgba(0,168,232,0.6)]"
                                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                                         />
                                     )}
@@ -121,13 +128,13 @@ export function Navbar() {
                         href="#contact"
                         onClick={(e) => scrollToSection(e, "#contact")}
                         className={cn(
-                            "hidden md:block px-5 py-2 rounded-full text-[15.5px] font-medium transition-all duration-300 border",
+                            "hidden md:block px-6 py-2 rounded-full text-[15.5px] font-bold transition-all duration-300 border font-mono uppercase tracking-wider text-xs",
                             activeSection === "contact"
-                                ? "bg-blue-600 text-white border-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.3)]"
-                                : "bg-white/10 text-neutral-300 hover:bg-white/20 border-white/10"
+                                ? "bg-brand-orange text-white border-brand-orange shadow-[0_0_20px_rgba(251,133,0,0.4)]"
+                                : "bg-brand-deep-blue/20 text-neutral-300 hover:bg-brand-cyan/15 hover:text-white border-brand-cyan/30"
                         )}
                     >
-                        Let's Talk
+                        Let&apos;s Talk
                     </Link>
 
                     {/* Mobile Toggle */}
@@ -156,11 +163,16 @@ export function Navbar() {
                                         href={item.href}
                                         onClick={(e) => {
                                             setMobileMenuOpen(false);
+                                            if (item.href === "#blogs") {
+                                                e.preventDefault();
+                                                window.location.hash = "#blogs";
+                                                return;
+                                            }
                                             scrollToSection(e, item.href);
                                         }}
                                         className={cn(
-                                            "text-2xl font-light transition-colors",
-                                            isActive ? "text-blue-500 font-medium" : "text-white hover:text-blue-500"
+                                            "text-2xl font-light transition-colors uppercase font-mono tracking-wider",
+                                            isActive ? "text-brand-cyan font-bold" : "text-white hover:text-brand-cyan"
                                         )}
                                     >
                                         {item.name}

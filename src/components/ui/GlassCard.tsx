@@ -6,7 +6,7 @@ import { motion, HTMLMotionProps } from "framer-motion";
 interface GlassCardProps extends HTMLMotionProps<"div"> {
     children: React.ReactNode;
     className?: string;
-    variant?: "default" | "panel" | "hero";
+    variant?: "default" | "panel" | "hero" | "hud" | "hud-orange";
 }
 
 export const GlassCard = ({
@@ -18,11 +18,13 @@ export const GlassCard = ({
     return (
         <motion.div
             className={cn(
-                "rounded-2xl border transition-all duration-300",
+                "rounded-2xl border transition-all duration-300 relative",
                 variant === "default" &&
-                "glass-card hover:bg-white/10 hover:border-blue-500/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]",
-                variant === "panel" && "glass-panel bg-black/20 border-white/5",
-                variant === "hero" && "glass-card bg-white/5 backdrop-blur-3xl border-white/20 shadow-[0_0_50px_rgba(59,130,246,0.15)] rounded-3xl",
+                "glass-card hover:bg-brand-deep-blue/10 hover:border-brand-cyan/30 hover:shadow-[0_8px_32px_rgba(0,0,0,0.45)]",
+                variant === "panel" && "glass-panel bg-brand-black/40 border-brand-deep-blue/35",
+                variant === "hero" && "glass-card bg-brand-deep-blue/5 backdrop-blur-3xl border-brand-cyan/20 shadow-[0_12px_50px_rgba(0,0,0,0.6)] rounded-3xl",
+                variant === "hud" && "glass-panel bg-[#08111e]/90 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-[0_8px_32px_rgba(0,0,0,0.45)]",
+                variant === "hud-orange" && "glass-panel bg-[#08111e]/90 border-brand-orange/20 hover:border-brand-orange/40 hover:shadow-[0_8px_32px_rgba(0,0,0,0.45)]",
                 className
             )}
             initial={{ opacity: 0, y: 20 }}

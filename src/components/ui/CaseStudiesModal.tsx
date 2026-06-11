@@ -66,7 +66,7 @@ export const CaseStudiesModal = ({ isOpen, onClose }: CaseStudiesModalProps) => 
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-black/60 backdrop-blur-md"
+                        className="absolute inset-0 bg-black/80 backdrop-blur-md"
                     />
 
                     {/* Modal Content */}
@@ -75,17 +75,17 @@ export const CaseStudiesModal = ({ isOpen, onClose }: CaseStudiesModalProps) => 
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden bg-zinc-900/90 border border-white/10 rounded-3xl shadow-2xl flex flex-col"
+                        className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden bg-[#08111e]/95 border border-brand-cyan/20 rounded-3xl shadow-[0_0_50px_rgba(0,168,232,0.15)] flex flex-col"
                     >
                         {/* Header */}
-                        <div className="p-6 md:p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+                        <div className="p-6 md:p-8 border-b border-brand-cyan/15 flex items-center justify-between bg-brand-deep-blue/5">
                             <div>
-                                <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter">Case Studies</h2>
-                                <p className="text-blue-200/50 text-sm font-medium mt-1">Discover how we drive extraordinary growth</p>
+                                <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-wider font-mono">Case Studies</h2>
+                                <p className="text-brand-cyan/50 text-sm font-medium mt-1">Discover how we drive extraordinary growth</p>
                             </div>
                             <button
                                 onClick={onClose}
-                                className="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:rotate-90"
+                                className="p-2 rounded-full bg-brand-deep-blue/20 hover:bg-brand-cyan/25 border border-brand-cyan/30 text-white transition-all hover:rotate-90"
                             >
                                 <X className="w-6 h-6" />
                             </button>
@@ -101,7 +101,7 @@ export const CaseStudiesModal = ({ isOpen, onClose }: CaseStudiesModalProps) => 
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.1 + index * 0.1 }}
                                     >
-                                        <GlassCard className="group h-full flex flex-col overflow-hidden bg-white/[0.03] border-white/5 hover:border-blue-500/30 transition-all duration-500">
+                                        <GlassCard variant="hud" className="group h-full flex flex-col overflow-hidden bg-[#08111e]/95 border-brand-cyan/15 hover:border-brand-cyan/45 transition-all duration-500 shadow-lg">
                                             <div className="relative h-48 overflow-hidden">
                                                 <Image
                                                     src={study.image}
@@ -109,32 +109,32 @@ export const CaseStudiesModal = ({ isOpen, onClose }: CaseStudiesModalProps) => 
                                                     fill
                                                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                                                 />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-brand-black/90 to-transparent" />
                                                 <div className="absolute bottom-4 left-4">
-                                                    <span className="px-3 py-1 rounded-full bg-blue-600/90 text-[10px] font-black uppercase tracking-widest text-white">
+                                                    <span className="px-3 py-1 rounded-full bg-brand-orange text-[10px] font-black uppercase tracking-wider text-white font-mono shadow-[0_0_10px_rgba(251,133,0,0.3)]">
                                                         {study.category}
                                                     </span>
                                                 </div>
                                             </div>
 
                                             <div className="p-6 flex-1 flex flex-col">
-                                                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                                                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-brand-cyan transition-colors">
                                                     {study.title}
                                                 </h3>
-                                                <p className="text-blue-100/60 text-sm leading-relaxed mb-6 flex-1">
+                                                <p className="text-brand-white/70 text-sm leading-relaxed mb-6 flex-1">
                                                     {study.description}
                                                 </p>
 
                                                 <div className="grid grid-cols-2 gap-4 mb-6">
                                                     {study.stats.map((stat, i) => (
-                                                        <div key={i} className="p-3 rounded-xl bg-white/5 border border-white/5">
-                                                            <div className="text-lg font-black text-blue-400">{stat.value}</div>
-                                                            <div className="text-[10px] text-blue-200/40 uppercase font-bold">{stat.label}</div>
+                                                        <div key={i} className="p-3 rounded-xl bg-brand-black/40 border border-brand-deep-blue/20">
+                                                            <div className="text-lg font-black text-brand-cyan font-mono">{stat.value}</div>
+                                                            <div className="text-[10px] text-brand-white/40 uppercase font-bold font-mono">{stat.label}</div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <button className="w-full py-3 rounded-xl border border-white/10 bg-white/5 text-white text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-blue-600 hover:border-blue-500 transition-all group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                                                <button className="w-full py-3 rounded-xl border border-brand-cyan/30 bg-brand-deep-blue/20 text-white text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-brand-orange hover:border-brand-orange transition-all group-hover:shadow-[0_0_15px_rgba(251,133,0,0.3)] font-mono">
                                                     View Details <ExternalLink className="w-3 h-3" />
                                                 </button>
                                             </div>
@@ -148,25 +148,25 @@ export const CaseStudiesModal = ({ isOpen, onClose }: CaseStudiesModalProps) => 
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.4 }}
                                 >
-                                    <GlassCard className="h-full border-dashed border-white/10 bg-transparent flex flex-col items-center justify-center p-12 text-center opacity-40 hover:opacity-60 transition-opacity">
-                                        <div className="w-16 h-16 rounded-full border border-dashed border-white/20 flex items-center justify-center mb-4">
-                                            <ArrowRight className="w-6 h-6 text-white" />
+                                    <GlassCard variant="hud" className="h-full border-dashed border-brand-cyan/20 bg-transparent flex flex-col items-center justify-center p-12 text-center opacity-50 hover:opacity-75 transition-opacity">
+                                        <div className="w-16 h-16 rounded-full border border-dashed border-brand-cyan/30 flex items-center justify-center mb-4">
+                                            <ArrowRight className="w-6 h-6 text-brand-cyan" />
                                         </div>
-                                        <h3 className="text-lg font-bold text-white mb-2 italic">Your Success Story Here</h3>
-                                        <p className="text-blue-200/60 text-sm">Join our network of thriving brands and let's craft your growth dimension.</p>
+                                        <h3 className="text-lg font-bold text-white mb-2 italic uppercase">Your Success Story Here</h3>
+                                        <p className="text-brand-white/65 text-sm">Join our network of thriving brands and let&apos;s craft your growth dimension.</p>
                                     </GlassCard>
                                 </motion.div>
                             </div>
                         </div>
 
                         {/* Footer */}
-                        <div className="p-6 md:p-8 bg-blue-600/5 border-t border-white/5 text-center">
-                            <p className="text-blue-200/60 text-sm font-medium">Ready to see these results for your brand?</p>
+                        <div className="p-6 md:p-8 bg-brand-deep-blue/10 border-t border-brand-cyan/20 text-center">
+                            <p className="text-brand-white/80 text-sm font-medium">Ready to see these results for your brand?</p>
                             <button
                                 onClick={onClose}
-                                className="mt-4 px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-blue-500/20 active:scale-95"
+                                className="mt-4 px-8 py-3 bg-brand-orange hover:bg-brand-orange/90 text-white font-bold rounded-full transition-all shadow-[0_0_20px_rgba(251,133,0,0.3)] hover:shadow-[0_0_30px_rgba(251,133,0,0.5)] active:scale-95 font-mono uppercase tracking-wider text-xs border border-brand-orange/40"
                             >
-                                Let's Discuss Your Project
+                                Let&apos;s Discuss Your Project
                             </button>
                         </div>
                     </motion.div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { BlurFade } from "@/components/ui/BlurFade";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
