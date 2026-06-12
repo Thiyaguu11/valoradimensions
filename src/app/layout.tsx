@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CookieConsent } from "@/components/ui/CookieConsent";
+import { DeviceStatusBar } from "@/components/layout/DeviceStatusBar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,12 +27,33 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased text-white relative selection:bg-blue-500/30 selection:text-blue-200 font-sans`}
       >
-        <Navbar />
-        <main className="min-h-screen relative overflow-hidden">
-          {children}
-        </main>
-        <Footer />
-        <CookieConsent />
+        <div className="device-wrapper">
+          <div className="device-chassis">
+            {/* Camera Notch */}
+            <div className="device-notch">
+              <div className="device-notch-speaker"></div>
+              <div className="device-notch-camera"></div>
+            </div>
+
+            {/* Mobile Status Bar */}
+            <DeviceStatusBar />
+
+            {/* Mobile Viewport */}
+            <div className="device-viewport">
+              <Navbar />
+              <main className="flex-1 relative overflow-visible">
+                {children}
+              </main>
+              <Footer />
+              <CookieConsent />
+            </div>
+
+            {/* Home Indicator */}
+            <div className="device-home-bar">
+              <div className="device-home-indicator"></div>
+            </div>
+          </div>
+        </div>
       </body>
     </html>
   );

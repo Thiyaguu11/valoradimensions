@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { BlurFade } from "@/components/ui/BlurFade";
-import { scrollToSection } from "@/lib/utils";
+import { cn, scrollToSection } from "@/lib/utils";
 import {
     Monitor,
     Search,
@@ -70,34 +70,34 @@ const serviceMap: Record<string, {
 }> = {
     webdev: {
         label: "Website Development",
-        icon: <Monitor className="w-5 h-5" />,
+        icon: <Monitor className="w-4 h-4" />,
         accent: "text-brand-cyan",
-        border: "border-brand-cyan/35",
-        bg: "bg-brand-cyan/8",
+        border: "border-brand-cyan/25",
+        bg: "bg-brand-cyan/5",
         pitch: "You need a modern, high-converting digital storefront that works 24/7.",
     },
     googleads: {
         label: "Google Ads",
-        icon: <Search className="w-5 h-5" />,
+        icon: <Search className="w-4 h-4" />,
         accent: "text-brand-orange",
-        border: "border-brand-orange/35",
-        bg: "bg-brand-orange/8",
+        border: "border-brand-orange/25",
+        bg: "bg-brand-orange/5",
         pitch: "You're missing immediate, high-intent search traffic — Google Ads fix that fast.",
     },
     leadgen: {
         label: "Lead Generation",
-        icon: <Users className="w-5 h-5" />,
+        icon: <Users className="w-4 h-4" />,
         accent: "text-brand-green",
-        border: "border-brand-green/35",
-        bg: "bg-brand-green/8",
+        border: "border-brand-green/25",
+        bg: "bg-brand-green/5",
         pitch: "You need a structured funnel that delivers qualified leads consistently.",
     },
     smm: {
         label: "Social Media Management",
-        icon: <LayoutGrid className="w-5 h-5" />,
+        icon: <LayoutGrid className="w-4 h-4" />,
         accent: "text-brand-yellow",
-        border: "border-brand-yellow/35",
-        bg: "bg-brand-yellow/8",
+        border: "border-brand-yellow/25",
+        bg: "bg-brand-yellow/5",
         pitch: "Your brand needs daily visibility and engagement to build trust & community.",
     },
 };
@@ -106,6 +106,7 @@ type Answer = "yes" | "no" | null;
 
 /* ─── COMPONENT ───────────────────────────────────────────────── */
 export const KnowYourBrand = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [answers, setAnswers] = useState<Record<number, Answer>>({});
     const [submitted, setSubmitted] = useState(false);
 
@@ -126,12 +127,32 @@ export const KnowYourBrand = () => {
     };
 
     const handleSubmit = () => {
-        if (allAnswered) setSubmitted(true);
+        if (allAnswered) {
+            setSubmitted(true);
+            try {
+                const recommendedList = Array.from(recommended).map(svcId => serviceMap[svcId]?.label || svcId);
+                const diagnosticInfo = {
+                    recommendedServices: recommendedList,
+                    answers: questions.map(q => ({
+                        question: q.q,
+                        answer: answers[q.id]
+                    }))
+                };
+                localStorage.setItem("valora_diagnostic_results", JSON.stringify(diagnosticInfo));
+            } catch (e) {
+                console.error("Error storing diagnostic results:", e);
+            }
+        }
     };
 
     const handleReset = () => {
         setAnswers({});
         setSubmitted(false);
+        try {
+            localStorage.removeItem("valora_diagnostic_results");
+        } catch (e) {
+            console.error("Error removing diagnostic results:", e);
+        }
     };
 
     const scorePercent = Math.round((totalAnswered / questions.length) * 100);
@@ -139,7 +160,7 @@ export const KnowYourBrand = () => {
     return (
         <section
             id="know-your-brand"
-            className="py-28 relative overflow-hidden bg-transparent text-white"
+            className="py-24 relative overflow-hidden bg-transparent text-white"
         >
             {/* Ambient glows */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -148,10 +169,10 @@ export const KnowYourBrand = () => {
                 <div className="absolute top-1/2 right-0 w-80 h-80 bg-brand-deep-blue/20 blur-[100px] rounded-full" />
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-12">
+            <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-12 text-center">
                 {/* ── HEADER ── */}
                 <BlurFade delay={0.05} inView>
-                    <div className="space-y-4 flex flex-col items-center text-center">
+                    <div className="space-y-4 flex flex-col items-center">
                         <div className="flex items-center gap-3 justify-center">
                             <span className="h-px w-10 bg-brand-cyan/40" />
                             <span className="text-brand-cyan text-[10px] font-mono font-bold uppercase tracking-[0.3em]">Brand Diagnostic</span>
@@ -159,8 +180,8 @@ export const KnowYourBrand = () => {
                         </div>
 
                         {/* Big title with gradient letters */}
-                        <div className="relative inline-block">
-                            <h2 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-none">
+                        <div className="relative inline-block pr-4">
+                            <h2 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-none italic">
                                 <span className="text-white">Know</span>{" "}
                                 <span
                                     className="relative inline-block"
@@ -182,293 +203,261 @@ export const KnowYourBrand = () => {
                             />
                         </div>
 
-                        <p className="text-brand-white/55 text-base max-w-xl leading-relaxed pt-2 mx-auto">
+                        <p className="text-brand-white/55 text-base max-w-xl leading-relaxed pt-2.5 mx-auto">
                             Six quick questions. Honest answers. We&apos;ll tell you exactly where your growth gaps are.
                         </p>
                     </div>
                 </BlurFade>
 
-                {/* ── 2-COL LAYOUT: Quiz left · Character GIF right ── */}
-                <div className="flex flex-col lg:flex-row items-stretch gap-8">
-                    {/* Left Column: Quiz Panel */}
-                    <div className="flex-1 min-w-0">
-                        <AnimatePresence mode="wait">
-                    {!submitted ? (
-                        <motion.div
-                            key="quiz"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
+                {/* ── LAUNCH BUTTON ── */}
+                <BlurFade delay={0.1} inView>
+                    <div className="flex justify-center pt-4">
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="group relative py-4 px-8 bg-gradient-to-r from-brand-cyan to-[#104e92] hover:scale-[1.02] active:scale-95 transition-all duration-300 rounded-full font-black text-xs uppercase tracking-widest text-white shadow-[0_0_20px_rgba(0,168,232,0.35)] hover:shadow-[0_0_35px_rgba(0,168,232,0.55)] border border-brand-cyan/30 cursor-pointer flex items-center justify-center gap-2.5 animate-pulse hover:animate-none"
                         >
-                            <GlassCard className="overflow-hidden border border-brand-cyan/15 bg-brand-deep-blue/5 shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
-                                {/* Card Header */}
-                                <div className="px-8 py-5 border-b border-brand-white/8 flex items-center justify-between bg-brand-black/30 backdrop-blur-sm">
-                                    <div className="flex items-center gap-3">
-                                        <Sparkles className="w-4 h-4 text-brand-cyan" />
-                                        <span className="text-white font-black text-sm uppercase tracking-widest font-mono">
-                                            The Dimension Diagnostic
-                                        </span>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        {/* Progress bar */}
-                                        <div className="w-28 h-1.5 rounded-full bg-brand-white/10 overflow-hidden">
-                                            <motion.div
-                                                className="h-full rounded-full"
-                                                style={{ background: "linear-gradient(90deg, #00a8e8, #fb8500)" }}
-                                                animate={{ width: `${scorePercent}%` }}
-                                                transition={{ duration: 0.4 }}
-                                            />
-                                        </div>
-                                        <span className="text-brand-cyan text-[10px] font-mono font-bold whitespace-nowrap">
-                                            {totalAnswered}/{questions.length}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Questions */}
-                                <div className="divide-y divide-brand-white/6">
-                                    {questions.map((q, i) => {
-                                        const ans = answers[q.id] ?? null;
-                                        return (
-                                            <motion.div
-                                                key={q.id}
-                                                initial={{ opacity: 0, x: -10 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: i * 0.07, duration: 0.4 }}
-                                                className={`px-8 py-6 flex flex-col sm:flex-row sm:items-center gap-5 transition-colors duration-300 ${ans ? "bg-brand-white/2" : ""}`}
-                                            >
-                                                {/* Number */}
-                                                <div className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-black font-mono border border-brand-white/10 text-brand-white/40">
-                                                    {String(i + 1).padStart(2, "0")}
-                                                </div>
-
-                                                {/* Question text */}
-                                                <p className={`flex-1 text-base leading-snug font-medium transition-colors duration-200 ${ans ? "text-white" : "text-brand-white/70"}`}>
-                                                    {q.q}
-                                                </p>
-
-                                                {/* Yes / No buttons */}
-                                                <div className="flex gap-2.5 shrink-0">
-                                                    <button
-                                                        onClick={() => handleAnswer(q.id, "yes")}
-                                                        className={`relative overflow-hidden px-6 py-2.5 rounded-full border text-xs font-black uppercase tracking-widest font-mono transition-all duration-200 cursor-pointer
-                                                            ${ans === "yes"
-                                                                ? "border-brand-green bg-brand-green text-white shadow-[0_0_20px_rgba(72,199,142,0.35)]"
-                                                                : "border-brand-white/15 text-brand-white/50 hover:border-brand-green/50 hover:text-brand-green hover:bg-brand-green/8"
-                                                            }`}
-                                                    >
-                                                        {ans === "yes" && <CheckCircle2 className="w-3 h-3 inline mr-1.5 -mt-0.5" />}
-                                                        Yes
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleAnswer(q.id, "no")}
-                                                        className={`relative overflow-hidden px-6 py-2.5 rounded-full border text-xs font-black uppercase tracking-widest font-mono transition-all duration-200 cursor-pointer
-                                                            ${ans === "no"
-                                                                ? "border-brand-orange bg-brand-orange text-white shadow-[0_0_20px_rgba(251,133,0,0.35)]"
-                                                                : "border-brand-white/15 text-brand-white/50 hover:border-brand-orange/50 hover:text-brand-orange hover:bg-brand-orange/8"
-                                                            }`}
-                                                    >
-                                                        {ans === "no" && <XCircle className="w-3 h-3 inline mr-1.5 -mt-0.5" />}
-                                                        No
-                                                    </button>
-                                                </div>
-                                            </motion.div>
-                                        );
-                                    })}
-                                </div>
-
-                                {/* Submit */}
-                                <div className="px-8 py-6 border-t border-brand-white/8 bg-brand-black/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-                                    <p className="text-brand-white/35 text-xs font-mono">
-                                        {allAnswered
-                                            ? "✓ All answered — ready for your growth analysis"
-                                            : `Answer all ${questions.length} questions to unlock your results`}
-                                    </p>
-                                    <button
-                                        onClick={handleSubmit}
-                                        disabled={!allAnswered}
-                                        className={`group relative px-8 py-3.5 rounded-full font-black text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer overflow-hidden flex items-center gap-2.5
-                                            ${allAnswered
-                                                ? "text-white shadow-[0_0_25px_rgba(0,168,232,0.35)] hover:shadow-[0_0_40px_rgba(0,168,232,0.55)] hover:scale-[1.03]"
-                                                : "opacity-35 cursor-not-allowed border border-brand-white/15 text-brand-white/50"
-                                            }`}
-                                        style={allAnswered ? {
-                                            background: "linear-gradient(135deg, #00a8e8, #104e92)"
-                                        } : {}}
-                                    >
-                                        Analyse My Brand <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                    </button>
-                                </div>
-                            </GlassCard>
-                        </motion.div>
-                    ) : (
-                        /* ── RESULTS PANEL ── */
-                        <motion.div
-                            key="results"
-                            initial={{ opacity: 0, scale: 0.96 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5, ease: "easeOut" }}
-                            className="space-y-6"
-                        >
-                            {/* Results Header */}
-                            <GlassCard className="overflow-hidden border border-brand-white/10 bg-brand-deep-blue/5 shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
-                                {/* Gradient top bar */}
-                                <div className="h-1 w-full" style={{ background: "linear-gradient(90deg, #00a8e8, #fb8500, #48c78e)" }} />
-
-                                <div className="px-8 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                                    <div className="space-y-1.5">
-                                        <div className="text-brand-cyan text-[9px] font-mono font-bold uppercase tracking-[0.3em] flex items-center gap-2">
-                                            <Sparkles className="w-3 h-3" /> Analysis Complete
-                                        </div>
-                                        <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight italic">
-                                            {recommended.size === 0
-                                                ? "Your Brand is Solid 🎯"
-                                                : `${recommended.size} Growth Gap${recommended.size > 1 ? "s" : ""} Identified`}
-                                        </h3>
-                                        <p className="text-brand-white/50 text-sm">
-                                            {recommended.size === 0
-                                                ? "Impressive — you're covering all the bases. Let's talk scaling."
-                                                : "Here's where we can unlock your next growth phase."}
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={handleReset}
-                                        className="flex items-center gap-2 px-4 py-2 rounded-full border border-brand-white/15 text-brand-white/50 hover:text-white hover:border-brand-white/35 transition-all text-xs font-mono uppercase tracking-wider cursor-pointer"
-                                    >
-                                        <RotateCcw className="w-3.5 h-3.5" /> Retake
-                                    </button>
-                                </div>
-                            </GlassCard>
-
-                            {/* Recommendation Cards */}
-                            {recommended.size > 0 && (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {Array.from(recommended).map((svcId, i) => {
-                                        const svc = serviceMap[svcId];
-                                        if (!svc) return null;
-                                        return (
-                                            <motion.div
-                                                key={svcId}
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ delay: i * 0.1, duration: 0.45 }}
-                                            >
-                                                <GlassCard className={`p-6 border ${svc.border} ${svc.bg} h-full group hover:scale-[1.015] transition-transform duration-300`}>
-                                                    <div className="flex items-start gap-4">
-                                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${svc.border} ${svc.bg} ${svc.accent}`}>
-                                                            {svc.icon}
-                                                        </div>
-                                                        <div className="space-y-1.5">
-                                                            <div className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] ${svc.accent}`}>
-                                                                Recommended
-                                                            </div>
-                                                            <div className="text-white font-bold text-sm">{svc.label}</div>
-                                                            <p className="text-brand-white/55 text-sm leading-snug">{svc.pitch}</p>
-                                                        </div>
-                                                    </div>
-                                                </GlassCard>
-                                            </motion.div>
-                                        );
-                                    })}
-                                </div>
-                            )}
-
-                            {/* CTA — Contact */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 16 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3, duration: 0.5 }}
-                            >
-                                <GlassCard className="relative overflow-hidden border border-brand-cyan/20 bg-brand-deep-blue/5 shadow-[0_20px_80px_rgba(0,0,0,0.55)]">
-                                    {/* Vivid gradient background */}
-                                    <div
-                                        className="absolute inset-0 opacity-[0.07] pointer-events-none"
-                                        style={{ background: "linear-gradient(135deg, #00a8e8 0%, #104e92 50%, #fb8500 100%)" }}
-                                    />
-                                    <div className="absolute inset-0 gaming-grid opacity-15 pointer-events-none" />
-
-                                    <div className="relative z-10 px-8 py-10 flex flex-col md:flex-row items-center gap-8">
-                                        <div className="flex-1 space-y-3 text-center md:text-left">
-                                            <div className="text-brand-cyan text-[9px] font-mono font-bold uppercase tracking-[0.3em]">
-                                                Next Step
-                                            </div>
-                                            <h4 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight italic leading-tight">
-                                                Let&apos;s Build Your
-                                                <br />
-                                                <span
-                                                    style={{
-                                                        background: "linear-gradient(90deg, #00a8e8, #fb8500)",
-                                                        WebkitBackgroundClip: "text",
-                                                        WebkitTextFillColor: "transparent",
-                                                        backgroundClip: "text",
-                                                    }}
-                                                >
-                                                    Growth Strategy
-                                                </span>
-                                            </h4>
-                                            <p className="text-brand-white/55 text-sm max-w-md">
-                                                Share your results with our team. We&apos;ll put together a custom growth plan — no generic proposals, just real strategy.
-                                            </p>
-                                        </div>
-
-                                        <div className="shrink-0">
-                                            <Link
-                                                href="#contact"
-                                                onClick={(e) => scrollToSection(e, "#contact")}
-                                            >
-                                                <button className="group relative px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest text-white overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer flex items-center gap-3 shadow-[0_0_30px_rgba(251,133,0,0.3)] hover:shadow-[0_0_50px_rgba(251,133,0,0.55)]"
-                                                    style={{ background: "linear-gradient(135deg, #fb8500, #e07000)" }}
-                                                >
-                                                    Contact Us
-                                                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                                </button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </GlassCard>
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                            <Sparkles className="w-4 h-4 text-brand-yellow shrink-0 animate-spin" style={{ animationDuration: "3s" }} />
+                            <span>Audit Your Business Growth</span>
+                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
                     </div>
-
-                    {/* Right Column: Character GIF */}
-                    <div className="w-full lg:w-[300px] xl:w-[340px] shrink-0 h-[450px] lg:h-auto lg:sticky lg:top-24">
-                        <BlurFade delay={0.1} inView className="h-full">
-                            <GlassCard className="relative w-full h-full overflow-hidden border border-brand-cyan/15 bg-brand-deep-blue/5 shadow-[0_20px_80px_rgba(0,0,0,0.6)] flex flex-col justify-end items-center p-6">
-                                {/* Subtle background glow */}
-                                <div className="absolute inset-0 pointer-events-none" style={{
-                                    background: "radial-gradient(ellipse 75% 50% at 50% 85%, rgba(0,168,232,0.12) 0%, transparent 70%)"
-                                }} />
-
-                                {/* Ground shadow ellipse */}
-                                <div
-                                    className="absolute bottom-[8%] left-1/2 -translate-x-1/2 w-40 h-4 rounded-full pointer-events-none blur-[6px]"
-                                    style={{ background: "radial-gradient(ellipse, rgba(0,168,232,0.25), transparent 70%)" }}
-                                />
-
-                                {/* Character GIF */}
-                                <div className="relative w-full h-full z-10 flex items-end justify-center overflow-hidden">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src="/creatives/5.gif"
-                                        alt="Diagnostic Agent"
-                                        className="w-full h-full object-contain"
-                                        loading="eager"
-                                        style={{
-                                            mixBlendMode: "multiply",
-                                            filter: "drop-shadow(0 0 25px rgba(0,168,232,0.25))",
-                                        }}
-                                    />
-                                </div>
-                            </GlassCard>
-                        </BlurFade>
-                    </div>
-                </div>
+                </BlurFade>
             </div>
-            {/* close max-w container */}
+
+            {/* ── MODAL DIALOG ── */}
+            <AnimatePresence>
+                {isModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="absolute inset-0"
+                            onClick={() => setIsModalOpen(false)}
+                        />
+                        <motion.div
+                            initial={{ scale: 0.95, y: 15 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.95, y: 15 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="relative z-10 w-full max-w-md bg-[#070d19]/95 border border-brand-white/10 rounded-[2rem] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.85)] max-h-[80vh] flex flex-col justify-between"
+                        >
+                            {/* Scrollable container for modal contents */}
+                            <div className="overflow-y-auto scrollbar-none flex-1">
+                                {!submitted ? (
+                                    /* Diagnostic Form */
+                                    <div>
+                                        {/* Card Header */}
+                                        <div className="px-6 py-5 border-b border-brand-white/8 flex items-center justify-between bg-brand-black/35 backdrop-blur-sm sticky top-0 z-20">
+                                            <div className="flex items-center gap-2">
+                                                <Sparkles className="w-4 h-4 text-brand-cyan animate-pulse" />
+                                                <span className="text-white font-black text-xs uppercase tracking-widest font-mono">
+                                                    Dimension Diagnostic
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                {/* Progress bar */}
+                                                <div className="w-20 h-1 rounded-full bg-brand-white/10 overflow-hidden">
+                                                    <motion.div
+                                                        className="h-full rounded-full"
+                                                        style={{ background: "linear-gradient(90deg, #00a8e8, #fb8500)" }}
+                                                        animate={{ width: `${scorePercent}%` }}
+                                                        transition={{ duration: 0.4 }}
+                                                    />
+                                                </div>
+                                                <span className="text-brand-cyan text-[10px] font-mono font-bold whitespace-nowrap">
+                                                    {totalAnswered}/{questions.length}
+                                                </span>
+                                                <button
+                                                    onClick={() => setIsModalOpen(false)}
+                                                    className="text-brand-white/40 hover:text-white transition-colors p-1 rounded hover:bg-white/5 cursor-pointer font-mono font-black text-sm leading-none ml-1"
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Questions */}
+                                        <div className="divide-y divide-brand-white/6">
+                                            {questions.map((q, i) => {
+                                                const ans = answers[q.id] ?? null;
+                                                return (
+                                                    <motion.div
+                                                        key={q.id}
+                                                        initial={{ opacity: 0, x: -10 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: i * 0.05, duration: 0.35 }}
+                                                        className={cn(
+                                                            "px-6 py-5 flex flex-col gap-3.5 transition-colors duration-350",
+                                                            ans ? "bg-brand-white/2" : ""
+                                                        )}
+                                                    >
+                                                        <div className="flex items-start gap-3">
+                                                            {/* Number */}
+                                                            <div className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black font-mono border border-brand-white/10 text-brand-white/40 mt-0.5">
+                                                                {String(i + 1).padStart(2, "0")}
+                                                            </div>
+                                                            {/* Question text */}
+                                                            <p className={cn(
+                                                                "flex-1 text-sm leading-snug font-medium transition-colors duration-200",
+                                                                ans ? "text-white" : "text-brand-white/70"
+                                                            )}>
+                                                                {q.q}
+                                                            </p>
+                                                        </div>
+
+                                                        {/* Yes / No buttons */}
+                                                        <div className="flex gap-2.5 shrink-0 pl-9">
+                                                            <button
+                                                                onClick={() => handleAnswer(q.id, "yes")}
+                                                                className={cn(
+                                                                    "relative overflow-hidden px-5 py-2 rounded-full border text-[10px] font-black uppercase tracking-widest font-mono transition-all duration-200 cursor-pointer",
+                                                                    ans === "yes"
+                                                                        ? "border-brand-green bg-brand-green text-white shadow-[0_0_15px_rgba(72,199,142,0.3)]"
+                                                                        : "border-brand-white/10 text-brand-white/50 hover:border-brand-green/40 hover:text-brand-green hover:bg-brand-green/5"
+                                                                )}
+                                                            >
+                                                                {ans === "yes" && <CheckCircle2 className="w-3 h-3 inline mr-1 -mt-0.5" />}
+                                                                Yes
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleAnswer(q.id, "no")}
+                                                                className={cn(
+                                                                    "relative overflow-hidden px-5 py-2 rounded-full border text-[10px] font-black uppercase tracking-widest font-mono transition-all duration-200 cursor-pointer",
+                                                                    ans === "no"
+                                                                        ? "border-brand-orange bg-brand-orange text-white shadow-[0_0_15px_rgba(251,133,0,0.3)]"
+                                                                        : "border-brand-white/10 text-brand-white/50 hover:border-brand-orange/40 hover:text-brand-orange hover:bg-brand-orange/5"
+                                                                )}
+                                                            >
+                                                                {ans === "no" && <XCircle className="w-3 h-3 inline mr-1 -mt-0.5" />}
+                                                                No
+                                                            </button>
+                                                        </div>
+                                                    </motion.div>
+                                                );
+                                            })}
+                                        </div>
+
+                                        {/* Submit Footer */}
+                                        <div className="px-6 py-5 border-t border-brand-white/8 bg-brand-black/25 flex flex-col gap-3 sticky bottom-0 z-20 backdrop-blur-md">
+                                            <p className="text-brand-white/35 text-[9px] font-mono text-center">
+                                                {allAnswered
+                                                    ? "✓ All answered — ready for analysis"
+                                                    : `Answer all ${questions.length} questions to unlock results`}
+                                            </p>
+                                            <button
+                                                onClick={handleSubmit}
+                                                disabled={!allAnswered}
+                                                className={cn(
+                                                    "group relative w-full py-3.5 rounded-xl font-black text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer overflow-hidden flex items-center justify-center gap-2",
+                                                    allAnswered
+                                                        ? "text-white shadow-[0_0_20px_rgba(0,168,232,0.3)] hover:shadow-[0_0_30px_rgba(0,168,232,0.5)] hover:scale-[1.01]"
+                                                        : "opacity-35 cursor-not-allowed border border-brand-white/10 text-brand-white/50"
+                                                )}
+                                                style={allAnswered ? {
+                                                    background: "linear-gradient(135deg, #00a8e8, #104e92)"
+                                                } : {}}
+                                            >
+                                                <span>Analyse My Brand</span>
+                                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    /* ── RESULTS PANEL ── */
+                                    <div className="p-6 space-y-5">
+                                        {/* Sticky Results Header */}
+                                        <div className="flex items-center justify-between border-b border-brand-white/8 pb-4">
+                                            <div className="space-y-1 text-left">
+                                                <div className="text-brand-cyan text-[8px] font-mono font-bold uppercase tracking-[0.25em] flex items-center gap-1.5 animate-pulse">
+                                                    <Sparkles className="w-3 h-3 text-brand-yellow" /> Analysis Complete
+                                                </div>
+                                                <h3 className="text-lg font-black text-white uppercase tracking-tight italic">
+                                                    {recommended.size === 0
+                                                        ? "Your Brand is Solid 🎯"
+                                                        : `${recommended.size} Growth Gap${recommended.size > 1 ? "s" : ""} Identified`}
+                                                </h3>
+                                            </div>
+                                            <button
+                                                onClick={handleReset}
+                                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-brand-white/10 text-brand-white/40 hover:text-white hover:border-brand-white/25 transition-all text-[9px] font-mono uppercase tracking-wider cursor-pointer"
+                                            >
+                                                <RotateCcw className="w-3 h-3" /> Retake
+                                            </button>
+                                        </div>
+
+                                        {/* Recommendation Cards */}
+                                        {recommended.size > 0 ? (
+                                            <div className="flex flex-col gap-3">
+                                                {Array.from(recommended).map((svcId, i) => {
+                                                    const svc = serviceMap[svcId];
+                                                    if (!svc) return null;
+                                                    return (
+                                                        <motion.div
+                                                            key={svcId}
+                                                            initial={{ opacity: 0, y: 10 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            transition={{ delay: i * 0.08, duration: 0.3 }}
+                                                        >
+                                                            <div className={`p-4 rounded-xl border ${svc.border} ${svc.bg} flex items-start gap-3 text-left`}>
+                                                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${svc.border} ${svc.bg} ${svc.accent}`}>
+                                                                    {svc.icon}
+                                                                </div>
+                                                                <div className="space-y-1">
+                                                                    <div className={`text-[8px] font-mono font-bold uppercase tracking-[0.2em] ${svc.accent}`}>
+                                                                        Recommended
+                                                                    </div>
+                                                                    <div className="text-white font-bold text-xs">{svc.label}</div>
+                                                                    <p className="text-brand-white/75 text-xs leading-normal">{svc.pitch}</p>
+                                                                </div>
+                                                            </div>
+                                                        </motion.div>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <div className="py-6 text-center text-brand-white/60 text-xs">
+                                                Great job! Your growth checklist is complete. Let&apos;s build scaling systems.
+                                            </div>
+                                        )}
+
+                                        {/* CTA Card */}
+                                        <div className="relative overflow-hidden border border-brand-cyan/20 bg-[#0c1527] rounded-2xl p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06)] text-left">
+                                            <div className="absolute inset-0 gaming-grid opacity-10 pointer-events-none" />
+                                            <div className="relative z-10 space-y-3">
+                                                <div className="text-brand-cyan text-[8px] font-mono font-bold uppercase tracking-widest">
+                                                    Next Step
+                                                </div>
+                                                <h4 className="text-base font-black text-white uppercase tracking-tight italic leading-tight">
+                                                    Let&apos;s Build Your Growth Strategy
+                                                </h4>
+                                                <p className="text-brand-white/50 text-xs leading-normal">
+                                                    Share your results with our team. We&apos;ll put together a custom growth plan.
+                                                </p>
+                                                <Link
+                                                    href="#contact"
+                                                    onClick={(e) => {
+                                                        setIsModalOpen(false);
+                                                        scrollToSection(e, "#contact");
+                                                    }}
+                                                    className="block pt-2"
+                                                >
+                                                    <button className="w-full group relative py-3 rounded-xl font-black text-xs uppercase tracking-widest text-white transition-all duration-300 hover:scale-[1.01] cursor-pointer flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(251,133,0,0.25)] hover:shadow-[0_0_35px_rgba(251,133,0,0.45)]"
+                                                        style={{ background: "linear-gradient(135deg, #fb8500, #e07000)" }}
+                                                    >
+                                                        <span>Contact Us</span>
+                                                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                                                    </button>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };

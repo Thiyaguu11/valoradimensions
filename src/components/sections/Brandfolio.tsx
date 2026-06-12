@@ -226,11 +226,6 @@ export const Brandfolio = ({ onOpenCaseStudies, onOpenBlogs }: BrandfolioProps) 
                     <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter uppercase italic mb-6">
                         Brandfolio
                     </h2>
-                    <div className="bg-brand-deep-blue/10 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl max-w-4xl mx-auto shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
-                        <p className="text-brand-white/80 text-lg md:text-xl font-medium leading-relaxed">
-                            At Valora Dimensions, we pride ourselves on delivering innovative marketing solutions that drive results. Our portfolio showcases a diverse range of successful projects that highlight our expertise in brand strategy, digital marketing, and design.
-                        </p>
-                    </div>
                 </BlurFade>
             </div>
 
@@ -264,101 +259,62 @@ export const Brandfolio = ({ onOpenCaseStudies, onOpenBlogs }: BrandfolioProps) 
                 </div>
             </BlurFade>
 
-            {/* Dynamic Sector Summary Banner */}
-            <div className="max-w-7xl mx-auto px-6 mb-12">
-                <AnimatePresence mode="wait">
-                    {activeMeta && (
-                        <motion.div
-                            key={activeCategory}
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <GlassCard variant="hud" className="p-6 bg-[#08111e]/95 border-slate-800 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-                                <div className="space-y-1.5">
-                                    <h4 className="text-slate-400 text-[10px] font-semibold uppercase tracking-[0.2em] font-mono">{activeMeta.stat}</h4>
-                                    <h3 className="text-xl font-bold text-white uppercase font-sans tracking-tight">{activeMeta.tagline}</h3>
-                                    <p className="text-brand-white/60 text-xs font-medium max-w-3xl leading-relaxed">{activeMeta.desc}</p>
-                                </div>
-                            </GlassCard>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
-
-            {/* Clients Grid */}
-            <div className="max-w-7xl mx-auto px-6">
-                <motion.div
-                    layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
+            {/* Clients Simplified List: Horizontal Snap Swipe Carousel */}
+            <div className="w-full relative overflow-hidden">
+                <div className="overflow-x-auto flex gap-4 snap-x snap-mandatory scrollbar-none pb-3 px-6">
                     <AnimatePresence mode="popLayout">
                         {filteredItems.map((item) => (
                             <motion.div
                                 key={item.id}
                                 layout
-                                initial={{ opacity: 0, scale: 0.92 }}
+                                initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.92 }}
-                                transition={{ duration: 0.4, ease: "easeInOut" }}
-                                className="h-full"
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.3 }}
+                                className="flex-shrink-0 w-[275px] snap-start"
                             >
-                                <GlassCard 
-                                    className="flex flex-col bg-[#050b14]/80 border-slate-800 hover:border-slate-700 hover:bg-[#08111e]/90 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] rounded-2xl p-6 transition-all duration-300 hover:scale-[1.01] h-full justify-between min-h-[360px]"
+                                <a
+                                    href={item.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full block"
                                 >
-                                    <div className="space-y-3">
-                                        {/* Category & Indicator */}
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase">
+                                    <GlassCard 
+                                        className="p-5 h-[135px] flex flex-col justify-between bg-[#050b14]/70 hover:bg-[#08111e]/90 border border-slate-800/80 hover:border-slate-700/80 rounded-2xl group transition-all duration-300 active:scale-[0.98] cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.25)] relative overflow-hidden"
+                                    >
+                                        {/* Corner accent glow inside card */}
+                                        <div className="absolute top-0 right-0 w-20 h-20 bg-brand-cyan/5 blur-xl pointer-events-none rounded-full" />
+                                        
+                                        <div className="flex flex-col gap-1 text-left relative z-10">
+                                            <span className="text-[8px] text-slate-400 font-mono tracking-widest uppercase">
                                                 {getCategoryName(item.category)}
                                             </span>
-                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 shadow-[0_0_8px_rgba(16,185,129,0.3)]" />
+                                            <h3 className="text-sm font-black text-white uppercase tracking-wider font-sans group-hover:text-brand-cyan transition-colors leading-tight">
+                                                {item.title}
+                                            </h3>
                                         </div>
 
-                                        {/* Client Title */}
-                                        <h3 className="text-xl font-bold text-white tracking-tight uppercase font-sans">
-                                            {item.title}
-                                        </h3>
-
-                                        {/* Description */}
-                                        <p className="text-slate-300 text-xs leading-relaxed font-light">
-                                            {item.description}
-                                        </p>
-                                    </div>
-
-                                    <div className="space-y-4 mt-6">
-                                        {/* Stats Panel */}
-                                        <div className="space-y-2 pt-4 border-t border-slate-800/60">
-                                            <div className="text-[9px] text-slate-400 uppercase tracking-widest font-bold font-mono">Performance stats</div>
-                                            <div className="grid grid-cols-3 gap-1.5">
-                                                {item.stats.map((stat, sIdx) => (
-                                                    <div 
-                                                        key={sIdx} 
-                                                        className="p-2 text-center border border-slate-900 bg-slate-950/40 rounded-lg flex flex-col justify-center min-h-[44px]"
-                                                    >
-                                                        <span className="text-[7px] text-slate-400 font-sans block uppercase tracking-wider leading-tight mb-1">{stat.label}</span>
-                                                        <span className="font-mono font-extrabold text-[10px] text-white leading-none">{stat.value}</span>
-                                                    </div>
-                                                ))}
+                                        <div className="flex justify-between items-center mt-3 border-t border-slate-900/40 pt-3.5 relative z-10">
+                                            <span className="text-[9px] text-brand-white/40 font-mono uppercase tracking-widest flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
+                                                Launch Site <span className="text-[11px] font-sans">↗</span>
+                                            </span>
+                                            <div className="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-brand-cyan/40 group-hover:bg-[#060b14] transition-all">
+                                                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-brand-cyan group-hover:translate-x-0.5 transition-all" />
                                             </div>
                                         </div>
-
-                                        {/* Action Button */}
-                                        <a
-                                            href={item.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="w-full bg-[#104E92]/10 hover:bg-[#104E92]/20 border border-[#104E92]/30 hover:border-[#104E92]/60 text-white text-[10px] font-black py-3 rounded-xl flex items-center justify-center gap-2 transition-all font-mono uppercase tracking-widest active:scale-95 cursor-pointer text-center"
-                                        >
-                                            Launch Site <ArrowRight className="w-3.5 h-3.5" />
-                                        </a>
-                                    </div>
-                                </GlassCard>
+                                    </GlassCard>
+                                </a>
                             </motion.div>
                         ))}
                     </AnimatePresence>
-                </motion.div>
+                </div>
+            </div>
+
+            {/* Micro Scroll Instruction */}
+            <div className="text-center mt-2.5 mb-2">
+                <span className="text-[8.5px] text-brand-white/30 font-mono tracking-widest uppercase animate-pulse">
+                    ← Swipe to browse brandfolio →
+                </span>
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10 mt-16 flex flex-wrap justify-center gap-6">

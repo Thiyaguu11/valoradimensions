@@ -238,7 +238,7 @@ export const BlogsModal = ({ isOpen, onClose, activeBlogId, setActiveBlogId }: B
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.93, y: 20 }}
                         transition={{ type: "spring", damping: 26, stiffness: 280 }}
-                        className="relative w-full max-w-5xl h-[85vh] bg-white border border-slate-200 rounded-3xl shadow-[0_32px_64px_rgba(15,23,42,0.15)] flex flex-col overflow-hidden z-10 text-slate-800"
+                        className="relative w-full max-w-5xl h-[85%] max-h-[85vh] bg-white border border-slate-200 rounded-3xl shadow-[0_32px_64px_rgba(15,23,42,0.15)] flex flex-col overflow-hidden z-10 text-slate-800"
                     >
                         {/* Header */}
                         <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">

@@ -159,17 +159,18 @@ export const Hero = () => {
                                                 transition={{ duration: 0.5 }}
                                                 className="w-full h-full relative"
                                             >
-                                                {/* Character video */}
+                                                {/* Character video (converted from GIF for size) */}
                                                 <video
-                                                    src="/creatives/1.mp4"
-                                                    aria-label="Valora Character Visual"
-                                                    className="w-full h-full object-cover rounded-[14px] opacity-100 group-hover:scale-105 transition-transform duration-700"
                                                     autoPlay
                                                     loop
                                                     muted
                                                     playsInline
-                                                    preload="auto"
-                                                />
+                                                    aria-label="Valora Character Visual"
+                                                    className="w-full h-full object-cover rounded-[14px] opacity-100 group-hover:scale-105 transition-transform duration-700"
+                                                >
+                                                    <source src="/creatives/1.webm" type="video/webm" />
+                                                    <source src="/creatives/1.mp4" type="video/mp4" />
+                                                </video>
                                                 
                                                 {/* HUD Top Overlay */}
                                                 <div className="absolute top-4 left-4 right-4 flex justify-between items-center bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-brand-cyan/20">
@@ -289,6 +290,12 @@ export const Hero = () => {
                                     animate="visible"
                                     className="space-y-6 md:space-y-8 w-full"
                                 >
+                                    <motion.div variants={itemVariants} className="w-full text-left">
+                                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight uppercase italic text-gradient-cyan pr-4 drop-shadow-[0_2px_8px_rgba(0,168,232,0.2)] font-sans">
+                                            Valora Dimensions
+                                        </h2>
+                                    </motion.div>
+
                                     <motion.div variants={itemVariants} className="flex justify-start">
                                         <span className="px-4 py-1.5 rounded-full border border-brand-cyan/35 bg-brand-deep-blue/30 text-[10px] md:text-xs text-brand-cyan font-semibold tracking-wide uppercase backdrop-blur-md shadow-[0_0_15px_rgba(0,168,232,0.15)] flex items-center gap-2 font-mono">
                                             <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" /> Welcome to the Next Dimension

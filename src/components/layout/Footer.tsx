@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Instagram, Mail, Phone } from "lucide-react";
+import { Instagram, Mail, Phone, Send } from "lucide-react";
 import { BlurFade } from "@/components/ui/BlurFade";
 
 export function Footer() {
@@ -54,6 +54,16 @@ export function Footer() {
                                     className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
                                 >
                                     <Phone className="w-4 h-4 mr-2" /> WhatsApp
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://t.me/ValoraDimensions"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center text-neutral-400 hover:text-blue-400 transition-colors"
+                                >
+                                    <Send className="w-4 h-4 mr-2" /> Telegram
                                 </a>
                             </li>
                         </ul>
