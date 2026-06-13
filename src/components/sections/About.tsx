@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import NumberTicker from "@/components/ui/NumberTicker";
@@ -65,6 +66,27 @@ const stats = [
 ];
 
 export const About = () => {
+    const [isFlipped, setIsFlipped] = useState(false);
+    const [currentPillarSlide, setCurrentPillarSlide] = useState(0);
+    const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStartX(e.touches[0].clientX);
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStartX === null) return;
+        const touchEndX = e.changedTouches[0].clientX;
+        const diffX = touchStartX - touchEndX;
+
+        if (diffX > 50) {
+            setCurrentPillarSlide(1);
+        } else if (diffX < -50) {
+            setCurrentPillarSlide(0);
+        }
+        setTouchStartX(null);
+    };
+
     return (
         <section id="about" className="py-32 relative text-white overflow-hidden bg-transparent">
             {/* Ambient glows */}
@@ -85,136 +107,119 @@ export const About = () => {
                         <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter italic uppercase drop-shadow-[0_0_20px_rgba(0,168,232,0.12)]">
                             About Us
                         </h2>
-                        <p className="text-brand-white/55 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-medium">
-                            We are Valora Dimensions — a next-generation AI marketing &amp; automation agency built to accelerate business growth at scale.
-                        </p>
                     </div>
                 </BlurFade>
 
-                {/* ── ROW 1: 3-COL BENTO — TEXT · GIF PANEL · SIDEBAR ── */}
+                {/* ── ROW 1: BENTO VIEWPORTS ── */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
-                    {/* ── Col A: Main Statement (5/12) ── */}
-                    <BlurFade delay={0.15} inView className="lg:col-span-5">
-                        <GlassCard className="p-8 md:p-10 h-full flex flex-col justify-between bg-brand-deep-blue/5 border-brand-cyan/15 group overflow-hidden relative">
-                            <div className="absolute top-0 right-0 w-60 h-60 bg-brand-cyan/6 blur-[120px] rounded-full pointer-events-none" />
-                            <div className="relative z-10 space-y-6">
-                                <div className="space-y-2">
-                                    <span className="text-brand-orange text-[10px] font-mono font-bold uppercase tracking-[0.22em] flex items-center gap-2">
-                                        <Zap className="w-3 h-3" /> Business Growth Partner
-                                    </span>
-                                    <h3 className="text-3xl md:text-4xl font-black text-white leading-[1.1] tracking-tighter uppercase italic">
-                                        We don&apos;t run ads.
-                                        <br />
-                                        <span className="text-gradient-cyan">We engineer</span>
-                                        <br />
-                                        <span className="text-gradient-orange">your growth.</span>
-                                    </h3>
+                    {/* ── Col A: Main Statement with 3D Flip (Full Width) ── */}
+                    <BlurFade delay={0.15} inView className="lg:col-span-12 w-full">
+                        <div className="flip-card-container">
+                            <div 
+                                className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}
+                                onClick={() => setIsFlipped(!isFlipped)}
+                            >
+                                {/* Front Side */}
+                                <div className="flip-card-front">
+                                    <GlassCard className="p-8 md:p-10 h-full flex flex-col justify-between bg-brand-deep-blue/5 border-brand-cyan/15 group overflow-hidden relative">
+                                        <div className="absolute top-0 right-0 w-60 h-60 bg-brand-cyan/6 blur-[120px] rounded-full pointer-events-none" />
+                                        <div className="relative z-10 space-y-6">
+                                            <div className="space-y-2">
+                                                <span className="text-brand-orange text-[10px] font-mono font-bold uppercase tracking-[0.22em] flex items-center gap-2">
+                                                    <Zap className="w-3 h-3" /> Business Growth Partner
+                                                </span>
+                                                <h3 className="text-3xl md:text-4xl font-black text-white leading-[1.1] tracking-tighter uppercase italic">
+                                                    We don&apos;t run ads.
+                                                    <br />
+                                                    <span className="text-gradient-cyan">We engineer</span>
+                                                    <br />
+                                                    <span className="text-gradient-orange">your growth.</span>
+                                                </h3>
+                                            </div>
+
+                                            <div className="space-y-3 text-brand-white/65 text-sm md:text-base leading-relaxed">
+                                                <p>
+                                                    Valora Dimensions is an AI-powered marketing &amp; automation agency built to deliver predictable, scalable revenue pipelines — not vanity metrics.
+                                                </p>
+                                                <p>
+                                                    We combine brand strategy with cutting-edge AI tools to deliver results{" "}
+                                                    <span className="text-brand-cyan font-semibold">10x faster</span>{" "}
+                                                    than traditional agencies — zero fluff, full transparency.
+                                                </p>
+                                            </div>
+
+                                            <div className="pt-2 flex items-center gap-2 text-[9px] text-brand-cyan/50 font-mono font-bold tracking-widest uppercase animate-pulse">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-ping" />
+                                                Click panel to view Vision & Mission
+                                            </div>
+                                        </div>
+                                    </GlassCard>
                                 </div>
 
-                                <div className="space-y-3 text-brand-white/65 text-sm md:text-base leading-relaxed">
-                                    <p>
-                                        Valora Dimensions is an AI-powered marketing &amp; automation agency built to deliver predictable, scalable revenue pipelines — not vanity metrics.
-                                    </p>
-                                    <p>
-                                        We combine brand strategy with cutting-edge AI tools to deliver results{" "}
-                                        <span className="text-brand-cyan font-semibold">10x faster</span>{" "}
-                                        than traditional agencies — zero fluff, full transparency.
-                                    </p>
+                                {/* Back Side */}
+                                <div className="flip-card-back">
+                                    <GlassCard className="p-8 md:p-10 h-full flex flex-col justify-between bg-brand-deep-blue/5 border-brand-orange/25 group overflow-hidden relative">
+                                        <div className="absolute top-0 right-0 w-60 h-60 bg-brand-orange/6 blur-[120px] rounded-full pointer-events-none" />
+                                        <div className="relative z-10 h-full flex flex-col justify-between space-y-6">
+                                            <div className="space-y-4">
+                                                <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                                                    <span className="text-brand-cyan text-[10px] font-mono font-bold uppercase tracking-[0.22em] flex items-center gap-2">
+                                                        <Target className="w-3.5 h-3.5" /> Corporate Directives
+                                                    </span>
+                                                    <span className="text-[8px] bg-brand-orange/20 text-brand-orange px-2 py-0.5 rounded font-mono font-bold">ACTIVE</span>
+                                                </div>
+
+                                                {/* Vision */}
+                                                <div className="space-y-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <Target className="w-4 h-4 text-brand-cyan shrink-0" />
+                                                        <span className="text-brand-cyan text-[10px] font-mono font-bold uppercase tracking-widest">Vision</span>
+                                                    </div>
+                                                    <p className="text-brand-white/85 text-sm leading-snug font-medium">
+                                                        To be the most trusted growth partner for ambitious brands worldwide.
+                                                    </p>
+                                                </div>
+
+                                                {/* Mission */}
+                                                <div className="space-y-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <Rocket className="w-4 h-4 text-brand-orange shrink-0" />
+                                                        <span className="text-brand-orange text-[10px] font-mono font-bold uppercase tracking-widest">Mission</span>
+                                                    </div>
+                                                    <p className="text-brand-white/85 text-sm leading-snug font-medium">
+                                                        Deliver AI-driven systems that turn marketing spend into measurable revenue.
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {/* Active Multiplier */}
+                                            <div className="pt-4 border-t border-white/5 space-y-2">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="w-2 h-2 rounded-full bg-brand-green animate-ping shrink-0" />
+                                                    <span className="text-brand-cyan text-[10px] font-mono font-bold uppercase tracking-widest">Active Multiplier</span>
+                                                    <span className="ml-auto text-[8px] bg-brand-green/20 text-brand-green px-1.5 py-0.5 rounded font-mono font-bold">LIVE</span>
+                                                </div>
+                                                <div className="flex items-baseline gap-1 font-mono">
+                                                    <span className="text-3xl font-black text-brand-white">+</span>
+                                                    <NumberTicker value={145} className="text-3xl font-black text-brand-white" />
+                                                    <span className="text-2xl font-black text-brand-orange">%</span>
+                                                    <span className="ml-3 text-[10px] text-brand-white/50 leading-tight font-medium font-sans">
+                                                        Average Client YoY Growth
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center gap-2 text-[9px] text-brand-orange/50 font-mono font-bold tracking-widest uppercase">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
+                                                Click card to return
+                                            </div>
+                                        </div>
+                                    </GlassCard>
                                 </div>
                             </div>
-                        </GlassCard>
+                        </div>
                     </BlurFade>
-
-                    {/* ── Col B: Compact GIF Panel (4/12) ── */}
-                    <BlurFade delay={0.25} inView className="lg:col-span-4">
-                        <GlassCard className="bg-brand-deep-blue/5 border-brand-cyan/15 overflow-hidden relative group p-2.5 hover:border-brand-cyan/35 transition-all duration-500 shadow-[0_4px_40px_rgba(0,0,0,0.45)]">
-                            {/* HUD Top Bar */}
-                            <div className="flex items-center justify-between mb-2 px-1">
-                                <div className="flex items-center gap-2">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-ping" />
-                                    <span className="text-[8px] font-mono text-brand-cyan tracking-wider font-bold">VALORA_GROWTH_ENGINE</span>
-                                </div>
-                                <span className="text-[8px] font-mono text-brand-white/40">v2.0 ACTIVE</span>
-                            </div>
-
-                            {/* GIF — compact fixed height */}
-                            <div className="relative w-full h-[260px] rounded-xl overflow-hidden">
-                                <video
-                                    src="/creatives/3.mp4"
-                                    aria-label="Valora Dimensions AI Growth Partner"
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
-                                    preload="auto"
-                                />
-                                {/* Gradient fade bottom */}
-                                <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-brand-black/80 to-transparent pointer-events-none" />
-                            </div>
-
-                            {/* HUD Footer */}
-                            <div className="mt-2 px-1 flex items-center justify-between">
-                                <div>
-                                    <div className="text-[7px] text-brand-yellow font-mono font-bold tracking-widest uppercase flex items-center gap-1">
-                                        <BarChart3 className="w-2.5 h-2.5" /> AI MARKETING PARTNER
-                                    </div>
-                                    <div className="text-[9px] text-white font-mono font-bold uppercase tracking-wider mt-0.5">Growth Intelligence Unit</div>
-                                </div>
-                                <div className="text-right">
-                                    <div className="text-brand-green text-base font-black font-mono">+145%</div>
-                                    <div className="text-[7px] text-brand-white/40 font-mono">Avg. Growth</div>
-                                </div>
-                            </div>
-                        </GlassCard>
-                    </BlurFade>
-
-                    {/* ── Col C: Sidebar — Vision · Mission · Live Stat (3/12) ── */}
-                    <div className="lg:col-span-3 flex flex-col gap-4">
-                        {/* Vision */}
-                        <BlurFade delay={0.3} inView>
-                            <GlassCard className="p-5 bg-brand-deep-blue/5 border-brand-cyan/20 hover:border-brand-cyan/40 transition-all duration-300 group">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Target className="w-4 h-4 text-brand-cyan shrink-0" />
-                                    <span className="text-brand-cyan text-[10px] font-mono font-bold uppercase tracking-widest">Vision</span>
-                                </div>
-                                <p className="text-brand-white/75 text-sm leading-snug font-medium">
-                                    To be the most trusted growth partner for ambitious brands worldwide.
-                                </p>
-                            </GlassCard>
-                        </BlurFade>
-
-                        {/* Mission */}
-                        <BlurFade delay={0.38} inView>
-                            <GlassCard className="p-5 bg-brand-deep-blue/5 border-brand-orange/20 hover:border-brand-orange/40 transition-all duration-300 group">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Rocket className="w-4 h-4 text-brand-orange shrink-0" />
-                                    <span className="text-brand-orange text-[10px] font-mono font-bold uppercase tracking-widest">Mission</span>
-                                </div>
-                                <p className="text-brand-white/75 text-sm leading-snug font-medium">
-                                    Deliver AI-driven systems that turn marketing spend into measurable revenue.
-                                </p>
-                            </GlassCard>
-                        </BlurFade>
-
-                        {/* Live Stat */}
-                        <BlurFade delay={0.46} inView>
-                            <GlassCard variant="hud" className="p-5">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="w-2 h-2 rounded-full bg-brand-green animate-ping shrink-0" />
-                                    <span className="text-brand-cyan text-[10px] font-mono font-bold uppercase tracking-widest">Active Multiplier</span>
-                                    <span className="ml-auto text-[8px] bg-brand-green/20 text-brand-green px-1.5 py-0.5 rounded font-mono font-bold">LIVE</span>
-                                </div>
-                                <div className="flex items-baseline gap-1 font-mono">
-                                    <span className="text-3xl font-black text-brand-white">+</span>
-                                    <NumberTicker value={145} className="text-3xl font-black text-brand-white" />
-                                    <span className="text-2xl font-black text-brand-orange">%</span>
-                                </div>
-                                <div className="text-[9px] text-brand-white/40 font-mono mt-1">Average Client Business Growth YoY</div>
-                            </GlassCard>
-                        </BlurFade>
-                    </div>
                 </div>
 
                 {/* ── ROW 2: AI MARKETING PILLARS ── */}
@@ -229,40 +234,77 @@ export const About = () => {
                         </div>
                     </BlurFade>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                        {pillars.map((p, i) => (
-                            <motion.div
-                                key={p.label}
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true, margin: "-60px" }}
-                                variants={fadeUp}
-                                transition={{ delay: i * 0.1 }}
-                            >
-                                <GlassCard
-                                    className="p-7 h-full bg-brand-deep-blue/5 border-brand-cyan/12 hover:border-brand-cyan/30 transition-all duration-500 group flex flex-col gap-4"
-                                    style={{ boxShadow: `0 0 0 0 ${p.glow}` }}
-                                >
-                                    <div
-                                        className="w-12 h-12 rounded-xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110"
-                                        style={{
-                                            background: `${p.glow}`,
-                                            borderColor: `${p.glow}`.replace("0.15", "0.35"),
-                                        }}
+                    <div 
+                        className="relative w-full overflow-hidden px-1 py-4"
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}
+                    >
+                        <div 
+                            className="flex transition-transform duration-500 ease-out"
+                            style={{ transform: `translateX(-${currentPillarSlide * 100}%)` }}
+                        >
+                            {/* Slide 1 (Left 2) */}
+                            <div className="w-full shrink-0 flex flex-col gap-4 px-2">
+                                {pillars.slice(0, 2).map((p) => (
+                                    <GlassCard
+                                        key={p.label}
+                                        className="p-6 bg-[#08111e]/40 border-brand-cyan/15 hover:border-brand-cyan/30 transition-all duration-300 flex items-start gap-4"
                                     >
-                                        <p.icon className={`w-5 h-5 ${p.accent}`} />
-                                    </div>
-                                    <div>
-                                        <h4 className={`${p.accent} font-black text-sm uppercase tracking-wider font-mono mb-2`}>
-                                            {p.label}
-                                        </h4>
-                                        <p className="text-brand-white/60 text-sm leading-relaxed">
-                                            {p.desc}
-                                        </p>
-                                    </div>
-                                </GlassCard>
-                            </motion.div>
-                        ))}
+                                        <div
+                                            className="w-10 h-10 rounded-xl flex items-center justify-center border shrink-0 bg-brand-deep-blue/10 border-brand-cyan/20"
+                                        >
+                                            <p.icon className={`w-4 h-4 ${p.accent}`} />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className={`${p.accent} font-black text-xs uppercase tracking-wider font-mono`}>
+                                                {p.label}
+                                            </h4>
+                                            <p className="text-brand-white/70 text-xs leading-relaxed font-medium">
+                                                {p.desc}
+                                            </p>
+                                        </div>
+                                    </GlassCard>
+                                ))}
+                            </div>
+
+                            {/* Slide 2 (Right 2) */}
+                            <div className="w-full shrink-0 flex flex-col gap-4 px-2">
+                                {pillars.slice(2, 4).map((p) => (
+                                    <GlassCard
+                                        key={p.label}
+                                        className="p-6 bg-[#08111e]/40 border-brand-cyan/15 hover:border-brand-cyan/30 transition-all duration-300 flex items-start gap-4"
+                                    >
+                                        <div
+                                            className="w-10 h-10 rounded-xl flex items-center justify-center border shrink-0 bg-brand-deep-blue/10 border-brand-cyan/20"
+                                        >
+                                            <p.icon className={`w-4 h-4 ${p.accent}`} />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className={`${p.accent} font-black text-xs uppercase tracking-wider font-mono`}>
+                                                {p.label}
+                                            </h4>
+                                            <p className="text-brand-white/70 text-xs leading-relaxed font-medium">
+                                                {p.desc}
+                                            </p>
+                                        </div>
+                                    </GlassCard>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Swiper Controls */}
+                        <div className="flex justify-center items-center gap-3 mt-4">
+                            <button
+                                onClick={() => setCurrentPillarSlide(0)}
+                                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${currentPillarSlide === 0 ? "bg-brand-cyan w-6" : "bg-neutral-600 hover:bg-neutral-500"}`}
+                                aria-label="Go to slide 1"
+                            />
+                            <button
+                                onClick={() => setCurrentPillarSlide(1)}
+                                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${currentPillarSlide === 1 ? "bg-brand-cyan w-6" : "bg-neutral-600 hover:bg-neutral-500"}`}
+                                aria-label="Go to slide 2"
+                            />
+                        </div>
                     </div>
                 </div>
 

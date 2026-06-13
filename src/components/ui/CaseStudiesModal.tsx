@@ -75,7 +75,7 @@ export const CaseStudiesModal = ({ isOpen, onClose }: CaseStudiesModalProps) => 
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden bg-[#08111e]/95 border border-brand-cyan/20 rounded-3xl shadow-[0_0_50px_rgba(0,168,232,0.15)] flex flex-col"
+                        className="relative w-full max-w-6xl h-[85%] max-h-[90vh] overflow-hidden bg-[#08111e]/95 border border-brand-cyan/20 rounded-3xl shadow-[0_0_50px_rgba(0,168,232,0.15)] flex flex-col"
                     >
                         {/* Header */}
                         <div className="p-6 md:p-8 border-b border-brand-cyan/15 flex items-center justify-between bg-brand-deep-blue/5">

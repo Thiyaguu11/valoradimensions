@@ -60,7 +60,7 @@ export function Navbar() {
     return (
         <nav
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
+                "fixed top-[var(--navbar-top,0px)] left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
                 scrolled
                     ? "bg-black/50 backdrop-blur-md border-white/10 py-3"
                     : "bg-transparent py-6"
@@ -153,7 +153,7 @@ export function Navbar() {
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="absolute top-0 left-0 w-full h-screen bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 md:hidden"
+                            className="fixed inset-0 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 md:hidden"
                         >
                             {navItems.map((item) => {
                                 const isActive = activeSection === item.href.replace("#", "");
