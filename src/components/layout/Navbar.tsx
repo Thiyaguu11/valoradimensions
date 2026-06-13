@@ -22,13 +22,22 @@ export function Navbar() {
     const [activeSection, setActiveSection] = useState("");
 
     useEffect(() => {
+        // On desktop the site scrolls inside the phone-frame (.device-viewport),
+        // not the window — read scroll position from whichever is the real scroller.
+        const framed = window.matchMedia("(min-width: 481px)").matches;
+        const viewport = document.querySelector<HTMLElement>(".device-viewport");
+        const scroller: HTMLElement | Window = framed && viewport ? viewport : window;
+
+        const getScrollTop = () =>
+            scroller === window ? window.scrollY : (scroller as HTMLElement).scrollTop;
+
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            setScrolled(getScrollTop() > 50);
         };
 
-        // Intersection Observer for active section
-        const observerOptions = {
-            root: null,
+        // Intersection Observer for active section, rooted to the real scroller.
+        const observerOptions: IntersectionObserverInit = {
+            root: scroller === window ? null : (scroller as HTMLElement),
             rootMargin: "-20% 0px -70% 0px",
             threshold: 0,
         };
@@ -50,9 +59,10 @@ export function Navbar() {
             if (element) observer.observe(element);
         });
 
-        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+        scroller.addEventListener("scroll", handleScroll, { passive: true });
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            scroller.removeEventListener("scroll", handleScroll);
             observer.disconnect();
         };
     }, []);

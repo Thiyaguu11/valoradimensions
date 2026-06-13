@@ -92,7 +92,7 @@ export const CaseStudiesModal = ({ isOpen, onClose }: CaseStudiesModalProps) => 
                         </div>
 
                         {/* Body */}
-                        <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 scrollbar-hide">
+                        <div data-lenis-prevent className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 scrollbar-hide">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                 {dummyCaseStudies.map((study, index) => (
                                     <motion.div
