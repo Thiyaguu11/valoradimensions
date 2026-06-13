@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CookieConsent } from "@/components/ui/CookieConsent";
 import { DeviceStatusBar } from "@/components/layout/DeviceStatusBar";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,10 +42,13 @@ export default function RootLayout({
             {/* Mobile Viewport */}
             <div className="device-viewport">
               <Navbar />
-              <main className="flex-1 relative overflow-visible">
-                {children}
-              </main>
-              <Footer />
+              {/* Lenis-managed scroll content (Navbar + CookieConsent stay fixed, outside) */}
+              <div data-lenis-content className="flex-1 flex flex-col">
+                <main className="flex-1 relative overflow-visible">
+                  {children}
+                </main>
+                <Footer />
+              </div>
               <CookieConsent />
             </div>
 
@@ -54,6 +58,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
+        <SmoothScroll />
       </body>
     </html>
   );

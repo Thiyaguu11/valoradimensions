@@ -270,7 +270,7 @@ export const BlogsModal = ({ isOpen, onClose, activeBlogId, setActiveBlogId }: B
                         </div>
 
                         {/* Body Container */}
-                        <div className="flex-1 overflow-y-auto p-6 md:p-8 scrollbar-hide">
+                        <div data-lenis-prevent className="flex-1 overflow-y-auto p-6 md:p-8 scrollbar-hide">
                             <AnimatePresence mode="wait">
                                 {isUploading ? (
                                     /* ── UPLOAD BLOG FORM SCREEN ── */

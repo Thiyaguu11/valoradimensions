@@ -84,6 +84,56 @@ body {
   }
 }
 
+/* Floating / drift motion (used by hero doodles + ambient orbs) */
+@keyframes float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Smooth-scroll baseline (fallback when JS smooth-scroll is unavailable) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Honour users who prefer reduced motion: neutralise continuous + entrance motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Glassmorphism Utilities */
 .glass-panel {
   background: rgba(8, 17, 30, 0.6);
@@ -273,6 +323,7 @@ body {
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: rgba(16, 78, 146, 0.3) transparent;
   }
